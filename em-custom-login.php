@@ -12,6 +12,7 @@ include_once(plugin_dir_path(__FILE__).'error.php');
 include_once(plugin_dir_path(__FILE__).'functions.php');
 include_once(plugin_dir_path(__FILE__).'login.php');
 include_once(plugin_dir_path(__FILE__).'register.php');
+include_once(plugin_dir_path(__FILE__).'password.php');
 
 class EMCustomLogin {
 
@@ -44,6 +45,10 @@ class EMCustomLogin {
 			'register' => array(
 				'title' => __('Register','dummy'),
 				'content' => '[emcl-registration-form]'
+			),
+			'password-reset' => array(
+				'title' => __('Reset Password','dummy'),
+				'content' => '[emcl-password-form]'
 			),
 		);
 

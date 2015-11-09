@@ -43,6 +43,12 @@ function emcl_add_error_message($slug='',$message='') {
 	$custom_login_errors->register_errors()->add($slug,__($message));
 }
 
+/**
+ * emcl_has_error_messages function.
+ *
+ * @access public
+ * @return void
+ */
 function emcl_has_error_messages() {
 	global $custom_login_errors;
 

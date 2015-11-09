@@ -1,6 +1,17 @@
 <?php
+/**
+ * EMCustomRegistration class.
+ *
+ * @since 0.1.0
+ */
 class EMCustomRegistration {
 
+	/**
+	 * __construct function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		add_action('emcl_before_register-form','emcl_show_error_messages');
 		add_action('init',array($this,'add_new_user'));
@@ -9,15 +20,33 @@ class EMCustomRegistration {
 		add_shortcode('emcl-registration-form',array($this,'registration_form'));
 	}
 
+	/**
+	 * registration_form function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function registration_form() {
 		return emcl_get_template_html('register-form');
 	}
 
+	/**
+	 * register_form_redirect function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function register_form_redirect() {
 		wp_redirect(home_url('/register/'));
 		exit;
 	}
 
+	/**
+	 * add_new_user function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function add_new_user() {
 	  if (isset($_POST["custom_user_login_reg"]) && wp_verify_nonce($_POST['custom_register_nonce'],'custom-register-nonce')) :
 			$user_login=$_POST["custom_user_login_reg"];
