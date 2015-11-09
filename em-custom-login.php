@@ -46,9 +46,13 @@ class EMCustomLogin {
 				'title' => __('Register','dummy'),
 				'content' => '[emcl-registration-form]'
 			),
-			'password-reset' => array(
+			'forgot-password' => array(
+				'title' => __('Forgot Password','dummy'),
+				'content' => '[emcl-forgot-password-form]'
+			),
+			'reset-password' => array(
 				'title' => __('Reset Password','dummy'),
-				'content' => '[emcl-password-form]'
+				'content' => '[emcl-reset-password-form]'
 			),
 		);
 
