@@ -65,4 +65,40 @@ function emcl_show_error_messages() {
 
 	$custom_login_errors->show_error_messages();
 }
+
+/**
+ * emcl_login_extras function.
+ *
+ * @access public
+ * @param array $args (default: array())
+ * @return void
+ */
+function emcl_login_extras($args=array()) {
+	$html=null;
+	$default_args=array(
+		'loginout' => false,
+		'register' => true,
+		'password' => true
+	);
+	$args=array_merge($default_args,$args);
+	$wp_loginout=apply_filters('emcl_login_extras_loginout_redirect','');
+	$wp_register_before=apply_filters('emcl_login_extras_register_before','');
+	$wp_register_after=apply_filters('emcl_login_extras_register_after','');
+	$wp_lostpassword_text=apply_filters('emcl_login_extras_lostpassword_text','Lost Password?');
+
+	extract($args);
+
+	$html.='<ul class="custom-login-extras">';
+		if ($loginout)
+			$html.='<li class="loginout">'.wp_loginout($wp_loginout,false).'</li>';
+
+		if ($register)
+			$html.='<li class="wp-register">'.wp_register($wp_register_before,$wp_register_after,false).'</li>';
+
+		if ($password)
+			$html.='<li class="lost-password"><a href="'.wp_lostpassword_url().'" title="'.$wp_lostpassword_text.'">'.$wp_lostpassword_text.'</a></li>';
+	$html.='</ul>';
+
+	echo $html;
+}
 ?>

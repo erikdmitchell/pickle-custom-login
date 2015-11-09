@@ -11,6 +11,7 @@ Author URI: http://erikmitchell.net
 include_once(plugin_dir_path(__FILE__).'error.php');
 include_once(plugin_dir_path(__FILE__).'functions.php');
 include_once(plugin_dir_path(__FILE__).'login.php');
+include_once(plugin_dir_path(__FILE__).'register.php');
 
 class EMCustomLogin {
 
@@ -39,6 +40,10 @@ class EMCustomLogin {
 			'login' => array(
 				'title' => __('Login','dummy'),
 				'content' => '[emcl-login-form]'
+			),
+			'register' => array(
+				'title' => __('Register','dummy'),
+				'content' => '[emcl-registration-form]'
 			),
 		);
 

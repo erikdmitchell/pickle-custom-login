@@ -19,6 +19,8 @@ class EMLogin {
 		add_action('wp_login_failed',array($this,'login_failed'));
 		add_action('wp_logout',array($this,'logout_page'));
 
+		add_filter('authenticate',array($this,'verify_username_password'),1,3);
+
 		add_shortcode('emcl-login-form',array($this,'login_form'));
 	}
 
@@ -107,10 +109,29 @@ class EMLogin {
 	 * @access public
 	 * @return void
 	 */
-	function logout_page() {
+	public function logout_page() {
 		$login_page=home_url('/login/');
 		wp_redirect($login_page."?login=false");
 		exit;
+	}
+
+	/**
+	 * verify_username_password function.
+	 *
+	 * redirects login errors to our page
+	 *
+	 * @access public
+	 * @param mixed $user
+	 * @param mixed $username
+	 * @param mixed $password
+	 * @return void
+	 */
+	public function verify_username_password( $user, $username, $password ) {
+	    $login_page  = home_url( '/login/' );
+	    if( $username == "" || $password == "" ) {
+	        wp_redirect( $login_page . "?login=empty" );
+	        exit;
+	    }
 	}
 
 }

@@ -14,3 +14,4 @@
 		</p>
 	</fieldset>
 </form>
+<?php emcl_login_extras(); ?>
