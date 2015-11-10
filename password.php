@@ -55,10 +55,10 @@ class EMCustomPasswordReset {
 		if (isset($_GET['login'])) :
 			switch ($_GET['login']) :
 				case 'expiredkey':
-					return __('<b>Error</b>: You need to have a valid key. Try again.','dummy');
+					return emcl_format_error_message('Error','Your key has expired. Try again.','error');
 					break;
 				case 'invalidkey':
-		    	return __('<b>Error</b>: You need to have a valid key. Try again.','dummy');
+		    	return emcl_format_error_message('Error','You need to have a valid key. Try again.','error');
 		    	break;
 		  endswitch;
 		endif;
@@ -224,7 +224,6 @@ class EMCustomPasswordReset {
 
 				exit;
 			endif;
-
 
 			if ( isset( $_POST['pass1'] ) ) :
 				if ( $_POST['pass1'] != $_POST['pass2'] ) {
