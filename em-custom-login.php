@@ -13,6 +13,7 @@ include_once(plugin_dir_path(__FILE__).'functions.php');
 include_once(plugin_dir_path(__FILE__).'login.php');
 include_once(plugin_dir_path(__FILE__).'register.php');
 include_once(plugin_dir_path(__FILE__).'password.php');
+include_once(plugin_dir_path(__FILE__).'admin.php');
 
 class EMCustomLogin {
 
