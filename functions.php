@@ -137,4 +137,10 @@ function emcl_is_activation_required() {
 
 	return false;
 }
+
+function emcl_activate_user() {
+	global $EMCustomLoginUserActivation;
+
+	return $EMCustomLoginUserActivation->activate_user();
+}
 ?>

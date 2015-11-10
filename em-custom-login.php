@@ -14,6 +14,7 @@ include_once(plugin_dir_path(__FILE__).'login.php');
 include_once(plugin_dir_path(__FILE__).'register.php');
 include_once(plugin_dir_path(__FILE__).'password.php');
 include_once(plugin_dir_path(__FILE__).'admin.php');
+include_once(plugin_dir_path(__FILE__).'user-activation.php');
 include_once(plugin_dir_path(__FILE__).'emails.php');
 
 
@@ -56,6 +57,10 @@ class EMCustomLogin {
 			'reset-password' => array(
 				'title' => __('Reset Password','dummy'),
 				'content' => '[emcl-reset-password-form]'
+			),
+			'activate-account' => array(
+				'title' => __('Activate Account','dummy'),
+				'content' => '[emcl-user-activation]'
 			),
 		);
 

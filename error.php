@@ -2,7 +2,7 @@
 /**
  * EMCustomLoginErrors class.
  *
- * @sonce 0.10
+ * @sonce 0.1.0
  */
 class EMCustomLoginErrors {
 

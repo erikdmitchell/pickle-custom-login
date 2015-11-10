@@ -1,5 +1,4 @@
 <?php
-
 /**
  * emcl_user_activation_email function.
  *
@@ -47,7 +46,7 @@ function emcl_user_activation_email($user_id,$notify='') {
 	if (emcl_is_activation_required()) :
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";
-		$message .= '<' . home_url("/activate/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
+		$message .= '<' . home_url("/activate-account/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
 	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
