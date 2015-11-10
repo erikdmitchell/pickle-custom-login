@@ -122,4 +122,19 @@ function emcl_login_extras($args=array()) {
 
 	echo $html;
 }
+
+/**
+ * emcl_is_activation_required function.
+ *
+ * @access public
+ * @return void
+ */
+function emcl_is_activation_required() {
+	$require_activation_key=get_option('emcl-require-activation-key',0);
+
+	if ($require_activation_key)
+		return true;
+
+	return false;
+}
 ?>

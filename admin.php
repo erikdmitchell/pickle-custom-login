@@ -175,5 +175,5 @@ class EMCustomLoginAdmin {
 
 }
 
-new EMCustomLoginAdmin();
+$EMCustomLoginAdmin=new EMCustomLoginAdmin();
 ?>

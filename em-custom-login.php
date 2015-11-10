@@ -8,12 +8,14 @@ Author: Erik Mitchell
 Author URI: http://erikmitchell.net
 */
 
-include_once(plugin_dir_path(__FILE__).'error.php');
 include_once(plugin_dir_path(__FILE__).'functions.php');
+include_once(plugin_dir_path(__FILE__).'error.php');
 include_once(plugin_dir_path(__FILE__).'login.php');
 include_once(plugin_dir_path(__FILE__).'register.php');
 include_once(plugin_dir_path(__FILE__).'password.php');
 include_once(plugin_dir_path(__FILE__).'admin.php');
+include_once(plugin_dir_path(__FILE__).'emails.php');
+
 
 class EMCustomLogin {
 

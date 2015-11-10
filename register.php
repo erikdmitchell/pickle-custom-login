@@ -6,6 +6,8 @@
  */
 class EMCustomRegistration {
 
+	protected $registration_success_notice=false;
+
 	/**
 	 * __construct function.
 	 *
@@ -27,6 +29,9 @@ class EMCustomRegistration {
 	 * @return void
 	 */
 	public function registration_form() {
+		if ($this->registration_success_notice)
+			echo emcl_format_error_message('','Please check your email to activate your account.','success');
+
 		return emcl_get_template_html('register-form');
 	}
 
@@ -99,15 +104,21 @@ class EMCustomRegistration {
 
 				if ($new_user_id) :
 					// send an email to the admin alerting them of the registration
-					wp_new_user_notification($new_user_id);
+					emcl_user_activation_email($new_user_id,'both');
 
-					// log the new user in
-					wp_setcookie($user_login, $user_pass, true);
-					wp_set_current_user($new_user_id, $user_login);
-					do_action('wp_login', $user_login);
+					// if activation is required, we skip
+					if (!emcl_is_activation_required()) :
+						// log the new user in
+						wp_setcookie($user_login, $user_pass, true);
+						wp_set_current_user($new_user_id, $user_login);
+						do_action('wp_login', $user_login);
 
-					// send the newly created user to the home page after logging them in
-					wp_redirect(home_url()); exit;
+						// send the newly created user to the home page after logging them in
+						wp_redirect(home_url());
+						exit;
+					else :
+						$this->registration_success_notice=true;
+					endif;
 				endif;
 			endif;
 
