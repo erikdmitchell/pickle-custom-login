@@ -18,6 +18,11 @@ include_once(plugin_dir_path(__FILE__).'user-activation.php');
 include_once(plugin_dir_path(__FILE__).'emails.php');
 
 
+/**
+ * EMCustomLogin class.
+ *
+ * @since 0.1.0
+ */
 class EMCustomLogin {
 
 	/**
