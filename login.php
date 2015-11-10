@@ -32,10 +32,10 @@ class EMLogin {
 	 */
 	public function login_form() {
 		if (isset($_GET['checkemail']) && $_GET['checkemail']=='confirm')
-			echo emcl_format_error_message('An email has been set to the address provided with instructions on how to reset your password.','success');
+			echo emcl_format_error_message('','An email has been set to the address provided with instructions on how to reset your password.','success');
 
 		if (isset($_GET['password']) && $_GET['password']=='changed')
-			echo emcl_format_error_message('Your password has been changed. Please login.','success');
+			echo emcl_format_error_message('','Your password has been changed. Please login.','success');
 
 		return emcl_get_template_html('login-form');
 	}

@@ -44,7 +44,8 @@ class EMCustomPasswordReset {
 
 		if (isset($_REQUEST['login']) && isset($_REQUEST['key'])) :
 			if (isset($_REQUEST['error']))
-				echo '<b>Error</b>: '.$_REQUEST['error'];
+				$this->process_error_codes($_REQUEST['error']);
+
 
 			return emcl_get_template_html('reset-password');
 		else:
@@ -127,13 +128,20 @@ class EMCustomPasswordReset {
 		foreach ($codes as $code) :
 			switch ($code) :
 				case 'empty_username':
-					echo __('<b>Error</b>: You need to enter your email address to continue.','dummy');
+					echo emcl_format_error_message('Error','You need to enter your email address to continue.','error');
 					break;
 				case 'invalid_email':
 				case 'invalidcombo':
-		    	echo __('<b>Error</b>: There are no users registered with this email address.','dummy');
+		    	echo emcl_format_error_message('Error','There are no users registered with this email address.','error');
+		    	break;
+		    case 'password_reset_empty':
+		    	echo emcl_format_error_message('Error','Please enter a new password.','error');
+		    	break;
+		    case 'password_reset_mismatch':
+		    	echo emcl_format_error_message('Error','The passwords do not match.','error');
 		    	break;
 		    default:
+		    	echo emcl_format_error_message('Error','There was an error, please try again.','error');
 		    	break;
 		  endswitch;
 		 endforeach;

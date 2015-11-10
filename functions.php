@@ -76,14 +76,15 @@ function emcl_show_error_messages() {
  * emcl_format_error_message function.
  *
  * @access public
- * @param string $message (default: '')
+ * @param string $code (default: '')
+ * @param bool $message (default: false)
  * @param string $type (default: '')
  * @return void
  */
-function emcl_format_error_message($message='',$type='') {
+function emcl_format_error_message($code='',$message=false,$type='') {
 	global $custom_login_errors;
 
-	return $custom_login_errors->format_error($message,$type);
+	return $custom_login_errors->format_error($code,$message,$type);
 }
 
 /**

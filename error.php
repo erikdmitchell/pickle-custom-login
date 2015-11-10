@@ -50,18 +50,23 @@ class EMCustomLoginErrors {
 	 * format_error function.
 	 *
 	 * @access public
+	 * @param string $code (default: '')
 	 * @param bool $message (default: false)
 	 * @param string $type (default: '')
 	 * @return void
 	 */
-	public function format_error($message=false,$type='') {
+	public function format_error($code='',$message=false,$type='') {
 		if (!$message)
 			return false;
 
 		$html=null;
+		$code_display=null;
+
+		if ($code && $code!='')
+			$code_display='<span class="title">'.__($code).'</span>: ';
 
 		$html.='<div class="custom-login-notice">';
-			$html.='<span class="'.$type.'">'.$message.'</span>';
+			$html.='<span class="'.$type.'">'.$code_display.$message.'</span>';
 		$html.='</div>';
 
 		return $html;
