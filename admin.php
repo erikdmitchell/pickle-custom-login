@@ -30,8 +30,8 @@ class EMCustomLoginAdmin {
 	public function admin_page() {
 		$settings=array(
 			'media_buttons' => false,
-
 		);
+		$require_activation_key=get_option('emcl-require-activation-key',0);
 		?>
 		<div class="wrap">
 			<h1>EM Custom Login</h1>
@@ -59,17 +59,13 @@ class EMCustomLoginAdmin {
 							<p class="description" id="tagline-description">In a few words, explain what this site is about.</p></td>
 						</tr>
 						-->
-						<!--
 						<tr>
-							<th scope="row">Membership</th>
+							<th scope="row"><label for="require_activation_key">Require Account Activation</label></th>
 							<td>
-								<fieldset><legend class="screen-reader-text"><span>Membership</span></legend><label for="users_can_register">
-									<input name="users_can_register" type="checkbox" id="users_can_register" value="1" checked="checked">
-									Anyone can register</label>
-								</fieldset>
+								<input name="require_activation_key" type="checkbox" id="require_activation_key" value="1" <?php checked($require_activation_key,1); ?>>
+								<p class="description" id="rquire-activation-key-description">If checked, users would receive an email to activate their account before they can login.</p></td>
 							</td>
 						</tr>
-						-->
 					</tbody>
 				</table>
 
@@ -92,6 +88,12 @@ class EMCustomLoginAdmin {
 			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')
 				update_option('emcl-retrieve-password-email',wp_kses_post($_POST['retrieve_password_email']));
 
+			// require activation key //
+			if (isset($_POST['require_activation_key'])) :
+				update_option('emcl-require-activation-key',$_POST['require_activation_key']);
+			else :
+				delete_option('emcl-require-activation-key');
+			endif;
 
 			$this->admin_notices['updated']='Settings Updated!';
 		endif;
