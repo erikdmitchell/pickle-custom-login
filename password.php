@@ -170,18 +170,7 @@ class EMCustomPasswordReset {
 	 * @return void
 	 */
 	public function replace_retrieve_password_message($message,$key,$user_login,$user_data) {
-		$password_reset_link=site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login');
-
-		// check if custom message exists //
-		if ($custom_message=get_option('emcl-retrieve-password-email')) :
-			$custom_message=stripslashes($custom_message); // clean from db
-			$custom_message=str_replace('{user_login}',$user_login,$custom_message);
-			$custom_message=str_replace('{password_reset_link}',$password_reset_link,$custom_message);
-
-			$message=$custom_message;
-		endif;
-
-		return $custom_message;
+		return emcl_get_custom_email_message('password_reset',$message,$key,$user_login);
 	}
 
 	/**

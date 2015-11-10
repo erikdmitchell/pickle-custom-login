@@ -1,4 +1,66 @@
 <?php
+function emcl_get_custom_email_message($type=false,$original_message='',$key='',$user_login=false,$user_id=false) {
+	$user=false;
+	$message='';
+
+	// we need an email type to send
+	if (!$type)
+		return false;
+
+	// we need somethign to get the user details
+	if (!$user_id && !$user_login)
+		return false;
+
+	// get user details
+	if ($user_id) :
+		$user=get_userdata($user_id);
+	else :
+		$user=get_user_by('login',$user_login);
+	endif;
+
+	// one last check
+	if (!$user || is_wp_error($user))
+		return false;
+
+	switch ($type) :
+		case ('password_reset'):
+			$message=emcl_password_reset_email($original_message,$key,$user->user_login);
+			break;
+		default:
+			break;
+	endswitch;
+echo $message;
+exit;
+
+	return $message;
+}
+
+function emcl_password_reset_email($message,$key,$user_login) {
+		//$password_reset_link=;
+		$custom_message=$message;
+
+		// check if custom message exists //
+		if ($custom_message=get_option('emcl-retrieve-password-email')) :
+			$custom_message=stripslashes($custom_message); // clean from db
+			$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+		endif;
+
+		return $custom_message;
+}
+
+function emcl_clean_up_placeholders($message='',$user_login='',$key='') {
+	$placeholders=array(
+		'{user_login}' => $user_login,
+		'{password_reset_link}' => site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
+	);
+
+	$message=strtr($message,$placeholders);
+
+	return $message;
+}
+
+
+
 /**
  * emcl_user_activation_email function.
  *
