@@ -8,6 +8,12 @@ class EMCustomLoginAdmin {
 
 	protected $admin_notices=array();
 
+	/**
+	 * __construct function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		add_action('admin_menu',array($this,'admin_menu'));
 		add_action('admin_notices',array($this,'admin_notices'));
@@ -16,10 +22,23 @@ class EMCustomLoginAdmin {
 		//add_action('wp_ajax_send_test_email',array($this,'ajax_send_test_emails'));
 	}
 
+	/**
+	 * admin_menu function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function admin_menu() {
 		add_options_page('EM Custom Login','EM Custom Login','manage_options','em_custom_login',array($this,'admin_page'));
 	}
 
+	/**
+	 * admin_scripts_styles function.
+	 *
+	 * @access public
+	 * @param mixed $hook
+	 * @return void
+	 */
 	public function admin_scripts_styles($hook) {
 		if ($hook!='settings_page_em_custom_login')
 			return false;
@@ -27,6 +46,12 @@ class EMCustomLoginAdmin {
 		wp_enqueue_script('emcl-admin-script',plugins_url('/js/admin.js',__FILE__),array('jquery'));
 	}
 
+	/**
+	 * admin_page function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function admin_page() {
 		$settings=array(
 			'media_buttons' => false,
@@ -49,16 +74,8 @@ class EMCustomLoginAdmin {
 							<th scope="row"><label for="retrieve-password-email">Retrieve Password Email</label></th>
 							<td>
 								<?php wp_editor(stripslashes(get_option('emcl-retrieve-password-email',$this->default_email_content('retrieve_password_email'))),'retrieve_password_email',$settings); ?>
-								<!-- <p class="submit"><input type="button" name="send_retrieve_password_email" id="send_retrieve_password_email" class="button send-demo-email" data-type="retrieve_password_email" value="Send Demo Email"></p> -->
 							</td>
 						</tr>
-						<!--
-						<tr>
-							<th scope="row"><label for="blogdescription">Tagline</label></th>
-							<td><input name="blogdescription" type="text" id="blogdescription" aria-describedby="tagline-description" value="The Ultimate WP Test Site but this Description Needs to be Even longer - what is up with the weird capitalization" class="regular-text">
-							<p class="description" id="tagline-description">In a few words, explain what this site is about.</p></td>
-						</tr>
-						-->
 						<tr>
 							<th scope="row"><label for="require_activation_key">Require Account Activation</label></th>
 							<td>
@@ -117,34 +134,6 @@ class EMCustomLoginAdmin {
 
 		echo $html;
 	}
-
-	/**
-	 * ajax_send_test_emails function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-/*
-	public function ajax_send_test_emails() {
-		$type='';
-
-		if (isset($_POST['type']))
-			$type=$_POST['type'];
-
-		if (!function_exists('retrieve_password'))
-			include_once('/Users/erik/Sites/wordpress/wp-login.php');
-
-		switch ($type) :
-			case 'retrieve_password_email' :
-				retrieve_password(); // wp function
-				break;
-			default:
-				break;
-		endswitch;
-
-		return;
-	}
-*/
 
 	/**
 	 * default_email_content function.
