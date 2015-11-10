@@ -11,11 +11,20 @@ class EMCustomLoginAdmin {
 	public function __construct() {
 		add_action('admin_menu',array($this,'admin_menu'));
 		add_action('admin_notices',array($this,'admin_notices'));
+		add_action('admin_enqueue_scripts',array($this,'admin_scripts_styles'));
 		add_action('init',array($this,'update_admin_settings'));
+		//add_action('wp_ajax_send_test_email',array($this,'ajax_send_test_emails'));
 	}
 
 	public function admin_menu() {
 		add_options_page('EM Custom Login','EM Custom Login','manage_options','em_custom_login',array($this,'admin_page'));
+	}
+
+	public function admin_scripts_styles($hook) {
+		if ($hook!='settings_page_em_custom_login')
+			return false;
+
+		wp_enqueue_script('emcl-admin-script',plugins_url('/js/admin.js',__FILE__),array('jquery'));
 	}
 
 	public function admin_page() {
@@ -40,6 +49,7 @@ class EMCustomLoginAdmin {
 							<th scope="row"><label for="retrieve-password-email">Retrieve Password Email</label></th>
 							<td>
 								<?php wp_editor(stripslashes(get_option('emcl-retrieve-password-email',$this->default_email_content('retrieve_password_email'))),'retrieve_password_email',$settings); ?>
+								<!-- <p class="submit"><input type="button" name="send_retrieve_password_email" id="send_retrieve_password_email" class="button send-demo-email" data-type="retrieve_password_email" value="Send Demo Email"></p> -->
 							</td>
 						</tr>
 						<!--
@@ -69,6 +79,12 @@ class EMCustomLoginAdmin {
 		<?php
 	}
 
+	/**
+	 * update_admin_settings function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function update_admin_settings() {
 		if (isset($_POST['custom_login_admin']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 
@@ -81,6 +97,12 @@ class EMCustomLoginAdmin {
 		endif;
 	}
 
+	/**
+	 * admin_notices function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function admin_notices() {
 		if (empty($this->admin_notices))
 			return;
@@ -94,6 +116,41 @@ class EMCustomLoginAdmin {
 		echo $html;
 	}
 
+	/**
+	 * ajax_send_test_emails function.
+	 *
+	 * @access public
+	 * @return void
+	 */
+/*
+	public function ajax_send_test_emails() {
+		$type='';
+
+		if (isset($_POST['type']))
+			$type=$_POST['type'];
+
+		if (!function_exists('retrieve_password'))
+			include_once('/Users/erik/Sites/wordpress/wp-login.php');
+
+		switch ($type) :
+			case 'retrieve_password_email' :
+				retrieve_password(); // wp function
+				break;
+			default:
+				break;
+		endswitch;
+
+		return;
+	}
+*/
+
+	/**
+	 * default_email_content function.
+	 *
+	 * @access protected
+	 * @param string $slug (default: '')
+	 * @return void
+	 */
 	protected function default_email_content($slug='') {
 		$content='';
 

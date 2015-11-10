@@ -57,7 +57,6 @@ class EMCustomPasswordReset {
 			if (isset($_REQUEST['error']))
 				$this->process_error_codes($_REQUEST['error']);
 
-
 			return emcl_get_template_html('reset-password');
 		else:
 			return __('Invalid password reset link.','dummy');
