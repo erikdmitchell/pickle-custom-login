@@ -44,6 +44,8 @@ class EMCustomLoginAdmin {
 			return false;
 
 		wp_enqueue_script('emcl-admin-script',plugins_url('/js/admin.js',__FILE__),array('jquery'));
+
+		wp_enqueue_style('emcl-admin-style',plugins_url('/css/admin.css',__FILE__));
 	}
 
 	/**
@@ -57,11 +59,13 @@ class EMCustomLoginAdmin {
 			'media_buttons' => false,
 		);
 		$require_activation_key=get_option('emcl-require-activation-key',0);
-		?>
-		<div class="wrap">
-			<h1>EM Custom Login</h1>
+		$require_activation_key_sub_classes='hide-if-js';
 
-			<p>custom emails, add option for activation key</p>
+		if ($require_activation_key)
+			$require_activation_key_sub_classes='';
+		?>
+		<div class="custom-login-admin wrap">
+			<h1>EM Custom Login</h1>
 
 			<form method="post" action="" method="post">
 				<input type="hidden" name="custom_login_admin" value="update">
@@ -71,9 +75,15 @@ class EMCustomLoginAdmin {
 				<table class="form-table">
 					<tbody>
 						<tr>
-							<th scope="row"><label for="retrieve-password-email">Retrieve Password Email</label></th>
+							<th scope="row"><label for="retrieve_password_email">Retrieve Password Email</label></th>
 							<td>
 								<?php wp_editor(stripslashes(get_option('emcl-retrieve-password-email',$this->default_email_content('retrieve_password_email'))),'retrieve_password_email',$settings); ?>
+							</td>
+						</tr>
+						<tr class="hide-if-activation-key">
+							<th scope="row"><label for="account_creation_email">Retrieve Password Email</label></th>
+							<td>
+								<?php wp_editor(stripslashes(get_option('emcl-account-creation-email',$this->default_email_content('account_creation_email'))),'account_creation_email',$settings); ?>
 							</td>
 						</tr>
 						<tr>
@@ -81,6 +91,13 @@ class EMCustomLoginAdmin {
 							<td>
 								<input name="require_activation_key" type="checkbox" id="require_activation_key" value="1" <?php checked($require_activation_key,1); ?>>
 								<p class="description" id="rquire-activation-key-description">If checked, users would receive an email to activate their account before they can login.</p></td>
+							</td>
+						</tr>
+						<tr class="require_activation_key_sub <?php echo $require_activation_key_sub_classes; ?>">
+							<th scope="row"><label for="account_activation_email">Account Creation Email</label></th>
+							<td>
+								<?php wp_editor(stripslashes(get_option('emcl-account-activation-email',$this->default_email_content('account_activation_email'))),'account_activation_email',$settings); ?>
+								<p class="description">When "Require Account Activation" is active.</p>
 							</td>
 						</tr>
 					</tbody>
@@ -146,15 +163,29 @@ class EMCustomLoginAdmin {
 		$content='';
 
 		switch ($slug) :
-			case 'retrieve_password_email' :
+			case 'retrieve_password_email':
 				$content.="Hello!\r\n\r\n";
-				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n"; // $user_login
+				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n";
 				$content.="If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.\r\n\r\n";
 				$content.="To reset your password, visit the following address:\r\n\r\n";
 				$content.="{password_reset}\r\n\r\n";
-				//$contet.=site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login')."\r\n\r\n";
 				$content.="Thanks!\r\n\r\n";
 				break;
+			case 'account_activation_email':
+				$content="Username: {username}\r\n\r\n";
+				$content.="To activate your account, visit the following address:\r\n\r\n";
+				$content.="{activate_account_link}\r\n\r\n";
+			  $content.="If you have any problems, please contact us at {admin_email}\r\n\r\n";
+				$content.="Cheers!\r\n\r\n";
+				break;
+			case 'account_creation_email':
+				$content="Username: {username}\r\n\r\n";
+				$content.="To set your password, visit the following address:\r\n\r\n";
+				$content.="{set_password_link}\r\n\r\n";
+				$content.="Or, login here:\r\n\r\n";
+				$content.="{login_url}\r\n\r\n";
+			  $content.="If you have any problems, please contact us at {admin_email}\r\n\r\n";
+				$content.="Cheers!\r\n\r\n";
 			default:
 				break;
 		endswitch;

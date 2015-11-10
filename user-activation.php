@@ -6,14 +6,32 @@
  */
 class EMCustomLoginUserActivation {
 
+	/**
+	 * __construct function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		add_shortcode('emcl-user-activation',array($this,'user_activation_form'));
 	}
 
+	/**
+	 * user_activation_form function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function user_activation_form() {
 		return emcl_get_template_html('user-activation-form');
 	}
 
+	/**
+	 * activate_user function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function activate_user() {
 		global $wpdb;
 
@@ -30,6 +48,13 @@ class EMCustomLoginUserActivation {
 		return false;
 	}
 
+	/**
+	 * is_user_authenticated function.
+	 *
+	 * @access public
+	 * @param mixed $user
+	 * @return void
+	 */
 	public function is_user_authenticated($user) {
 		if (!$user || is_wp_error($user))
 			return false;
@@ -42,5 +67,5 @@ class EMCustomLoginUserActivation {
 
 }
 
-$EMCustomLoginUserActivation=new EMCustomLoginUserActivation();
+new EMCustomLoginUserActivation();
 ?>
