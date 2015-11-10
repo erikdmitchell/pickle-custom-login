@@ -73,6 +73,20 @@ function emcl_show_error_messages() {
 }
 
 /**
+ * emcl_format_error_message function.
+ *
+ * @access public
+ * @param string $message (default: '')
+ * @param string $type (default: '')
+ * @return void
+ */
+function emcl_format_error_message($message='',$type='') {
+	global $custom_login_errors;
+
+	return $custom_login_errors->format_error($message,$type);
+}
+
+/**
  * emcl_login_extras function.
  *
  * @access public
