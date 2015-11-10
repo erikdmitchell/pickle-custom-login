@@ -23,35 +23,103 @@ function emcl_get_custom_email_message($type=false,$original_message='',$key='',
 		return false;
 
 	switch ($type) :
-		case ('password_reset'):
+		case 'password_reset':
 			$message=emcl_password_reset_email($original_message,$key,$user->user_login);
+			break;
+		case 'account_creation_activation_required':
+			$message=emcl_account_creation_activation_email($original_message,$key,$user->user_login);
+			break;
+		case 'account_creation':
+			$message=emcl_account_creation_email($original_message,$key,$user->user_login);
 			break;
 		default:
 			break;
 	endswitch;
-echo $message;
-exit;
 
 	return $message;
 }
 
+/**
+ * emcl_password_reset_email function.
+ *
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
 function emcl_password_reset_email($message,$key,$user_login) {
-		//$password_reset_link=;
-		$custom_message=$message;
+	$custom_message=$message;
 
-		// check if custom message exists //
-		if ($custom_message=get_option('emcl-retrieve-password-email')) :
-			$custom_message=stripslashes($custom_message); // clean from db
-			$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
-		endif;
+	// check if custom message exists //
+	if ($custom_message=get_option('emcl-retrieve-password-email')) :
+		$custom_message=stripslashes($custom_message); // clean from db
+		$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+	endif;
 
-		return $custom_message;
+	return $custom_message;
 }
 
+/**
+ * emcl_account_creation_activation_email function.
+ *
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
+function emcl_account_creation_activation_email($message,$key,$user_login) {
+	$custom_message=$message;
+
+	// check if custom message exists //
+	if ($custom_message=get_option('emcl-account-activation-email')) :
+		$custom_message=stripslashes($custom_message); // clean from db
+		$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+	endif;
+
+	return $custom_message;
+}
+
+/**
+ * emcl_account_creation_email function.
+ *
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
+function emcl_account_creation_email($message,$key,$user_login) {
+	$custom_message=$message;
+
+	// check if custom message exists //
+	if ($custom_message=get_option('emcl-account-creation-email')) :
+		$custom_message=stripslashes($custom_message); // clean from db
+		$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+	endif;
+
+	return $custom_message;
+}
+
+/**
+ * emcl_clean_up_placeholders function.
+ *
+ * @access public
+ * @param string $message (default: '')
+ * @param string $user_login (default: '')
+ * @param string $key (default: '')
+ * @return void
+ */
 function emcl_clean_up_placeholders($message='',$user_login='',$key='') {
 	$placeholders=array(
 		'{user_login}' => $user_login,
 		'{password_reset_link}' => site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
+		'{username}' => $user_login,
+		'{activate_account_link}' => home_url("/activate-account/?key=$key&user_login=$user_login"),
+		'{admin_email_link}' => get_option('admin_email'),
+		'{set_password_link}' => network_site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
+		'{login_url}' => wp_login_url(),
 	);
 
 	$message=strtr($message,$placeholders);
@@ -112,6 +180,8 @@ function emcl_user_activation_email($user_id,$notify='') {
 	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
+		$message=emcl_get_custom_email_message('account_creation_activation_required',$message,$hashed,$user->user_login);
+
 		add_user_meta($user_id,'has_to_be_activated',$hashed,true);
 		// send notice to reg //
 	else:
@@ -122,6 +192,8 @@ function emcl_user_activation_email($user_id,$notify='') {
 		$message .= wp_login_url() . "\r\n\r\n";
 	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
+
+		$message=emcl_get_custom_email_message('account_creation',$message,$key,$user->user_login);
 	endif;
 
 	wp_mail($user->user_email, sprintf(__('[%s] Your username and password info'), $blogname), $message);

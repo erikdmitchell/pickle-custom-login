@@ -129,6 +129,14 @@ class EMCustomLoginAdmin {
 				delete_option('emcl-require-activation-key');
 			endif;
 
+			// update account creation email //
+			if (isset($_POST['account_creation_email']) && $_POST['account_creation_email']!='')
+				update_option('emcl-account-creation-email',wp_kses_post($_POST['account_creation_email']));
+
+			// update account activation email //
+			if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
+				update_option('emcl-account-activation-email',wp_kses_post($_POST['account_activation_email']));
+
 			$this->admin_notices['updated']='Settings Updated!';
 		endif;
 	}
@@ -175,7 +183,7 @@ class EMCustomLoginAdmin {
 				$content="Username: {username}\r\n\r\n";
 				$content.="To activate your account, visit the following address:\r\n\r\n";
 				$content.="{activate_account_link}\r\n\r\n";
-			  $content.="If you have any problems, please contact us at {admin_email}\r\n\r\n";
+			  $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";
 				break;
 			case 'account_creation_email':
@@ -184,7 +192,7 @@ class EMCustomLoginAdmin {
 				$content.="{set_password_link}\r\n\r\n";
 				$content.="Or, login here:\r\n\r\n";
 				$content.="{login_url}\r\n\r\n";
-			  $content.="If you have any problems, please contact us at {admin_email}\r\n\r\n";
+			  $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";
 			default:
 				break;
