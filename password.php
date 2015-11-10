@@ -1,4 +1,9 @@
 <?php
+/**
+ * EMCustomPasswordReset class.
+ *
+ * @since 0.1.0
+ */
 class EMCustomPasswordReset {
 
 	/**
@@ -38,6 +43,12 @@ class EMCustomPasswordReset {
 		return emcl_get_template_html('forgot-password');
 	}
 
+	/**
+	 * password_reset_form function.
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function password_reset_form() {
 		if (is_user_logged_in())
 			return __('You are already signed in.','dummy');
@@ -160,14 +171,18 @@ class EMCustomPasswordReset {
 	 * @return void
 	 */
 	public function replace_retrieve_password_message($message,$key,$user_login,$user_data) {
-		$msg= __( 'Hello!', 'dummy' ) . "\r\n\r\n";
-		$msg.= sprintf( __( 'You asked us to reset your password for your account using the email address %s.', 'dummy' ), $user_login ) . "\r\n\r\n";
-		$msg.= __( "If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.", 'dummy' ) . "\r\n\r\n";
-		$msg.= __( 'To reset your password, visit the following address:', 'dummy' ) . "\r\n\r\n";
-		$msg.= site_url( "wp-login.php?action=rp&key=$key&login=" . rawurlencode( $user_login ), 'login' ) . "\r\n\r\n";
-		$msg.= __( 'Thanks!', 'dummy' ) . "\r\n";
+		$password_reset_link=site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login');
 
-		return $msg;
+		// check if custom message exists //
+		if ($custom_message=get_option('emcl-retrieve-password-email')) :
+			$custom_message=stripslashes($custom_message); // clean from db
+			$custom_message=str_replace('{user_login}',$user_login,$custom_message);
+			$custom_message=str_replace('{password_reset_link}',$password_reset_link,$custom_message);
+
+			$message=$custom_message;
+		endif;
+
+		return $custom_message;
 	}
 
 	/**
@@ -257,7 +272,6 @@ class EMCustomPasswordReset {
 
 			exit;
 		endif;
-exit;
 	}
 
 }
