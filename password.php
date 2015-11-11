@@ -113,7 +113,7 @@ class EMCustomPasswordReset {
 				$redirect_url=add_query_arg('errors',join(',',$errors->get_error_codes()),$redirect_url);
 			else :
 				// Email sent
-				$redirect_url=home_url('login');
+				$redirect_url=home_url(emcl_page_slug('login'));
 				$redirect_url=add_query_arg('checkemail','confirm',$redirect_url);
 			endif;
 
@@ -187,14 +187,14 @@ class EMCustomPasswordReset {
 
 			if ( ! $user || is_wp_error( $user ) ) :
 				if ( $user && $user->get_error_code() === 'expired_key' ) :
-					wp_redirect(home_url('/reset-password?login=expiredkey'));
+					wp_redirect(home_url('/'.emcl_page_slug('reset').'?login=expiredkey'));
 				else:
-					wp_redirect(home_url('/reset-password?login=invalidkey'));
+					wp_redirect(home_url('/'.emcl_page_slug('reset').'?login=invalidkey'));
 				endif;
 				exit;
 			endif;
 
-			$redirect_url=home_url('reset-password');
+			$redirect_url=home_url(emcl_page_slug('reset'));
 			$redirect_url=add_query_arg('login',esc_attr($_REQUEST['login']),$redirect_url);
 			$redirect_url=add_query_arg('key',esc_attr($_REQUEST['key']),$redirect_url);
 
@@ -220,9 +220,9 @@ class EMCustomPasswordReset {
 
 			if (!$user || is_wp_error($user)) :
 				if ($user && $user->get_error_code()==='expired_key') :
-					wp_redirect(home_url('/reset-password?login=expiredkey'));
+					wp_redirect(home_url('/'.emcl_page_slug('reset').'?login=expiredkey'));
 				else :
-					wp_redirect(home_url('/reset-password?login=invalidkey'));
+					wp_redirect(home_url('/'.emcl_page_slug('reset').'?login=invalidkey'));
 				endif;
 
 				exit;
@@ -231,7 +231,7 @@ class EMCustomPasswordReset {
 			if ( isset( $_POST['pass1'] ) ) :
 				if ( $_POST['pass1'] != $_POST['pass2'] ) {
 					// Passwords don't match
-					$redirect_url = home_url('/reset-password/');
+					$redirect_url = home_url(emcl_page_slug('reset'));
 					$redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
 					$redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
 					$redirect_url = add_query_arg( 'error', 'password_reset_mismatch', $redirect_url );
@@ -242,7 +242,7 @@ class EMCustomPasswordReset {
 
 				if (empty($_POST['pass1'])) {
 					// Password is empty
-					$redirect_url=home_url('/reset-password/');
+					$redirect_url=home_url(emcl_page_slug('reset'));
 					$redirect_url = add_query_arg( 'key', $rp_key, $redirect_url );
 					$redirect_url = add_query_arg( 'login', $rp_login, $redirect_url );
 					$redirect_url = add_query_arg( 'error', 'password_reset_empty', $redirect_url );
@@ -253,7 +253,7 @@ class EMCustomPasswordReset {
 
 				// Parameter checks OK, reset password
 				reset_password( $user, $_POST['pass1'] );
-				wp_redirect( home_url( 'login?password=changed' ) );
+				wp_redirect( home_url( emcl_page_slug('login').'?password=changed' ) );
 			else :
 				echo "Invalid request.";
 			endif;

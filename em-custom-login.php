@@ -24,7 +24,6 @@ include_once(plugin_dir_path(__FILE__).'emails.php');
  * @since 0.1.0
  */
 class EMCustomLogin {
-
 	/**
 	 * __construct function.
 	 *

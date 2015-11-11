@@ -96,7 +96,7 @@ class EMLogin {
 	 * @return void
 	 */
 	public function redirect_login_page() {
-		$login_page =home_url('/login/');
+		$login_page =home_url(emcl_page_slug('login'));
 		$page_viewed=basename($_SERVER['REQUEST_URI']);
 
 		if ($page_viewed == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') :
@@ -114,7 +114,7 @@ class EMLogin {
 	 * @return void
 	 */
 	public function login_failed() {
-		$login_page=home_url('/login/');
+		$login_page=home_url(emcl_page_slug('login'));
 		wp_redirect($login_page.'?login=failed');
 		exit;
 	}
@@ -128,7 +128,7 @@ class EMLogin {
 	 * @return void
 	 */
 	public function logout_page() {
-		$login_page=home_url('/login/');
+		$login_page=home_url(emcl_page_slug('login'));
 		wp_redirect($login_page."?login=false");
 		exit;
 	}
@@ -145,7 +145,7 @@ class EMLogin {
 	 * @return void
 	 */
 	public function verify_username_password( $user, $username, $password ) {
-	    $login_page  = home_url( '/login/' );
+	    $login_page=home_url(emcl_page_slug('login'));
 	    if( $username == "" || $password == "" ) {
 	        wp_redirect( $login_page . "?login=empty" );
 	        exit;

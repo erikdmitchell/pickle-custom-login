@@ -19,7 +19,6 @@ class EMCustomLoginAdmin {
 		add_action('admin_notices',array($this,'admin_notices'));
 		add_action('admin_enqueue_scripts',array($this,'admin_scripts_styles'));
 		add_action('init',array($this,'update_admin_settings'));
-		//add_action('wp_ajax_send_test_email',array($this,'ajax_send_test_emails'));
 	}
 
 	/**

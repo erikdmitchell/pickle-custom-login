@@ -194,4 +194,29 @@ function emcl_logged_in_links($args=array()) {
 
 	echo $html;
 }
+
+/**
+ * emcl_get_pages function.
+ *
+ * @access public
+ * @return void
+ */
+function emcl_page_slug($page_type='') {
+	$default_pages=array(
+		'login' => 'login',
+		'register' => 'register',
+		'forgot-password' => 'forgot-password',
+		'reset' => 'reset-password',
+		'activate' => 'activate-account',
+	);
+	$pages=get_option('emcl-pages',$default_pages); // for potential user (admin) override
+
+	if (isset($pages[$page_type])) :
+		$slug=$pages[$page_type];
+	else :
+		$slug='';
+	endif;
+
+	return $slug;
+}
 ?>
