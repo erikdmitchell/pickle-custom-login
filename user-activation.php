@@ -46,7 +46,7 @@ class EMCustomLoginUserActivation {
 		if ($user_id) :
 			$code=get_user_meta($user_id,'has_to_be_activated',true);
 			if ($code==$_GET['key']) :
-				delete_user_meta( $user_id,'has_to_be_activated');
+				delete_user_meta($user_id,'has_to_be_activated');
 				return true;
 			endif;
 		endif;

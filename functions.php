@@ -138,6 +138,16 @@ function emcl_is_activation_required() {
 	return false;
 }
 
+function emcl_is_user_authenticated($user_id=0) {
+	if (!$user_id)
+		return false;
+echo $user_id;
+	if (get_user_meta($user_id,'has_to_be_activated',true))
+		return false;
+
+	return true;
+}
+
 /**
  * emcl_activate_user function.
  *
@@ -150,6 +160,13 @@ function emcl_activate_user() {
 	return $EMCustomLoginUserActivation->activate_user();
 }
 
+/**
+ * emcl_logged_in_links function.
+ *
+ * @access public
+ * @param array $args (default: array())
+ * @return void
+ */
 function emcl_logged_in_links($args=array()) {
 	$html=null;
 	$default_args=array(

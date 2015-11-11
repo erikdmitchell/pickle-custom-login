@@ -66,6 +66,10 @@ class EMLogin {
 			if (!isset($user->user_pass) || !wp_check_password($_POST['custom_user_pass'], $user->user_pass, $user->ID))
 				emcl_add_error_message('empty_password','Incorrect password');
 
+			// check if activation is required and if so, user is active //
+			if (isset($user->ID) && emcl_is_activation_required() && !emcl_is_user_authenticated($user->ID))
+				emcl_add_error_message('not_activated','You must activate your account before logging in.');
+
 			// only log the user in if there are no errors
 			if (!emcl_has_error_messages()) {
 				wp_setcookie($_POST['custom_user_login'], $_POST['custom_user_pass'], true);
