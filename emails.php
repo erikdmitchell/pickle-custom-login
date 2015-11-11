@@ -116,7 +116,7 @@ function emcl_clean_up_placeholders($message='',$user_login='',$key='') {
 		'{user_login}' => $user_login,
 		'{password_reset_link}' => site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
 		'{username}' => $user_login,
-		'{activate_account_link}' => home_url("/".emcl_page_slug('activate')."/?key=$key&user_login=$user_login"),
+		'{activate_account_link}' => home_url("/".emcl_page_slug('activate-account')."/?key=$key&user_login=$user_login"),
 		'{admin_email_link}' => get_option('admin_email'),
 		'{set_password_link}' => network_site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
 		'{login_url}' => wp_login_url(),
@@ -174,7 +174,7 @@ function emcl_user_activation_email($user_id,$notify='') {
 	if (emcl_is_activation_required()) :
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";
-		$message .= '<' . home_url("/".emcl_page_slug('activate')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
+		$message .= '<' . home_url("/".emcl_page_slug('activate-account')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
 	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 

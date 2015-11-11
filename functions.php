@@ -202,17 +202,13 @@ function emcl_logged_in_links($args=array()) {
  * @return void
  */
 function emcl_page_slug($page_type='') {
-	$default_pages=array(
-		'login' => 'login',
-		'register' => 'register',
-		'forgot-password' => 'forgot-password',
-		'reset' => 'reset-password',
-		'activate' => 'activate-account',
-	);
-	$pages=get_option('emcl-pages',$default_pages); // for potential user (admin) override
+	global $EMCustomLoginAdmin;
+
+	$pages=get_option('emcl-pages');
 
 	if (isset($pages[$page_type])) :
-		$slug=$pages[$page_type];
+		$post=get_post($pages[$page_type]);
+		$slug=$post->post_name;
 	else :
 		$slug='';
 	endif;

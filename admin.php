@@ -7,6 +7,7 @@
 class EMCustomLoginAdmin {
 
 	protected $admin_notices=array();
+	//public $default_pages=array();
 
 	/**
 	 * __construct function.
@@ -19,6 +20,16 @@ class EMCustomLoginAdmin {
 		add_action('admin_notices',array($this,'admin_notices'));
 		add_action('admin_enqueue_scripts',array($this,'admin_scripts_styles'));
 		add_action('init',array($this,'update_admin_settings'));
+
+/*
+		$this->default_pages=array(
+			'login' => 'login',
+			'register' => 'register',
+			'forgot-password' => 'forgot-password',
+			'reset-password' => 'reset-password',
+			'activate-account' => 'activate-account',
+		);
+*/
 	}
 
 	/**
@@ -54,6 +65,7 @@ class EMCustomLoginAdmin {
 	 * @return void
 	 */
 	public function admin_page() {
+		$pages=get_option('emcl-pages');
 		$settings=array(
 			'media_buttons' => false,
 		);
@@ -71,7 +83,51 @@ class EMCustomLoginAdmin {
 				<input type="hidden" name="custom_login_nonce" value="<?php echo wp_create_nonce('custom-login-nonce'); ?>" />
 				<?php wp_referer_field(); ?>
 
-				<table class="form-table">
+				<h3 class="title">Pages</h3>
+
+				<table class="form-table pages">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="login_page">Login Page</label></th>
+							<td>
+								<?php wp_dropdown_pages(array("name" => "login_page", "show_option_none" => "-- " . __('Choose One', 'dummy') . " --", "selected" => $pages['login'])); ?>
+								<p class="description"><?php _e('Include the shortcode','dummy'); ?> [emcl-login-form]</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="register_page">Registration Page</label></th>
+							<td>
+								<?php wp_dropdown_pages(array("name" => "register_page", "show_option_none" => "-- " . __('Choose One', 'dummy') . " --", "selected" => $pages['register'])); ?>
+								<p class="description"><?php _e('Include the shortcode','dummy'); ?> [emcl-registration-form]</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="forgot_password_page">Forgot Password Page</label></th>
+							<td>
+								<?php wp_dropdown_pages(array("name" => "forgot_password_page", "show_option_none" => "-- " . __('Choose One', 'dummy') . " --", "selected" => $pages['forgot-password'])); ?>
+								<p class="description"><?php _e('Include the shortcode','dummy'); ?> [emcl-forgot-password-form]</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="reset_page">Reset Password Page</label></th>
+							<td>
+								<?php wp_dropdown_pages(array("name" => "reset_page", "show_option_none" => "-- " . __('Choose One', 'dummy') . " --", "selected" => $pages['reset-password'])); ?>
+								<p class="description"><?php _e('Include the shortcode','dummy'); ?> [emcl-reset-password-form]</p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="activate_page">Activation Page</label></th>
+							<td>
+								<?php wp_dropdown_pages(array("name" => "activate_page", "show_option_none" => "-- " . __('Choose One', 'dummy') . " --", "selected" => $pages['activate-account'])); ?>
+								<p class="description"><?php _e('Include the shortcode','dummy'); ?> [emcl-user-activation]</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3 class="title">Customize Emails</h3>
+
+				<table class="form-table customize-emails">
 					<tbody>
 						<tr>
 							<th scope="row"><label for="retrieve_password_email">Retrieve Password Email</label></th>
@@ -116,6 +172,15 @@ class EMCustomLoginAdmin {
 	 */
 	public function update_admin_settings() {
 		if (isset($_POST['custom_login_admin']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
+			// update pages //
+			$pages=get_option('emcl-pages');
+			$pages['login']=$_POST['login_page'];
+			$pages['register']=$_POST['register_page'];
+			$pages['forgot-password']=$_POST['forgot_password_page'];
+			$pages['reset-password']=$_POST['reset_page'];
+			$pages['activate-account']=$_POST['activate_page'];
+
+			update_option('emcl-pages',$pages);
 
 			// update retrieve password email //
 			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')

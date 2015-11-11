@@ -48,6 +48,7 @@ class EMCustomLogin {
 	 * @return void
 	 */
 	public static function plugin_activated() {
+		$pages_arr=array();
 		// Information needed for creating the plugin's pages
 		$page_definitions = array(
 			'login' => array(
@@ -78,7 +79,7 @@ class EMCustomLogin {
 
 			if (!$query->have_posts()) :
 				// Add the page using the data from the array above
-				wp_insert_post(
+				$post_id=wp_insert_post(
 					array(
 						'post_content'   => $page['content'],
 						'post_name'      => $slug,
@@ -89,8 +90,16 @@ class EMCustomLogin {
 						'comment_status' => 'closed',
 					)
 				);
+			else :
+				$post_id=$query->queried_object_id;
 			endif;
+
+			$pages_arr[$slug]=$post_id;
 		endforeach;
+
+		// if this plugin existed before, keep their settings //
+		if (!get_option('emcl-pages'))
+			update_option('emcl-pages',$pages_arr);
 	}
 
 }
