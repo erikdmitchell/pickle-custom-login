@@ -1,8 +1,8 @@
-=== Plugin Name ===
+=== EM Custom Login ===
 Contributors: erikdmitchell
 Donate link: erikdmitchell@gmail.com
-Tags: custom login, login, register, password
-Requires at least: 3.0.1
+Tags: custom login, login, register, password, admin, customization, error, login error
+Requires at least: 4.0
 Tested up to: 4.3.1
 Stable tag: 4.3.1
 License: GPLv2 or later
@@ -39,9 +39,19 @@ No. However, we will allow a custom override in the near future.
 
 == Screenshots ==
 
+1. The (admin) settings panel.
+
+More soon.
+
+== Hooks and Filters ==
+
 Coming soon.
 
 == Changelog ==
 
 = 0.1.0 =
 * Initial version.
+
+== Upgrade Notice ==
+
+None yet.
