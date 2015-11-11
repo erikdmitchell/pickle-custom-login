@@ -26,7 +26,8 @@ In addition, an admin section allows users to perform various tasks such as cust
 
 = Do I need to use the built in pages?  =
 
-Yes, while we do utilize shortcodes to generate our forms, we do use some hard coded slugs for our password forms and functions. 
+No. The plugin automatically creates pages for you, but in the settings area, you can use custom pages. 
+Each page needs a specific shortcode, which is provided below the option to change page.
 
 = What shortcodes should I use? =
 
@@ -44,24 +45,3 @@ Coming soon.
 
 = 0.1.0 =
 * Initial version.
-
-== Upgrade Notice ==
-
-= 0.1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
