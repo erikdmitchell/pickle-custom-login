@@ -23,6 +23,9 @@ class EMCustomLoginUserActivation {
 	 * @return void
 	 */
 	public function user_activation_form() {
+		if (is_user_logged_in())
+			return emcl_get_template_html('logged-in');
+
 		return emcl_get_template_html('user-activation-form');
 	}
 
@@ -34,6 +37,9 @@ class EMCustomLoginUserActivation {
 	 */
 	public function activate_user() {
 		global $wpdb;
+
+		if (!isset($_GET['user_login']) || !isset($_GET['key']))
+			return false;
 
 		$user_id=$wpdb->get_var("SELECT ID FROM $wpdb->users WHERE user_login='{$_GET['user_login']}' AND  user_activation_key='{$_GET['key']}'");
 
@@ -67,5 +73,5 @@ class EMCustomLoginUserActivation {
 
 }
 
-new EMCustomLoginUserActivation();
+$EMCustomLoginUserActivation=new EMCustomLoginUserActivation();
 ?>

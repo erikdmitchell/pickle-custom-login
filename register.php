@@ -29,6 +29,9 @@ class EMCustomRegistration {
 	 * @return void
 	 */
 	public function registration_form() {
+		if (is_user_logged_in())
+			return emcl_get_template_html('logged-in');
+
 		if ($this->registration_success_notice)
 			echo emcl_format_error_message('','Please check your email to activate your account.','success');
 

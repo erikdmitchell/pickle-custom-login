@@ -31,6 +31,9 @@ class EMLogin {
 	 * @return void
 	 */
 	public function login_form() {
+		if (is_user_logged_in())
+			return emcl_get_template_html('logged-in');
+
 		if (isset($_GET['checkemail']) && $_GET['checkemail']=='confirm')
 			echo emcl_format_error_message('','An email has been set to the address provided with instructions on how to reset your password.','success');
 

@@ -138,9 +138,36 @@ function emcl_is_activation_required() {
 	return false;
 }
 
+/**
+ * emcl_activate_user function.
+ *
+ * @access public
+ * @return void
+ */
 function emcl_activate_user() {
 	global $EMCustomLoginUserActivation;
 
 	return $EMCustomLoginUserActivation->activate_user();
+}
+
+function emcl_logged_in_links($args=array()) {
+	$html=null;
+	$default_args=array(
+		'edit_profile' => true,
+		'logout' => true,
+	);
+	$args=array_merge($default_args,$args);
+
+	extract($args);
+
+	$html.='<ul class="loggedin-extras">';
+		if ($edit_profile)
+			$html.='<li class="edit-profile"><a href="'.get_edit_user_link().'">Edit Profile</a></li>';
+
+		if ($logout)
+			$html.='<li class="logout"><a href="'.wp_logout_url().'">Log Out</a></li>';
+	$html.='</ul>';
+
+	echo $html;
 }
 ?>
