@@ -138,10 +138,17 @@ function emcl_is_activation_required() {
 	return false;
 }
 
+/**
+ * emcl_is_user_authenticated function.
+ *
+ * @access public
+ * @param int $user_id (default: 0)
+ * @return void
+ */
 function emcl_is_user_authenticated($user_id=0) {
 	if (!$user_id)
 		return false;
-echo $user_id;
+
 	if (get_user_meta($user_id,'has_to_be_activated',true))
 		return false;
 
