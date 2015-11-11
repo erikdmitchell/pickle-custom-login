@@ -32,7 +32,11 @@ class EMCustomLogin {
 	 * @return void
 	 */
 	public function __construct() {
+		add_action('wp_enqueue_scripts',array($this,'scripts_styles'));
+	}
 
+	public function scripts_styles() {
+		wp_enqueue_style('emcl-style',plugins_url('/css/style.css',__FILE__));
 	}
 
 	/**
@@ -91,6 +95,8 @@ class EMCustomLogin {
 	}
 
 }
+
+new EMCustomLogin();
 
 // Create the custom pages at plugin activation //
 register_activation_hook( __FILE__,array('EMCustomLogin','plugin_activated'));
