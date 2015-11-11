@@ -50,6 +50,8 @@ class EMLogin {
 	 * @return void
 	 */
 	public function login_member() {
+		$redirect=home_url();
+
 		if (isset($_POST['custom_user_login']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 			// this returns the user ID and other info from the user name
 			$user=get_user_by('login',$_POST['custom_user_login']);
@@ -76,7 +78,10 @@ class EMLogin {
 				wp_set_current_user($user->ID, $_POST['custom_user_login']);
 				do_action('wp_login', $_POST['custom_user_login']);
 
-				wp_redirect(home_url());
+				if (current_user_can('administrator'))
+					$redirect=admin_url();
+
+				wp_redirect($redirect);
 				exit;
 			}
 		endif;
