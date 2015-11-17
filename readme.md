@@ -52,6 +52,7 @@ Coming soon.
 = 0.1.1 =
 
 * Created a new workflow that sets login functions to the WordPress default if there's no set page.
+* Added ability to give users a specific page after login (set in admin panel).
 
 = 0.1.0 =
 
