@@ -20,16 +20,7 @@ class EMCustomLoginAdmin {
 		add_action('admin_notices',array($this,'admin_notices'));
 		add_action('admin_enqueue_scripts',array($this,'admin_scripts_styles'));
 		add_action('init',array($this,'update_admin_settings'));
-
-/*
-		$this->default_pages=array(
-			'login' => 'login',
-			'register' => 'register',
-			'forgot-password' => 'forgot-password',
-			'reset-password' => 'reset-password',
-			'activate-account' => 'activate-account',
-		);
-*/
+		add_action('wp_trash_post',array($this,'check_emcl_pages_on_trash'));
 	}
 
 	/**
@@ -263,6 +254,26 @@ class EMCustomLoginAdmin {
 		endswitch;
 
 		return $content;
+	}
+
+	/**
+	 * check_emcl_pages_on_trash function.
+	 *
+	 * if a user trashes one of our set pages, we need to remove the id from our settings (option)
+	 *
+	 * @access public
+	 * @param mixed $post_id
+	 * @return void
+	 */
+	public function check_emcl_pages_on_trash($post_id) {
+		$pages=get_option('emcl-pages');
+
+		foreach ($pages as $slug => $id) :
+			if ($post_id==$id)
+				$pages[$slug]=null;
+		endforeach;
+
+		update_option('emcl-pages',$pages);
 	}
 
 }

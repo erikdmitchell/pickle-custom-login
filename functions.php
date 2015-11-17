@@ -210,7 +210,7 @@ function emcl_page_slug($page_type='') {
 		$post=get_post($pages[$page_type]);
 		$slug=$post->post_name;
 	else :
-		$slug='';
+		$slug=false;
 	endif;
 
 	return $slug;

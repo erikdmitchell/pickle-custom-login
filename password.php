@@ -113,7 +113,12 @@ class EMCustomPasswordReset {
 				$redirect_url=add_query_arg('errors',join(',',$errors->get_error_codes()),$redirect_url);
 			else :
 				// Email sent
-				$redirect_url=home_url(emcl_page_slug('login'));
+				if ($slug=emcl_page_slug('login')) :
+					$redirect_url=home_url($slug);
+				else :
+					$redirect_url=wp_login_url();
+				endif;
+
 				$redirect_url=add_query_arg('checkemail','confirm',$redirect_url);
 			endif;
 
@@ -252,8 +257,15 @@ class EMCustomPasswordReset {
 				}
 
 				// Parameter checks OK, reset password
-				reset_password( $user, $_POST['pass1'] );
-				wp_redirect( home_url( emcl_page_slug('login').'?password=changed' ) );
+				reset_password($user,$_POST['pass1']);
+
+				$slug=emcl_page_slug('login');
+
+				if ($slug) :
+					wp_redirect(home_url($slug.'?password=changed'));
+				else :
+					wp_redirect(wp_login_url().'?password=changed');
+				endif;
 			else :
 				echo "Invalid request.";
 			endif;

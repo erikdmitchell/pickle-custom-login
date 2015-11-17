@@ -96,12 +96,16 @@ class EMLogin {
 	 * @return void
 	 */
 	public function redirect_login_page() {
-		$login_page =home_url(emcl_page_slug('login'));
+		$slug=emcl_page_slug('login');
 		$page_viewed=basename($_SERVER['REQUEST_URI']);
 
-		if ($page_viewed == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') :
-			wp_redirect($login_page);
-			exit;
+		if ($slug) :
+			$login_page=home_url($slug);
+
+			if ($page_viewed == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') :
+				wp_redirect($login_page);
+				exit;
+			endif;
 		endif;
 	}
 
@@ -114,9 +118,14 @@ class EMLogin {
 	 * @return void
 	 */
 	public function login_failed() {
-		$login_page=home_url(emcl_page_slug('login'));
-		wp_redirect($login_page.'?login=failed');
-		exit;
+		$slug=emcl_page_slug('login');
+
+		if ($slug) :
+			$login_page=home_url($slug);
+
+			wp_redirect($login_page.'?login=failed');
+			exit;
+		endif;
 	}
 
 	/**
@@ -128,9 +137,14 @@ class EMLogin {
 	 * @return void
 	 */
 	public function logout_page() {
-		$login_page=home_url(emcl_page_slug('login'));
-		wp_redirect($login_page."?login=false");
-		exit;
+		$slug=emcl_page_slug('login');
+
+		if ($slug) :
+			$login_page=home_url($slug);
+
+			wp_redirect($login_page.'?login=false');
+			exit;
+		endif;
 	}
 
 	/**
@@ -145,11 +159,16 @@ class EMLogin {
 	 * @return void
 	 */
 	public function verify_username_password( $user, $username, $password ) {
-	    $login_page=home_url(emcl_page_slug('login'));
-	    if( $username == "" || $password == "" ) {
-	        wp_redirect( $login_page . "?login=empty" );
-	        exit;
-	    }
+		$slug=emcl_page_slug('login');
+
+		if ($slug) :
+			$login_page=home_url($slug);
+
+			if ($username == "" || $password == "") :
+	      wp_redirect($login_page."?login=empty");
+	      exit;
+	    endif;
+		endif;
 	}
 
 }
