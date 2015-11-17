@@ -51,8 +51,10 @@ Coming soon.
 
 = 0.1.1 =
 
+* Created a new workflow that sets login functions to the WordPress default if there's no set page.
 
 = 0.1.0 =
+
 * Initial version.
 
 == Upgrade Notice ==

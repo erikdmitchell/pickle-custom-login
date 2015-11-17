@@ -116,6 +116,19 @@ class EMCustomLoginAdmin {
 					</tbody>
 				</table>
 
+				<h3 class="title">Redirects</h3>
+
+				<table class="form-table redirects">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="login_page">Redirect Users</label></th>
+							<td>
+								<input name="redirect_users" type="url" id="redirect_users" value="<?php echo get_option('emcl-login-redirect',home_url()); ?>" class="regular-text code">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
 				<h3 class="title">Customize Emails</h3>
 
 				<table class="form-table customize-emails">
@@ -172,6 +185,10 @@ class EMCustomLoginAdmin {
 			$pages['activate-account']=$_POST['activate_page'];
 
 			update_option('emcl-pages',$pages);
+
+			// update redirects //
+			if ($_POST['redirect_users']!='')
+				update_option('emcl-login-redirect',$_POST['redirect_users']);
 
 			// update retrieve password email //
 			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')

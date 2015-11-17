@@ -50,7 +50,7 @@ class EMLogin {
 	 * @return void
 	 */
 	public function login_member() {
-		$redirect=home_url();
+		$redirect=get_option('emcl-login-redirect',home_url());
 
 		if (isset($_POST['custom_user_login']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 			// this returns the user ID and other info from the user name
