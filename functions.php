@@ -208,7 +208,12 @@ function emcl_page_slug($page_type='') {
 
 	if (isset($pages[$page_type])) :
 		$post=get_post($pages[$page_type]);
-		$slug=$post->post_name;
+
+		if (isset($post->post_name)) :
+			$slug=$post->post_name;
+		else :
+			$slug=false;
+		endif;
 	else :
 		$slug=false;
 	endif;
