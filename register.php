@@ -45,8 +45,12 @@ class EMCustomRegistration {
 	 * @return void
 	 */
 	public function register_form_redirect() {
-		wp_redirect(home_url('/register/'));
-		exit;
+		$slug=emcl_page_slug('register');
+
+		if ($slug) :
+			wp_redirect(home_url($slug));
+			exit;
+		endif;
 	}
 
 	/**
