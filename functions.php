@@ -208,11 +208,39 @@ function emcl_page_slug($page_type='') {
 
 	if (isset($pages[$page_type])) :
 		$post=get_post($pages[$page_type]);
-		$slug=$post->post_name;
+
+		if (isset($post->post_name)) :
+			$slug=$post->post_name;
+		else :
+			$slug=false;
+		endif;
 	else :
-		$slug='';
+		$slug=false;
 	endif;
 
 	return $slug;
 }
+
+/**
+ * emcl_remove_admin_bar function.
+ *
+ * @access public
+ * @return void
+ */
+function emcl_remove_admin_bar() {
+	$hide_admin_bar=get_option('emcl-hide-admin-bar',false);
+
+	if (!current_user_can('administrator') && !is_admin() && $hide_admin_bar) :
+  	show_admin_bar(false);
+	endif;
+}
+add_action('after_setup_theme','emcl_remove_admin_bar');
+
+function emcl_recaptcha_scripts_styles() {
+	if (!is_page(emcl_page_slug('register')))
+		return false;
+
+	wp_enqueue_script('google-recaptcha-api-script','https://www.google.com/recaptcha/api.js');
+}
+add_action('wp_enqueue_scripts','emcl_recaptcha_scripts_styles');
 ?>

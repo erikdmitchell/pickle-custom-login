@@ -20,16 +20,7 @@ class EMCustomLoginAdmin {
 		add_action('admin_notices',array($this,'admin_notices'));
 		add_action('admin_enqueue_scripts',array($this,'admin_scripts_styles'));
 		add_action('init',array($this,'update_admin_settings'));
-
-/*
-		$this->default_pages=array(
-			'login' => 'login',
-			'register' => 'register',
-			'forgot-password' => 'forgot-password',
-			'reset-password' => 'reset-password',
-			'activate-account' => 'activate-account',
-		);
-*/
+		add_action('wp_trash_post',array($this,'check_emcl_pages_on_trash'));
 	}
 
 	/**
@@ -71,6 +62,8 @@ class EMCustomLoginAdmin {
 		);
 		$require_activation_key=get_option('emcl-require-activation-key',0);
 		$require_activation_key_sub_classes='hide-if-js';
+		$hide_admin_bar=get_option('emcl-hide-admin-bar',false);
+		$enable_recaptcha=get_option('emcl-enable-recaptcha',false);
 
 		if ($require_activation_key)
 			$require_activation_key_sub_classes='';
@@ -120,6 +113,65 @@ class EMCustomLoginAdmin {
 							<td>
 								<?php wp_dropdown_pages(array("name" => "activate_page", "show_option_none" => "-- " . __('Choose One', 'dummy') . " --", "selected" => $pages['activate-account'])); ?>
 								<p class="description"><?php _e('Include the shortcode','dummy'); ?> [emcl-user-activation]</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3 class="title">Redirects</h3>
+
+				<table class="form-table redirects">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="redirect_users">Redirect Users</label></th>
+							<td>
+								<input name="redirect_users" type="url" id="redirect_users" value="<?php echo get_option('emcl-login-redirect',home_url()); ?>" class="regular-text code">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="redirect_after_registration">Redirect Users After Registration</label></th>
+							<td>
+								<input name="redirect_after_registration" type="url" id="redirect_after_registration" value="<?php echo get_option('emcl-register-redirect',home_url()); ?>" class="regular-text code">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3 class="title">General</h3>
+
+				<table class="form-table general">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="hide_admin_bar">Hide Admin Bar</label></th>
+							<td>
+								<input name="hide_admin_bar" type="checkbox" id="hide_admin_bar" value="1" <?php checked($hide_admin_bar,1); ?>>
+								<p class="description" id="hide_admin_bar_description">If checked, the admin bar would be hidden for non administrators.</p></td>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h3 class="title">reCaptcha</h3>
+
+				<table class="form-table general">
+					<tbody>
+						<tr>
+							<th scope="row"><label for="enable_recaptcha">Enable reCaptcha</label></th>
+							<td>
+								<input name="enable_recaptcha" type="checkbox" id="enable_recaptcha" value="1" <?php checked($enable_recaptcha,1); ?>>
+								<p class="description" id="enable_recaptcha_description">Enable reCaptcha form on registration page.</p></td>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="recaptcha_site_key">Site Key</label></th>
+							<td>
+								<input name="recaptcha_site_key" type="text" id="recaptcha_site_key" value="<?php echo get_option('emcl-recaptcha-site-key',''); ?>" class="regular-text code">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><label for="recaptcha_secret_key">Secret Key</label></th>
+							<td>
+								<input name="recaptcha_secret_key" type="text" id="recaptcha_secret_key" value="<?php echo get_option('emcl-recaptcha-secret-key',''); ?>" class="regular-text code">
 							</td>
 						</tr>
 					</tbody>
@@ -181,6 +233,33 @@ class EMCustomLoginAdmin {
 			$pages['activate-account']=$_POST['activate_page'];
 
 			update_option('emcl-pages',$pages);
+
+			// update redirects //
+			if ($_POST['redirect_users']!='')
+				update_option('emcl-login-redirect',$_POST['redirect_users']);
+
+			if ($_POST['redirect_after_registration']!='')
+				update_option('emcl-register-redirect',$_POST['redirect_after_registration']);
+
+			// update admin bar //
+			if (isset($_POST['hide_admin_bar'])) :
+				update_option('emcl-hide-admin-bar',$_POST['hide_admin_bar']);
+			else :
+				delete_option('emcl-hide-admin-bar');
+			endif;
+
+			// update reCaptcha //
+			if (isset($_POST['enable_recaptcha'])) :
+				update_option('emcl-enable-recaptcha',$_POST['enable_recaptcha']);
+			else :
+				delete_option('emcl-enable-recaptcha');
+			endif;
+
+			if ($_POST['recaptcha_site_key']!='')
+				update_option('emcl-recaptcha-site-key',$_POST['recaptcha_site_key']);
+
+			if ($_POST['recaptcha_secret_key']!='')
+				update_option('emcl-recaptcha-secret-key',$_POST['recaptcha_secret_key']);
 
 			// update retrieve password email //
 			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')
@@ -263,6 +342,26 @@ class EMCustomLoginAdmin {
 		endswitch;
 
 		return $content;
+	}
+
+	/**
+	 * check_emcl_pages_on_trash function.
+	 *
+	 * if a user trashes one of our set pages, we need to remove the id from our settings (option)
+	 *
+	 * @access public
+	 * @param mixed $post_id
+	 * @return void
+	 */
+	public function check_emcl_pages_on_trash($post_id) {
+		$pages=get_option('emcl-pages');
+
+		foreach ($pages as $slug => $id) :
+			if ($post_id==$id)
+				$pages[$slug]=null;
+		endforeach;
+
+		update_option('emcl-pages',$pages);
 	}
 
 }
