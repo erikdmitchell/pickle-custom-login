@@ -18,10 +18,6 @@
 				<input name="custom_user_last" id="custom_user_last" type="text"/>
 			</p>
 			<p>
-				<label for="team_name"><?php _e('Team Name'); ?></label>
-				<input name="team_name" id="team_name" type="text"/>
-			</p>
-			<p>
 				<label for="password"><?php _e('Password'); ?></label>
 				<input name="custom_user_pass" id="password" class="required" type="password"/>
 			</p>
@@ -29,6 +25,8 @@
 				<label for="password_again"><?php _e('Password Again'); ?></label>
 				<input name="custom_user_pass_confirm" id="password_again" class="required" type="password"/>
 			</p>
+
+			<?php do_action('emcl_registraion_before_recaptcha'); ?>
 
 			<?php if (get_option('emcl-enable-recaptcha',false)) : ?>
 				<p>

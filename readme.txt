@@ -54,6 +54,8 @@ Coming soon.
 * Added functionality to disable admin bar for non administrators.
 * Added ability to give users a specific page after registration (set in admin panel).
 * Added reCaptcha integration on registration page.
+* Added ability to hide admin bar from users.
+* Added tow hooks: emcl_after_user_registration and emcl_registraion_before_recaptcha. More details soon.
 
 = 0.1.1 =
 

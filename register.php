@@ -101,7 +101,7 @@ class EMCustomRegistration {
 
 			if ($_POST['g-recaptcha-response'])
 				$response=$reCaptcha->verifyResponse(
-        	$_SERVER["REMOTE_ADDR"],
+					$_SERVER["REMOTE_ADDR"],
 					$_POST["g-recaptcha-response"]
 				);
 
@@ -121,7 +121,7 @@ class EMCustomRegistration {
 					)
 				);
 
-				do_action('emcl-after-user-registration',$new_user_id,$_POST);
+				do_action('emcl_after_user_registration',$new_user_id,$_POST);
 
 				if ($new_user_id) :
 					// send an email to the admin alerting them of the registration
