@@ -49,6 +49,8 @@ Coming soon.
 
 == Changelog ==
 
+= 0.1.3 =
+
 = 0.1.2 =
 
 * Added functionality to disable admin bar for non administrators.
