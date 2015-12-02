@@ -23,6 +23,9 @@
 /**
  * log in link lists
  */
+.custom-login-extras {
+	overflow: hidden;
+}
 .custom-login-extras,
 .custom-login-logged-in .loggedin-extras {
 	list-style-type: none;

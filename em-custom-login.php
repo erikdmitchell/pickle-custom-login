@@ -3,7 +3,7 @@
 Plugin Name: EM Custom Login
 Plugin URI:
 Description: Enables a completely customizable WordPress login, registration and password form.
-Version: 0.1.1
+Version: 0.1.2
 Author: Erik Mitchell
 Author URI: http://erikmitchell.net
 */
@@ -16,6 +16,7 @@ include_once(plugin_dir_path(__FILE__).'password.php');
 include_once(plugin_dir_path(__FILE__).'admin.php');
 include_once(plugin_dir_path(__FILE__).'user-activation.php');
 include_once(plugin_dir_path(__FILE__).'emails.php');
+include_once(plugin_dir_path(__FILE__).'recaptchalib.php'); // google recaptcha library
 
 /**
  * EMCustomLogin class.

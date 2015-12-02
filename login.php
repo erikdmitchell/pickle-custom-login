@@ -165,9 +165,9 @@ class EMLogin {
 			$login_page=home_url($slug);
 
 			if ($username == "" || $password == "") :
-	      wp_redirect($login_page."?login=empty");
-	      exit;
-	    endif;
+				wp_redirect($login_page."?login=empty");
+				exit;
+			endif;
 		endif;
 	}
 

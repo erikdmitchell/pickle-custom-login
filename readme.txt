@@ -12,7 +12,7 @@ Enables a completely customizable WordPress login, registration and password for
 
 == Description ==
 
-Provides users with a completely customizable login page, registration page and a password reset/update page. 
+Provides users with a completely customizable login page, registration page and a password reset/update page.
 
 In addition, an admin section allows users to perform various tasks such as customized emails.
 
@@ -26,7 +26,7 @@ In addition, an admin section allows users to perform various tasks such as cust
 
 = Do I need to use the built in pages?  =
 
-No. The plugin automatically creates pages for you, but in the settings area, you can use custom pages. 
+No. The plugin automatically creates pages for you, but in the settings area, you can use custom pages.
 Each page needs a specific shortcode, which is provided below the option to change page.
 
 = What shortcodes should I use? =
@@ -48,6 +48,14 @@ More soon.
 Coming soon.
 
 == Changelog ==
+
+= 0.1.2 =
+
+* Added functionality to disable admin bar for non administrators.
+* Added ability to give users a specific page after registration (set in admin panel).
+* Added reCaptcha integration on registration page.
+* Added ability to hide admin bar from users.
+* Added tow hooks: emcl_after_user_registration and emcl_registraion_before_recaptcha. More details soon.
 
 = 0.1.1 =
 

@@ -60,6 +60,8 @@ class EMCustomRegistration {
 	 * @return void
 	 */
 	public function add_new_user() {
+		$redirect=get_option('emcl-register-redirect',home_url());
+
 	  if (isset($_POST["custom_user_login_reg"]) && wp_verify_nonce($_POST['custom_register_nonce'],'custom-register-nonce')) :
 			$user_login=$_POST["custom_user_login_reg"];
 			$user_email=$_POST["custom_user_email"];
@@ -96,6 +98,20 @@ class EMCustomRegistration {
 			if ($user_pass != $pass_confirm)
 				emcl_add_error_message('password_mismatch','Passwords do not match');
 
+			// check recaptcha
+			$secret=get_option('emcl-recaptcha-secret-key',''); // secret key
+			$response=null; // empty response
+			$reCaptcha=new ReCaptcha($secret); // check secret key
+
+			if ($_POST['g-recaptcha-response'])
+				$response=$reCaptcha->verifyResponse(
+					$_SERVER["REMOTE_ADDR"],
+					$_POST["g-recaptcha-response"]
+				);
+
+			if ($response==null || !$response->success)
+				emcl_add_error_message('recaptcha','Issue with the recaptcha');
+
 			// only create the user in if there are no errors
 			if (!emcl_has_error_messages()) :
 				$new_user_id = wp_insert_user(array(
@@ -109,6 +125,8 @@ class EMCustomRegistration {
 					)
 				);
 
+				do_action('emcl_after_user_registration',$new_user_id,$_POST);
+
 				if ($new_user_id) :
 					// send an email to the admin alerting them of the registration
 					emcl_user_activation_email($new_user_id,'both');
@@ -120,8 +138,8 @@ class EMCustomRegistration {
 						wp_set_current_user($new_user_id, $user_login);
 						do_action('wp_login', $user_login);
 
-						// send the newly created user to the home page after logging them in
-						wp_redirect(home_url());
+						// send the newly created user to the redirect page after logging them in
+						wp_redirect($redirect);
 						exit;
 					else :
 						$this->registration_success_notice=true;
