@@ -1,12 +1,21 @@
 <?php
 /*
-Plugin Name: EM Custom Login
-Plugin URI:
-Description: Enables a completely customizable WordPress login, registration and password form.
-Version: 0.1.3
-Author: Erik Mitchell
-Author URI: http://erikmitchell.net
+ * Plugin Name: EM Custom Login
+ * Plugin URI: https://wordpress.org/plugins/em-custom-login/
+ * Description: Enables a completely customizable WordPress login, registration and password form.
+ * Version: 0.1.3
+ * Author: Erik Mitchell
+ * Author URI: http://erikmitchell.net
+ * License: GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain: emcl
+ * Domain Path: /languages
 */
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 include_once(plugin_dir_path(__FILE__).'functions.php');
 include_once(plugin_dir_path(__FILE__).'error.php');
