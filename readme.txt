@@ -3,8 +3,8 @@ Contributors: erikdmitchell
 Donate link: erikdmitchell@gmail.com
 Tags: custom login, login, register, password, admin, customization, error, login error
 Requires at least: 4.0
-Tested up to: 4.3.1
-Stable tag: 4.3.1
+Tested up to: 4.4
+Stable tag: 4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,6 +50,10 @@ Coming soon.
 == Changelog ==
 
 = 0.1.3 =
+
+* Added index.php and a security check for the main plugin file.
+* Added LICENSE.txt
+* Cleaned up all files for translation support
 
 = 0.1.2 =
 
