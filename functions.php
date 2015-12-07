@@ -117,7 +117,7 @@ function emcl_login_extras($args=array()) {
 			$html.='<li class="wp-register">'.wp_register($wp_register_before,$wp_register_after,false).'</li>';
 
 		if ($password)
-			$html.='<li class="lost-password"><a href="'.wp_lostpassword_url().'" title="'.$wp_lostpassword_text.'">'.$wp_lostpassword_text.'</a></li>';
+			$html.='<li class="lost-password"><a href="'.wp_lostpassword_url().'" title="'.$wp_lostpassword_text.'">'.__($wp_lostpassword_text,'emcl').'</a></li>';
 	$html.='</ul>';
 
 	echo $html;
@@ -186,10 +186,10 @@ function emcl_logged_in_links($args=array()) {
 
 	$html.='<ul class="loggedin-extras">';
 		if ($edit_profile)
-			$html.='<li class="edit-profile"><a href="'.get_edit_user_link().'">Edit Profile</a></li>';
+			$html.='<li class="edit-profile"><a href="'.get_edit_user_link().'">'.__('Edit Profile','emcl').'</a></li>';
 
 		if ($logout)
-			$html.='<li class="logout"><a href="'.wp_logout_url().'">Log Out</a></li>';
+			$html.='<li class="logout"><a href="'.wp_logout_url().'">'.__('Log Out','emcl').'</a></li>';
 	$html.='</ul>';
 
 	echo $html;
@@ -236,6 +236,12 @@ function emcl_remove_admin_bar() {
 }
 add_action('after_setup_theme','emcl_remove_admin_bar');
 
+/**
+ * emcl_recaptcha_scripts_styles function.
+ *
+ * @access public
+ * @return void
+ */
 function emcl_recaptcha_scripts_styles() {
 	if (!is_page(emcl_page_slug('register')))
 		return false;
