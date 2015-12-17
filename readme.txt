@@ -40,6 +40,10 @@ A detailed list of shortcodes and their functionality are coming soon.
 3. Copy the templates from plugins/em-custom-login/templates into themes/{active-theme}/em-custom-login/templates.
 4. Edit the files in your theme as needed.
 
+= How do I add custom registration fields? =
+
+This functionality is coming in our next release.
+
 == Screenshots ==
 
 1. The (admin) settings panel.
