@@ -33,9 +33,12 @@ Each page needs a specific shortcode, which is provided below the option to chan
 
 A detailed list of shortcodes and their functionality are coming soon.
 
-= Can I use my own templates? =
+= How do I use my own templates? =
 
-No. However, we will allow a custom override in the near future.
+1. Create a "em-custom-login" folder in your active theme.
+2. Create a "templates" sub folder.
+3. Copy the templates from plugins/em-custom-login/templates into themes/{active-theme}/em-custom-login/templates.
+4. Edit the files in your theme as needed.
 
 == Screenshots ==
 
@@ -53,6 +56,7 @@ Coming soon.
 
 * Added index.php and a security check for the main plugin file.
 * Added LICENSE.txt
+* Added a template functionality for our shortcodes. See FAQ.
 * Cleaned up all files for translation support
 
 = 0.1.2 =

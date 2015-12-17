@@ -18,7 +18,13 @@ function emcl_get_template_html($template_name=false,$attributes=null) {
 
 	do_action('emcl_before_'.$template_name);
 
-	require('templates/'.$template_name.'.php');
+	if (file_exists(get_stylesheet_directory().'/em-custom-login/templates/'.$template_name.'.php')) :
+		include(get_stylesheet_directory().'/em-custom-login/templates/'.$template_name.'.php');
+	elseif (file_exists(get_template_directory().'/em-custom-login/templates/'.$template_name.'.php')) :
+		include(get_template_directory().'/em-custom-login/templates/'.$template_name.'.php');
+	else :
+		include('templates/'.$template_name.'.php');
+	endif;
 
 	do_action('emcl_after_'.$template_name);
 
