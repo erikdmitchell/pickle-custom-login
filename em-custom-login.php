@@ -61,23 +61,23 @@ class EMCustomLogin {
 		// Information needed for creating the plugin's pages
 		$page_definitions = array(
 			'login' => array(
-				'title' => __('Login','dummy'),
+				'title' => __('Login','emcl'),
 				'content' => '[emcl-login-form]'
 			),
 			'register' => array(
-				'title' => __('Register','dummy'),
+				'title' => __('Register','emcl'),
 				'content' => '[emcl-registration-form]'
 			),
 			'forgot-password' => array(
-				'title' => __('Forgot Password','dummy'),
+				'title' => __('Forgot Password','emcl'),
 				'content' => '[emcl-forgot-password-form]'
 			),
 			'reset-password' => array(
-				'title' => __('Reset Password','dummy'),
+				'title' => __('Reset Password','emcl'),
 				'content' => '[emcl-reset-password-form]'
 			),
 			'activate-account' => array(
-				'title' => __('Activate Account','dummy'),
+				'title' => __('Activate Account','emcl'),
 				'content' => '[emcl-user-activation]'
 			),
 		);
