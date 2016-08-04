@@ -36,9 +36,8 @@ A detailed list of shortcodes and their functionality are coming soon.
 = How do I use my own templates? =
 
 1. Create a "em-custom-login" folder in your active theme.
-2. Create a "templates" sub folder.
-3. Copy the templates from plugins/em-custom-login/templates into themes/{active-theme}/em-custom-login/templates.
-4. Edit the files in your theme as needed.
+2. Copy the templates from plugins/em-custom-login/templates into themes/{active-theme}/em-custom-login.
+3. Edit the files in your theme as needed.
 
 = How do I add custom registration fields? =
 
