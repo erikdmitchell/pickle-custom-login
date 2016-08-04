@@ -28,11 +28,12 @@
 
 			<?php do_action('emcl_registraion_before_recaptcha'); ?>
 
-			<?php if (get_option('emcl-enable-recaptcha',false)) : ?>
+			<?php if (get_option('emcl-enable-recaptcha', false)) : ?>
 				<p>
 					<div class="g-recaptcha" data-sitekey="<?php echo get_option('emcl-recaptcha-site-key',''); ?>"></div>
 				</p>
 			<?php endif; ?>
+
 			<p>
 				<input type="hidden" name="custom_register_nonce" value="<?php echo wp_create_nonce('custom-register-nonce'); ?>"/>
 				<input type="submit" value="<?php _e('Register'); ?>"/>
