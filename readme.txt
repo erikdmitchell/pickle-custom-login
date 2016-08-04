@@ -36,7 +36,7 @@ A detailed list of shortcodes and their functionality are coming soon.
 = How do I use my own templates? =
 
 1. Create a "em-custom-login" folder in your active theme.
-2. Copy the templates from plugins/em-custom-login/templates into themes/{active-theme}/em-custom-login.
+2. Copy the templates from plugins/em-custom-login/templates into themes/{active-theme}/em-custom-login/.
 3. Edit the files in your theme as needed.
 
 = How do I add custom registration fields? =
@@ -61,6 +61,8 @@ Coming soon.
 * Fixed issue where leaving the reCaptcha setting unchecked caused an error on the front end.
 
 * Added setting for a custom logout redirect.
+
+* Template system tweaked so you no longer need the templates sub folder. Files can go in {active-theme}/em-custom-login/
 
 = 0.1.3 =
 
