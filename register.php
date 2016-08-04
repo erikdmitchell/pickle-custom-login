@@ -48,7 +48,7 @@ class EMCustomRegistration {
 		$slug=emcl_page_slug('register');
 
 		if ($slug) :
-			wp_redirect(home_url($slug));
+			wp_safe_redirect(home_url($slug));
 			exit;
 		endif;
 	}
@@ -143,7 +143,7 @@ class EMCustomRegistration {
 						do_action('wp_login', $user_login);
 
 						// send the newly created user to the redirect page after logging them in
-						wp_redirect($redirect);
+						wp_safe_redirect($redirect);
 						exit;
 					else :
 						$this->registration_success_notice=true;

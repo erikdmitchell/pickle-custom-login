@@ -81,7 +81,7 @@ class EMLogin {
 				if (current_user_can('administrator'))
 					$redirect=admin_url();
 
-				wp_redirect($redirect);
+				wp_safe_redirect($redirect);
 				exit;
 			}
 		endif;
@@ -103,7 +103,7 @@ class EMLogin {
 			$login_page=home_url($slug);
 
 			if ($page_viewed == "wp-login.php" && $_SERVER['REQUEST_METHOD'] == 'GET') :
-				wp_redirect($login_page);
+				wp_safe_redirect($login_page);
 				exit;
 			endif;
 		endif;
@@ -123,7 +123,7 @@ class EMLogin {
 		if ($slug) :
 			$login_page=home_url($slug);
 
-			wp_redirect($login_page.'?login=failed');
+			wp_safe_redirect($login_page.'?login=failed');
 			exit;
 		endif;
 	}
@@ -138,14 +138,9 @@ class EMLogin {
 	 */
 	public function logout_page() {
 		$redirect=get_option('emcl-logout-redirect', home_url());
-		//$slug=emcl_page_slug('login');
 
-		//if ($slug) :
-			//$login_page=home_url($slug);
-
-			wp_safe_redirect($redirect.'?login=false');
-			exit;
-		//endif;
+		wp_safe_redirect($redirect.'?login=false');
+		exit;
 	}
 
 	/**
@@ -166,7 +161,7 @@ class EMLogin {
 			$login_page=home_url($slug);
 
 			if ($username == "" || $password == "") :
-				wp_redirect($login_page."?login=empty");
+				wp_safe_redirect($login_page."?login=empty");
 				exit;
 			endif;
 		endif;
