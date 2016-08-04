@@ -17,6 +17,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+define('EMCL_PATH', plugin_dir_path(__FILE__));
+
 include_once(plugin_dir_path(__FILE__).'functions.php');
 include_once(plugin_dir_path(__FILE__).'error.php');
 include_once(plugin_dir_path(__FILE__).'login.php');
