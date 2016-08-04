@@ -15,11 +15,11 @@ class EMCustomRegistration {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action('emcl_before_register-form','emcl_show_error_messages');
-		add_action('init',array($this,'add_new_user'));
-		add_action('login_form_register', array($this,'register_form_redirect'));
+		add_action('emcl_before_register-form', 'emcl_show_error_messages');
+		add_action('init', array($this, 'add_new_user'));
+		add_action('login_form_register', array($this, 'register_form_redirect'));
 
-		add_shortcode('emcl-registration-form',array($this,'registration_form'));
+		add_shortcode('emcl-registration-form', array($this, 'registration_form'));
 	}
 
 	/**
@@ -33,7 +33,7 @@ class EMCustomRegistration {
 			return emcl_get_template_html('logged-in');
 
 		if ($this->registration_success_notice)
-			echo emcl_format_error_message('','Please check your email to activate your account.','success');
+			echo emcl_format_error_message('', 'Please check your email to activate your account.', 'success');
 
 		return emcl_get_template_html('register-form');
 	}
@@ -60,7 +60,7 @@ class EMCustomRegistration {
 	 * @return void
 	 */
 	public function add_new_user() {
-		$redirect=get_option('emcl-register-redirect',home_url());
+		$redirect=get_option('emcl-register-redirect', home_url());
 
 	  if (isset($_POST["custom_user_login_reg"]) && wp_verify_nonce($_POST['custom_register_nonce'],'custom-register-nonce')) :
 			$user_login=$_POST["custom_user_login_reg"];
@@ -72,31 +72,31 @@ class EMCustomRegistration {
 
 			// Username already registered
 			if (username_exists($user_login))
-				emcl_add_error_message('username_unavailable','Username already taken');
+				emcl_add_error_message('username_unavailable', 'Username already taken');
 
 			// invalid username
 			if (!validate_username($user_login))
-				emcl_add_error_message('username_invalid','Invalid username');
+				emcl_add_error_message('username_invalid', 'Invalid username');
 
 			// empty username
 			if ($user_login == '')
-				emcl_add_error_message('username_empty','Please enter a username');
+				emcl_add_error_message('username_empty', 'Please enter a username');
 
 			//invalid email
 			if (!is_email($user_email))
-				emcl_add_error_message('email_invalid','Invalid email');
+				emcl_add_error_message('email_invalid', 'Invalid email');
 
 			//Email address already registered
 			if (email_exists($user_email))
-				emcl_add_error_message('email_used','Email already registered');
+				emcl_add_error_message('email_used', 'Email already registered');
 
 			// passwords do not match
 			if ($user_pass == '')
-				emcl_add_error_message('password_empty','Please enter a password');
+				emcl_add_error_message('password_empty', 'Please enter a password');
 
 			// passwords do not match
 			if ($user_pass != $pass_confirm)
-				emcl_add_error_message('password_mismatch','Passwords do not match');
+				emcl_add_error_message('password_mismatch', 'Passwords do not match');
 
 			// check recaptcha, if active
 			if (get_option('emcl-enable-recaptcha', false)) :

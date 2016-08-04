@@ -58,19 +58,19 @@ class EMLogin {
 
 			// if the user name doesn't exist
 			if (!$user)
-				emcl_add_error_message('empty_username','Invalid username');
+				emcl_add_error_message('empty_username', 'Invalid username');
 
 			// if no password was entered
 			if (!isset($_POST['custom_user_pass']) || $_POST['custom_user_pass'] == '')
-				emcl_add_error_message('empty_password','Please enter a password');
+				emcl_add_error_message('empty_password', 'Please enter a password');
 
 			// check the user's login with their password
 			if (!isset($user->user_pass) || !wp_check_password($_POST['custom_user_pass'], $user->user_pass, $user->ID))
-				emcl_add_error_message('empty_password','Incorrect password');
+				emcl_add_error_message('empty_password', 'Incorrect password');
 
 			// check if activation is required and if so, user is active //
 			if (isset($user->ID) && emcl_is_activation_required() && !emcl_is_user_authenticated($user->ID))
-				emcl_add_error_message('not_activated','You must activate your account before logging in.');
+				emcl_add_error_message('not_activated', 'You must activate your account before logging in.');
 
 			// only log the user in if there are no errors
 			if (!emcl_has_error_messages()) {

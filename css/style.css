@@ -42,3 +42,10 @@
 .custom-login-logged-in .loggedin-extras li:last-child {
 	border-right: none;
 }
+
+/**
+ * register form
+ */
+.emcl-registration label.required::after {
+	content: ' *';
+}

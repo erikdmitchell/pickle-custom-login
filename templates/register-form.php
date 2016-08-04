@@ -2,12 +2,12 @@
 	<form id="custom_registration_form" class="custom_form" action="" method="POST">
 		<fieldset>
 			<p>
-				<label for="custom_user_login_reg"><?php _e('Username'); ?></label>
-				<input name="custom_user_login_reg" id="custom_user_login_reg" class="required" type="text"/>
+				<label for="custom_user_login_reg" class="required"><?php _e('Username'); ?></label>
+				<input name="custom_user_login_reg" id="custom_user_login_reg" class="" type="text"/>
 			</p>
 			<p>
-				<label for="custom_user_email"><?php _e('Email'); ?></label>
-				<input name="custom_user_email" id="custom_user_email" class="required" type="email"/>
+				<label for="custom_user_email" class="required"><?php _e('Email'); ?></label>
+				<input name="custom_user_email" id="custom_user_email" class="email" type="email"/>
 			</p>
 			<p>
 				<label for="custom_user_first"><?php _e('First Name'); ?></label>
@@ -18,12 +18,12 @@
 				<input name="custom_user_last" id="custom_user_last" type="text"/>
 			</p>
 			<p>
-				<label for="password"><?php _e('Password'); ?></label>
-				<input name="custom_user_pass" id="password" class="required" type="password"/>
+				<label for="password" class="required"><?php _e('Password'); ?></label>
+				<input name="custom_user_pass" id="password" class="password" type="password"/>
 			</p>
 			<p>
-				<label for="password_again"><?php _e('Password Again'); ?></label>
-				<input name="custom_user_pass_confirm" id="password_again" class="required" type="password"/>
+				<label for="password_again" class="required"><?php _e('Password Again'); ?></label>
+				<input name="custom_user_pass_confirm" id="password_again" class="password" type="password"/>
 			</p>
 
 			<?php do_action('emcl_registraion_before_recaptcha'); ?>
