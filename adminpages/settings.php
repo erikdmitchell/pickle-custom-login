@@ -66,18 +66,28 @@ if ($require_activation_key)
 
 		<table class="form-table redirects">
 			<tbody>
+
 				<tr>
 					<th scope="row"><label for="redirect_users"><?php _e('Redirect Users','emcl'); ?></label></th>
 					<td>
 						<input name="redirect_users" type="url" id="redirect_users" value="<?php echo get_option('emcl-login-redirect',home_url()); ?>" class="regular-text code">
 					</td>
 				</tr>
+
 				<tr>
 					<th scope="row"><label for="redirect_after_registration"><?php _e('Redirect Users After Registration','emcl'); ?></label></th>
 					<td>
 						<input name="redirect_after_registration" type="url" id="redirect_after_registration" value="<?php echo get_option('emcl-register-redirect',home_url()); ?>" class="regular-text code">
 					</td>
 				</tr>
+
+				<tr>
+					<th scope="row"><label for="redirect_after_logout"><?php _e('Redirect Users After Logout', 'emcl'); ?></label></th>
+					<td>
+						<input name="redirect_after_logout" type="url" id="redirect_after_logout" value="<?php echo get_option('emcl-logout-redirect', home_url()); ?>" class="regular-text code">
+					</td>
+				</tr>
+
 			</tbody>
 		</table>
 
