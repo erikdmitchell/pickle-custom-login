@@ -84,6 +84,9 @@ class EMCustomLoginAdmin {
 			if ($_POST['redirect_after_registration']!='')
 				update_option('emcl-register-redirect',$_POST['redirect_after_registration']);
 
+			if ($_POST['redirect_after_logout']!='')
+				update_option('emcl-logout-redirect', $_POST['redirect_after_logout']);
+
 			// update admin bar //
 			if (isset($_POST['hide_admin_bar'])) :
 				update_option('emcl-hide-admin-bar',$_POST['hide_admin_bar']);

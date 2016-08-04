@@ -50,7 +50,7 @@ class EMLogin {
 	 * @return void
 	 */
 	public function login_member() {
-		$redirect=get_option('emcl-login-redirect',home_url());
+		$redirect=get_option('emcl-login-redirect', home_url());
 
 		if (isset($_POST['custom_user_login']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 			// this returns the user ID and other info from the user name
@@ -137,14 +137,15 @@ class EMLogin {
 	 * @return void
 	 */
 	public function logout_page() {
-		$slug=emcl_page_slug('login');
+		$redirect=get_option('emcl-logout-redirect', home_url());
+		//$slug=emcl_page_slug('login');
 
-		if ($slug) :
-			$login_page=home_url($slug);
+		//if ($slug) :
+			//$login_page=home_url($slug);
 
-			wp_redirect($login_page.'?login=false');
+			wp_safe_redirect($redirect.'?login=false');
 			exit;
-		endif;
+		//endif;
 	}
 
 	/**
