@@ -98,19 +98,23 @@ class EMCustomRegistration {
 			if ($user_pass != $pass_confirm)
 				emcl_add_error_message('password_mismatch','Passwords do not match');
 
-			// check recaptcha
-			$secret=get_option('emcl-recaptcha-secret-key',''); // secret key
-			$response=null; // empty response
-			$reCaptcha=new ReCaptcha($secret); // check secret key
+			// check recaptcha, if active
+			if (get_option('emcl-enable-recaptcha', false)) :
 
-			if ($_POST['g-recaptcha-response'])
-				$response=$reCaptcha->verifyResponse(
-					$_SERVER["REMOTE_ADDR"],
-					$_POST["g-recaptcha-response"]
-				);
+				$secret=get_option('emcl-recaptcha-secret-key', ''); // secret key
+				$response=null; // empty response
+				$reCaptcha=new ReCaptcha($secret); // check secret key
 
-			if ($response==null || !$response->success)
-				emcl_add_error_message('recaptcha','Issue with the recaptcha');
+				if (isset($_POST['g-recaptcha-response']))
+					$response=$reCaptcha->verifyResponse(
+						$_SERVER["REMOTE_ADDR"],
+						$_POST["g-recaptcha-response"]
+					);
+
+				if ($response==null || !$response->success)
+					emcl_add_error_message('recaptcha','Issue with the recaptcha');
+
+			endif;
 
 			// only create the user in if there are no errors
 			if (!emcl_has_error_messages()) :
