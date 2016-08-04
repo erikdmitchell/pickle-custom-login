@@ -58,6 +58,11 @@ Coming soon.
 
 = 0.1.4 =
 
+* Fixed "Retrieve Password Email" label duplication on admin page.
+* Fixed issue where leaving the reCaptcha setting unchecked caused an error on the front end.
+
+* Added setting for a custom logout redirect.
+
 = 0.1.3 =
 
 * Added index.php and a security check for the main plugin file.
