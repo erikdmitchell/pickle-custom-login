@@ -1,15 +1,15 @@
 <?php
-		$pages=get_option('emcl-pages');
-		$settings=array(
-			'media_buttons' => false,
-		);
-		$require_activation_key=get_option('emcl-require-activation-key', 0);
-		$require_activation_key_sub_classes='hide-if-js';
-		$hide_admin_bar=get_option('emcl-hide-admin-bar', false);
-		$enable_recaptcha=get_option('emcl-enable-recaptcha', false);
+$pages=get_option('emcl-pages');
+$settings=array(
+	'media_buttons' => false,
+);
+$require_activation_key=get_option('emcl-require-activation-key', 0);
+$require_activation_key_sub_classes='hide-if-js';
+$hide_admin_bar=get_option('emcl-hide-admin-bar', false);
+$enable_recaptcha=get_option('emcl-enable-recaptcha', false);
 
-		if ($require_activation_key)
-			$require_activation_key_sub_classes='';
+if ($require_activation_key)
+	$require_activation_key_sub_classes='';
 ?>
 
 <div class="custom-login-admin wrap">
@@ -62,7 +62,7 @@
 			</tbody>
 		</table>
 
-		<h3 class="title"><?php _e('Redirects','emcl'); ?></h3>
+		<h3 class="title"><?php _e('Redirects', 'emcl'); ?></h3>
 
 		<table class="form-table redirects">
 			<tbody>
@@ -81,7 +81,7 @@
 			</tbody>
 		</table>
 
-		<h3 class="title"><?php _e('General','emcl'); ?></h3>
+		<h3 class="title"><?php _e('General', 'emcl'); ?></h3>
 
 		<table class="form-table general">
 			<tbody>
@@ -95,7 +95,7 @@
 			</tbody>
 		</table>
 
-		<h3 class="title"><?php _e('reCaptcha','emcl'); ?></h3>
+		<h3 class="title"><?php _e('reCaptcha', 'emcl'); ?></h3>
 
 		<table class="form-table general">
 			<tbody>
@@ -121,18 +121,18 @@
 			</tbody>
 		</table>
 
-		<h3 class="title"><?php _e('Customize Emails','emcl'); ?></h3>
+		<h3 class="title"><?php _e('Customize Emails', 'emcl'); ?></h3>
 
 		<table class="form-table customize-emails">
 			<tbody>
 				<tr>
-					<th scope="row"><label for="retrieve_password_email"><?php _e('Retrieve Password Email','emcl'); ?></label></th>
+					<th scope="row"><label for="retrieve_password_email"><?php _e('Reset Password Email', 'emcl'); ?></label></th>
 					<td>
 						<?php wp_editor(stripslashes(get_option('emcl-retrieve-password-email',$this->default_email_content('retrieve_password_email'))),'retrieve_password_email',$settings); ?>
 					</td>
 				</tr>
 				<tr class="hide-if-activation-key">
-					<th scope="row"><label for="account_creation_email"><?php _e('Retrieve Password Email','emcl'); ?></label></th>
+					<th scope="row"><label for="account_creation_email"><?php _e('Retrieve Password Email', 'emcl'); ?></label></th>
 					<td>
 						<?php wp_editor(stripslashes(get_option('emcl-account-creation-email',$this->default_email_content('account_creation_email'))),'account_creation_email',$settings); ?>
 					</td>
