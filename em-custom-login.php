@@ -3,7 +3,7 @@
  * Plugin Name: EM Custom Login
  * Plugin URI: https://wordpress.org/plugins/em-custom-login/
  * Description: Enables a completely customizable WordPress login, registration and password form.
- * Version: 0.1.4
+ * Version: 0.1.5
  * Author: Erik Mitchell
  * Author URI: http://erikmitchell.net
  * License: GPL-2.0+
