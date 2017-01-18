@@ -30,93 +30,64 @@ include_once(plugin_dir_path(__FILE__).'emails.php');
 include_once(plugin_dir_path(__FILE__).'recaptchalib.php'); // google recaptcha library
 
 /**
- * EMCustomLogin class.
- *
- * @since 0.1.0
+ * emcl_plugin_activated function.
+ * 
+ * @access public
+ * @return void
  */
-class EMCustomLogin {
-	/**
-	 * __construct function.
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function __construct() {
-		add_action('wp_enqueue_scripts',array($this,'scripts_styles'));
-	}
+function emcl_plugin_activated() {
+	$pages_arr=array();
+	// Information needed for creating the plugin's pages
+	$page_definitions = array(
+		'login' => array(
+			'title' => __('Login','emcl'),
+			'content' => '[emcl-login-form]'
+		),
+		'register' => array(
+			'title' => __('Register','emcl'),
+			'content' => '[emcl-registration-form]'
+		),
+		'forgot-password' => array(
+			'title' => __('Forgot Password','emcl'),
+			'content' => '[emcl-forgot-password-form]'
+		),
+		'reset-password' => array(
+			'title' => __('Reset Password','emcl'),
+			'content' => '[emcl-reset-password-form]'
+		),
+		'activate-account' => array(
+			'title' => __('Activate Account','emcl'),
+			'content' => '[emcl-user-activation]'
+		),
+	);
 
-	public function scripts_styles() {
-		wp_enqueue_style('emcl-style',plugins_url('/css/style.css',__FILE__));
-	}
+	foreach ($page_definitions as $slug => $page) :
+		// Check that the page doesn't exist already
+		$query=new WP_Query('pagename='.$slug);
 
-	/**
-	 * plugin_activated function.
-	 *
-	 * Creates all WordPress pages needed by the plugin.
-	 *
-	 * @access public
-	 * @static
-	 * @return void
-	 */
-	public static function plugin_activated() {
-		$pages_arr=array();
-		// Information needed for creating the plugin's pages
-		$page_definitions = array(
-			'login' => array(
-				'title' => __('Login','emcl'),
-				'content' => '[emcl-login-form]'
-			),
-			'register' => array(
-				'title' => __('Register','emcl'),
-				'content' => '[emcl-registration-form]'
-			),
-			'forgot-password' => array(
-				'title' => __('Forgot Password','emcl'),
-				'content' => '[emcl-forgot-password-form]'
-			),
-			'reset-password' => array(
-				'title' => __('Reset Password','emcl'),
-				'content' => '[emcl-reset-password-form]'
-			),
-			'activate-account' => array(
-				'title' => __('Activate Account','emcl'),
-				'content' => '[emcl-user-activation]'
-			),
-		);
+		if (!$query->have_posts()) :
+			// Add the page using the data from the array above
+			$post_id=wp_insert_post(
+				array(
+					'post_content'   => $page['content'],
+					'post_name'      => $slug,
+					'post_title'     => $page['title'],
+					'post_status'    => 'publish',
+					'post_type'      => 'page',
+					'ping_status'    => 'closed',
+					'comment_status' => 'closed',
+				)
+			);
+		else :
+			$post_id=$query->queried_object_id;
+		endif;
 
-		foreach ($page_definitions as $slug => $page) :
-			// Check that the page doesn't exist already
-			$query=new WP_Query('pagename='.$slug);
+		$pages_arr[$slug]=$post_id;
+	endforeach;
 
-			if (!$query->have_posts()) :
-				// Add the page using the data from the array above
-				$post_id=wp_insert_post(
-					array(
-						'post_content'   => $page['content'],
-						'post_name'      => $slug,
-						'post_title'     => $page['title'],
-						'post_status'    => 'publish',
-						'post_type'      => 'page',
-						'ping_status'    => 'closed',
-						'comment_status' => 'closed',
-					)
-				);
-			else :
-				$post_id=$query->queried_object_id;
-			endif;
-
-			$pages_arr[$slug]=$post_id;
-		endforeach;
-
-		// if this plugin existed before, keep their settings //
-		if (!get_option('emcl-pages'))
-			update_option('emcl-pages',$pages_arr);
-	}
-
+	// if this plugin existed before, keep their settings //
+	if (!get_option('emcl-pages'))
+		update_option('emcl-pages',$pages_arr);
 }
-
-new EMCustomLogin();
-
-// Create the custom pages at plugin activation //
-register_activation_hook( __FILE__,array('EMCustomLogin','plugin_activated'));
+register_activation_hook( __FILE__, 'emcl_plugin_activated');
 ?>
