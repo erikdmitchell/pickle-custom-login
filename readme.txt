@@ -57,6 +57,10 @@ Coming soon.
 
 = 0.1.5 =
 
+* The plugin activation function has been cleaned up.
+* Properly enqueued the admin.js file.
+* Added front end styles.
+
 = 0.1.4 =
 
 * Fixed "Retrieve Password Email" label duplication on admin page.
