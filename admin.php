@@ -7,7 +7,6 @@
 class EMCustomLoginAdmin {
 
 	protected $admin_notices=array();
-	//public $default_pages=array();
 
 	/**
 	 * __construct function.
@@ -16,11 +15,11 @@ class EMCustomLoginAdmin {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action('admin_menu',array($this,'admin_menu'));
-		add_action('admin_notices',array($this,'admin_notices'));
-		add_action('admin_enqueue_scripts',array($this,'admin_scripts_styles'));
-		add_action('init',array($this,'update_admin_settings'));
-		add_action('wp_trash_post',array($this,'check_emcl_pages_on_trash'));
+		add_action('admin_menu', array($this, 'admin_menu'));
+		add_action('admin_notices', array($this, 'admin_notices'));
+		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
+		add_action('init', array($this, 'update_admin_settings'));
+		add_action('wp_trash_post', array($this, 'check_emcl_pages_on_trash'));
 	}
 
 	/**
@@ -44,9 +43,9 @@ class EMCustomLoginAdmin {
 		if ($hook!='settings_page_em_custom_login')
 			return false;
 
-		wp_enqueue_script('emcl-admin-script',plugins_url('/js/admin.js',__FILE__),array('jquery'));
+		wp_enqueue_script('emcl-admin-script', plugins_url('/js/admin.js', __FILE__), array('jquery'), '0.1.0', true);
 
-		wp_enqueue_style('emcl-admin-style',plugins_url('/css/admin.css',__FILE__));
+		wp_enqueue_style('emcl-admin-style', plugins_url('/css/admin.css', __FILE__));
 	}
 
 	/**

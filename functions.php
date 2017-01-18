@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * emcl_scripts_styles function.
+ * 
+ * @access public
+ * @return void
+ */
+function emcl_scripts_styles() {
+	wp_enqueue_style('emcl-frontend-style', plugins_url('css/style.css', __FILE__));	
+}
+add_action('wp_enqueue_scripts', 'emcl_scripts_styles');
+
 /**
  * emcl_get_template_html function.
  *

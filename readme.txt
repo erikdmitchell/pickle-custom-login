@@ -3,8 +3,8 @@ Contributors: erikdmitchell
 Donate link: erikdmitchell@gmail.com
 Tags: custom login, login, register, password, admin, customization, error, login error
 Requires at least: 4.0
-Tested up to: 4.5.3
-Stable tag: 0.1.4
+Tested up to: 4.7.1
+Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,12 @@ More soon.
 Coming soon.
 
 == Changelog ==
+
+= 0.1.5 =
+
+* The plugin activation function has been cleaned up.
+* Properly enqueued the admin.js file.
+* Added front end styles.
 
 = 0.1.4 =
 
