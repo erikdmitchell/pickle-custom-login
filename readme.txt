@@ -1,4 +1,4 @@
-=== EM Custom Login ===
+=== Pickle Custom Login ===
 Contributors: erikdmitchell
 Donate link: erikdmitchell@gmail.com
 Tags: custom login, login, register, password, admin, customization, error, login error
@@ -18,7 +18,7 @@ In addition, an admin section allows users to perform various tasks such as cust
 
 == Installation ==
 
-1. Upload `em-custom-login` to the `/wp-content/plugins/` directory
+1. Upload `pickle-custom-login` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. The plugin will generate all the pages with the proper shortcode.
 
