@@ -1,54 +1,32 @@
 <?php
-/**
- * EMLogin class.
- *
- * @since 0.1.0
- */
-class EMLogin {
 
-	/**
-	 * __construct function.
-	 *
-	 * @access public
-	 * @return void
-	 */
+class Pickle_Custom_Login {
+
 	public function __construct() {
-		add_action('init',array($this,'login_member'));
-		add_action('init',array($this,'redirect_login_page'));
-		add_action('pcl_before_login-form','pcl_show_error_messages');
-		add_action('wp_login_failed',array($this,'login_failed'));
-		add_action('wp_logout',array($this,'logout_page'));
+		add_action('init', array($this, 'login_member'));
+		add_action('init', array($this, 'redirect_login_page'));
+		add_action('pcl_before_login-form', 'pcl_show_error_messages');
+		add_action('wp_login_failed', array($this, 'login_failed'));
+		add_action('wp_logout', array($this, 'logout_page'));
 
-		add_filter('authenticate',array($this,'verify_username_password'),1,3);
+		add_filter('authenticate', array($this, 'verify_username_password'), 1, 3);
 
-		add_shortcode('pcl-login-form',array($this,'login_form'));
+		add_shortcode('pcl-login-form', array($this, 'login_form'));
 	}
 
-	/**
-	 * login_form function.
-	 *
-	 * @access public
-	 * @return void
-	 */
 	public function login_form() {
 		if (is_user_logged_in())
 			return pcl_get_template_html('logged-in');
 
 		if (isset($_GET['checkemail']) && $_GET['checkemail']=='confirm')
-			echo pcl_format_error_message('','An email has been set to the address provided with instructions on how to reset your password.','success');
+			echo pcl_format_error_message('', 'An email has been set to the address provided with instructions on how to reset your password.', 'success');
 
 		if (isset($_GET['password']) && $_GET['password']=='changed')
-			echo pcl_format_error_message('','Your password has been changed. Please login.','success');
+			echo pcl_format_error_message('', 'Your password has been changed. Please login.', 'success');
 
 		return pcl_get_template_html('login-form');
 	}
 
-	/**
-	 * login_member function.
-	 *
-	 * @access public
-	 * @return void
-	 */
 	public function login_member() {
 		$redirect=get_option('pcl-login-redirect', home_url());
 
@@ -87,14 +65,6 @@ class EMLogin {
 		endif;
 	}
 
-	/**
-	 * redirect_login_page function.
-	 *
-	 * redirects the default wp login page to our login page (template done in fc_login_template_redirect())
-	 *
-	 * @access public
-	 * @return void
-	 */
 	public function redirect_login_page() {
 		$slug=pcl_page_slug('login');
 		$page_viewed=basename($_SERVER['REQUEST_URI']);
@@ -109,14 +79,6 @@ class EMLogin {
 		endif;
 	}
 
-	/**
-	 * login_failed function.
-	 *
-	 * redirects failed login to our page
-	 *
-	 * @access public
-	 * @return void
-	 */
 	public function login_failed() {
 		$slug=pcl_page_slug('login');
 
@@ -128,14 +90,6 @@ class EMLogin {
 		endif;
 	}
 
-	/**
-	 * logout_page function.
-	 *
-	 * redirects logout to our page
-	 *
-	 * @access public
-	 * @return void
-	 */
 	public function logout_page() {
 		$redirect=get_option('pcl-logout-redirect', home_url());
 
@@ -143,17 +97,6 @@ class EMLogin {
 		exit;
 	}
 
-	/**
-	 * verify_username_password function.
-	 *
-	 * redirects login errors to our page
-	 *
-	 * @access public
-	 * @param mixed $user
-	 * @param mixed $username
-	 * @param mixed $password
-	 * @return void
-	 */
 	public function verify_username_password( $user, $username, $password ) {
 		$slug=pcl_page_slug('login');
 
@@ -168,6 +111,4 @@ class EMLogin {
 	}
 
 }
-
-new EMLogin();
 ?>

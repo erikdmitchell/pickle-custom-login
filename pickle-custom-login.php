@@ -63,13 +63,19 @@ final class PickleCustomLogin {
 		
 		include_once(PCL_PATH.'functions.php');
 		include_once(PCL_PATH.'pcl-errors.php');
-		include_once(PCL_PATH.'login.php');
+		include_once(PCL_PATH.'pcl-login.php');
 		include_once(PCL_PATH.'register.php');
 		include_once(PCL_PATH.'password.php');
-		include_once(PCL_PATH.'admin.php');
+		include_once(PCL_PATH.'admin/admin.php');
 		include_once(PCL_PATH.'user-activation.php');
 		include_once(PCL_PATH.'emails.php');
 		include_once(PCL_PATH.'recaptchalib.php'); // google recaptcha library
+		
+		new Pickle_Custom_Login();
+		
+		if (is_admin()) :
+			new Pickle_Custom_Login_Admin();
+		endif;
 	}
 
 	private function init_hooks() {

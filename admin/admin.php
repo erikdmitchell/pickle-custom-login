@@ -1,10 +1,6 @@
 <?php
-/**
- * EMCustomLoginAdmin class.
- *
- * @sonce 0.1.0
- */
-class EMCustomLoginAdmin {
+
+class Pickle_Custom_Login_Admin {
 
 	protected $admin_notices=array();
 
@@ -236,6 +232,4 @@ class EMCustomLoginAdmin {
 	}
 
 }
-
-$EMCustomLoginAdmin=new EMCustomLoginAdmin();
 ?>

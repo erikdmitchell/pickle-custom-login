@@ -2,16 +2,32 @@
 
 class Pickle_Custom_Login_Errors {
 
-	public function __construct() {
+	/**
+	 * __construct function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function __construct() {}
 
-	}
-
+	/**
+	 * register_errors function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function register_errors() {
 		static $wp_error; // Will hold global variable safely
 		
 		return isset($wp_error) ? $wp_error : ($wp_error = new WP_Error(null, null, null));
 	}
 
+	/**
+	 * show_error_messages function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function show_error_messages() {
 		if ($codes=$this->register_errors()->get_error_codes()) :
 			echo '<div class="custom-login-notice">';
@@ -23,6 +39,15 @@ class Pickle_Custom_Login_Errors {
 		endif;
 	}
 
+	/**
+	 * format_error function.
+	 * 
+	 * @access public
+	 * @param string $code (default: '')
+	 * @param bool $message (default: false)
+	 * @param string $type (default: '')
+	 * @return void
+	 */
 	public function format_error($code='', $message=false, $type='') {
 		if (!$message)
 			return false;
