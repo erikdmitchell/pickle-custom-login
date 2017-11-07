@@ -149,10 +149,23 @@ function pcl_is_user_authenticated($user_id=0) {
 	return true;
 }
 
+/**
+ * pcl_activate_user function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_activate_user() {
 	return pickle_custom_login()->activation->activate_user();
 }
 
+/**
+ * pcl_logged_in_links function.
+ * 
+ * @access public
+ * @param array $args (default: array())
+ * @return void
+ */
 function pcl_logged_in_links($args=array()) {
 	$html=null;
 	$default_args=array(
