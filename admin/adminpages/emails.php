@@ -1,45 +1,32 @@
 <h2>Emails</h2>
 
-$require_activation_key_sub_classes='hide-if-js';
-
-
-
-if ($require_activation_key)
-	$require_activation_key_sub_classes='';
+<form method="post" action="" method="post">
+	<?php wp_nonce_field('update_emails', 'pcl_admin_update'); ?>
 	
-	pcl_require_activation_key()
+	<table class="form-table customize-emails">
+		<tbody>
+			<tr>
+				<th scope="row"><label for="retrieve_password_email"><?php _e('Reset Password Email', 'pcl'); ?></label></th>
+				<td>
+					<?php pickle_custom_login()->admin->email_editor('pcl-retrieve-password-email', 'retrieve_password_email'); ?>
+				</td>
+			</tr>
+			
+			<tr>
+				<th scope="row"><label for="account_creation_email"><?php _e('Retrieve Password Email', 'pcl'); ?></label></th>
+				<td>
+					<?php pickle_custom_login()->admin->email_editor('pcl-account-creation-email', 'account_creation_email'); ?>
+				</td>
+			</tr>
 	
-	$settings=array(
-	'media_buttons' => false,
-);
+			<tr class="activation-key-details-field hidden">
+				<th scope="row"><label for="account_activation_email"><?php _e('Account Creation Email', 'pcl'); ?></label></th>
+				<td>
+					<?php pickle_custom_login()->admin->email_editor('pcl-account-activation-email', 'account_activation_email'); ?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-<table class="form-table customize-emails">
-	<tbody>
-		<tr>
-			<th scope="row"><label for="retrieve_password_email"><?php _e('Reset Password Email', 'pcl'); ?></label></th>
-			<td>
-				<?php wp_editor(stripslashes(get_option('pcl-retrieve-password-email', $this->default_email_content('retrieve_password_email'))), 'retrieve_password_email', $settings); ?>
-			</td>
-		</tr>
-		<tr class="hide-if-activation-key">
-			<th scope="row"><label for="account_creation_email"><?php _e('Retrieve Password Email', 'pcl'); ?></label></th>
-			<td>
-				<?php wp_editor(stripslashes(get_option('pcl-account-creation-email', $this->default_email_content('account_creation_email'))), 'account_creation_email', $settings); ?>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row"><label for="require_activation_key"><?php _e('Require Account Activation', 'pcl'); ?></label></th>
-			<td>
-				<input name="require_activation_key" type="checkbox" id="require_activation_key" value="1" <?php checked($require_activation_key,1); ?>>
-				<p class="description" id="rquire-activation-key-description">If checked, users would receive an email to activate their account before they can login.</p></td>
-			</td>
-		</tr>
-		<tr class="require_activation_key_sub <?php echo $require_activation_key_sub_classes; ?>">
-			<th scope="row"><label for="account_activation_email"><?php _e('Account Creation Email', 'pcl'); ?></label></th>
-			<td>
-				<?php wp_editor(stripslashes(get_option('pcl-account-activation-email',$this->default_email_content('account_activation_email'))),'account_activation_email',$settings); ?>
-				<p class="description"><?php _e('When "Require Account Activation" is active.', 'pcl'); ?></p>
-			</td>
-		</tr>
-	</tbody>
-</table>
+	<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes', 'pcl'); ?>"></p>
+</form>

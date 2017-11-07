@@ -36,18 +36,37 @@ final class PickleCustomLoginAdmin {
 
 	}
 
+	/**
+	 * init_hooks function.
+	 * 
+	 * @access private
+	 * @return void
+	 */
 	private function init_hooks() {
 		add_action('admin_menu', array($this, 'admin_menu'));
 		add_action('admin_notices', array($this, 'admin_notices'));
 		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
 		add_action('admin_init', array($this, 'update_settings'), 0);
+		add_action('admin_init', array($this, 'update_emails'), 0);
 		add_action('wp_trash_post', array($this, 'check_pages_on_trash'));		
 	}
 
+	/**
+	 * admin_menu function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function admin_menu() {
 		add_options_page('Pickle Custom Login', 'Pickle Custom Login', 'manage_options', 'pickle_custom_login', array($this, 'admin_page'));
 	}
 
+	/**
+	 * admin_page function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function admin_page() {
 		$html=null;
 		$tabs=array(
@@ -84,6 +103,12 @@ final class PickleCustomLoginAdmin {
 		echo $html;
 	}
 
+	/**
+	 * admin_notices function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function admin_notices() {
 		if (empty($this->admin_notices))
 			return;
@@ -97,6 +122,13 @@ final class PickleCustomLoginAdmin {
 		echo $html;
 	}
 
+	/**
+	 * admin_scripts_styles function.
+	 * 
+	 * @access public
+	 * @param mixed $hook
+	 * @return void
+	 */
 	public function admin_scripts_styles($hook) {		
 		if ($hook!='settings_page_pickle_custom_login')
 			return false;
@@ -106,6 +138,12 @@ final class PickleCustomLoginAdmin {
 		wp_enqueue_style('pcl-admin-style', PCL_ADMIN_URL.'css/admin.css', '', PCL_VERSION);
 	}
 
+	/**
+	 * update_settings function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function update_settings() {	
 		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'update_settings'))
 			return;
@@ -142,30 +180,49 @@ final class PickleCustomLoginAdmin {
 	
 		if ($settings_data['recaptcha_secret_key']!='')
 			update_option('pcl-recaptcha-secret-key', $settings_data['recaptcha_secret_key']);
-/*
-			// update retrieve password email //
-			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')
-				update_option('pcl-retrieve-password-email',wp_kses_post($_POST['retrieve_password_email']));
 
-			// require activation key //
-			if (isset($_POST['require_activation_key'])) :
-				update_option('pcl-require-activation-key',$_POST['require_activation_key']);
-			else :
-				delete_option('pcl-require-activation-key');
-			endif;
-
-			// update account creation email //
-			if (isset($_POST['account_creation_email']) && $_POST['account_creation_email']!='')
-				update_option('pcl-account-creation-email',wp_kses_post($_POST['account_creation_email']));
-
-			// update account activation email //
-			if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
-				update_option('pcl-account-activation-email',wp_kses_post($_POST['account_activation_email']));
-*/
+		// require activation key //
+		if (isset($settings_data['require_activation_key'])) :
+			update_option('pcl-require-activation-key', 1);
+		else :
+			delete_option('pcl-require-activation-key');
+		endif;
 
 		$this->admin_notices['updated']='Settings Updated!';
 	}
 
+	/**
+	 * update_emails function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function update_emails() {	
+		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'update_emails'))
+			return;
+
+		// update retrieve password email //
+		if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')
+			update_option('pcl-retrieve-password-email', wp_kses_post($_POST['retrieve_password_email']));
+
+		// update account creation email //
+		if (isset($_POST['account_creation_email']) && $_POST['account_creation_email']!='')
+			update_option('pcl-account-creation-email', wp_kses_post($_POST['account_creation_email']));
+
+		// update account activation email //
+		if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
+			update_option('pcl-account-activation-email', wp_kses_post($_POST['account_activation_email']));
+
+		$this->admin_notices['updated']='Emails Updated!';
+	}
+
+	/**
+	 * check_pages_on_trash function.
+	 * 
+	 * @access public
+	 * @param mixed $post_id
+	 * @return void
+	 */
 	public function check_pages_on_trash($post_id) {
 		$pages=get_option('pcl_pages');
 
@@ -177,6 +234,13 @@ final class PickleCustomLoginAdmin {
 		update_option('pcl_pages',$pages);
 	}
 
+	/**
+	 * default_email_content function.
+	 * 
+	 * @access protected
+	 * @param string $slug (default: '')
+	 * @return void
+	 */
 	protected function default_email_content($slug='') {
 		$content='';
 
@@ -230,7 +294,28 @@ final class PickleCustomLoginAdmin {
 		
 		echo wp_dropdown_pages($args);
 	}
+	
+	/**
+	 * email_editor function.
+	 * 
+	 * @access public
+	 * @param string $slug (default: '')
+	 * @param string $id (default: '')
+	 * @return void
+	 */
+	public function email_editor($slug='', $id='') {
+		$content=stripslashes(get_option($slug, $this->default_email_content($id)));
 
+		wp_editor($content, $id, array('media_buttons' => false));
+	}
+
+	/**
+	 * get_admin_page function.
+	 * 
+	 * @access public
+	 * @param bool $template_name (default: false)
+	 * @return void
+	 */
 	public function get_admin_page($template_name=false) {
 		if (!$template_name)
 			return false;

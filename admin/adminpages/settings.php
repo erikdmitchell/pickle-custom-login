@@ -114,5 +114,19 @@
 		</tbody>
 	</table>
 
+	<h3 class="title"><?php _e('Account Activation', 'pcl'); ?></h3>
+
+	<table class="form-table account-activation">
+		<tbody>
+			<tr>
+				<th scope="row"><label for="require_activation_key"><?php _e('Require Account Activation', 'pcl'); ?></label></th>
+				<td>
+					<input name="pcl_settings[require_activation_key]" type="checkbox" id="require_activation_key" value="1" <?php checked(pcl_require_activation_key(), 1); ?>>
+					<p class="description" id="rquire_activation_key_description"><?php _e('If checked, users would receive an email to activate their account before they can login.', 'pcl'); ?></p></td>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
 	<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes', 'pcl'); ?>"></p>
 </form>
