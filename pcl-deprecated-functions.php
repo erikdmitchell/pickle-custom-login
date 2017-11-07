@@ -3,7 +3,7 @@
 if (!defined('WPINC')) {
 	die;
 }
-
+// WILL USE WC LOGIC
 /*
 function wc_do_deprecated_action( $action, $args, $deprecated_in, $replacement ) {
 	if ( has_action( $action ) ) {
