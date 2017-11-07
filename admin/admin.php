@@ -218,6 +218,18 @@ echo '</pre>';
 
 		return $content;
 	}
+	
+	public function pcl_admin_dropdown_pages($name='', $selected='') {
+		$args=array(
+			'name' => "pcl_settings[$name]",
+			'id' => $name,
+			'show_option_none' => '-- '.__('Choose One', 'pcl').' --',
+			'selected' => $selected,
+			'echo' => 0,
+		);
+		
+		echo wp_dropdown_pages($args);
+	}
 
 	public function get_admin_page($template_name=false) {
 		if (!$template_name)

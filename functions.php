@@ -262,4 +262,22 @@ function pcl_recaptcha_scripts_styles() {
 	wp_enqueue_script('google-recaptcha-api-script','https://www.google.com/recaptcha/api.js');
 }
 add_action('wp_enqueue_scripts','pcl_recaptcha_scripts_styles');
+
+/**
+ * pcl_hide_admin_bar function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_hide_admin_bar() {
+	return get_option('pcl-hide-admin-bar', false);
+}
+
+function pcl_enable_recaptcha() {
+	return get_option('pcl-enable-recaptcha', false);
+}
+
+function pcl_require_activation_key() {
+	return get_option('pcl-require-activation-key', 0);
+}
 ?>

@@ -1,17 +1,3 @@
-<?php
-$pages=get_option('pcl_pages');
-$settings=array(
-	'media_buttons' => false,
-);
-$require_activation_key=get_option('pcl-require-activation-key', 0);
-$require_activation_key_sub_classes='hide-if-js';
-$hide_admin_bar=get_option('pcl-hide-admin-bar', false);
-$enable_recaptcha=get_option('pcl-enable-recaptcha', false);
-
-if ($require_activation_key)
-	$require_activation_key_sub_classes='';
-?>
-
 <h2>Settings</h2>
 
 <form method="post" action="" method="post">
@@ -24,35 +10,35 @@ if ($require_activation_key)
 			<tr>
 				<th scope="row"><label for="login_page"><?php _e('Login Page', 'pcl'); ?></label></th>
 				<td>
-					<?php wp_dropdown_pages(array("name" => "pcl_settings[login_page]", "show_option_none" => "-- " . __('Choose One', 'pcl') . " --", "selected" => $pages['login'])); ?>
+					<?php pickle_custom_login()->admin->pcl_admin_dropdown_pages('login_page', pickle_custom_login()->pages['login']); ?>
 					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-login-form]</p>
 				</td>
 			</tr>
 			<tr>
 				<th scope="row"><label for="register_page"><?php _e('Registration Page', 'pcl'); ?></label></th>
 				<td>
-					<?php wp_dropdown_pages(array("name" => "pcl_settings[register_page]", "show_option_none" => "-- " . __('Choose One', 'pcl') . " --", "selected" => $pages['register'])); ?>
+					<?php pickle_custom_login()->admin->pcl_admin_dropdown_pages('register_page', pickle_custom_login()->pages['register']); ?>
 					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-registration-form]</p>
 				</td>
 			</tr>
 			<tr>
 				<th scope="row"><label for="forgot_password_page"><?php _e('Forgot Password Page', 'pcl'); ?></label></th>
 				<td>
-					<?php wp_dropdown_pages(array("name" => "forgot_password_page", "show_option_none" => "-- " . __('Choose One', 'pcl') . " --", "selected" => $pages['forgot-password'])); ?>
+					<?php pickle_custom_login()->admin->pcl_admin_dropdown_pages('forgot_password_page', pickle_custom_login()->pages['forgot-password']); ?>
 					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-forgot-password-form]</p>
 				</td>
 			</tr>
 			<tr>
 				<th scope="row"><label for="reset_page"><?php _e('Reset Password Page', 'pcl'); ?></label></th>
 				<td>
-					<?php wp_dropdown_pages(array("name" => "reset_page", "show_option_none" => "-- " . __('Choose One', 'pcl') . " --", "selected" => $pages['reset-password'])); ?>
+					<?php pickle_custom_login()->admin->pcl_admin_dropdown_pages('reset_page', pickle_custom_login()->pages['reset-password']); ?>
 					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-reset-password-form]</p>
 				</td>
 			</tr>
 			<tr>
 				<th scope="row"><label for="activate_page"><?php _e('Activation Page', 'pcl'); ?></label></th>
 				<td>
-					<?php wp_dropdown_pages(array("name" => "activate_page", "show_option_none" => "-- " . __('Choose One', 'pcl') . " --", "selected" => $pages['activate-account'])); ?>
+					<?php pickle_custom_login()->admin->pcl_admin_dropdown_pages('activate_page', pickle_custom_login()->pages['activate-account']); ?>
 					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-user-activation]</p>
 				</td>
 			</tr>
@@ -95,7 +81,7 @@ if ($require_activation_key)
 			<tr>
 				<th scope="row"><label for="hide_admin_bar"><?php _e('Hide Admin Bar', 'pcl'); ?></label></th>
 				<td>
-					<input name="hide_admin_bar" type="checkbox" id="hide_admin_bar" value="1" <?php checked($hide_admin_bar,1); ?>>
+					<input name="hide_admin_bar" type="checkbox" id="hide_admin_bar" value="1" <?php checked(pcl_hide_admin_bar(), 1); ?>>
 					<p class="description" id="hide_admin_bar_description"><?php _e('If checked, the admin bar would be hidden for non administrators.', 'pcl'); ?></p></td>
 				</td>
 			</tr>
@@ -109,7 +95,7 @@ if ($require_activation_key)
 			<tr>
 				<th scope="row"><label for="enable_recaptcha"><?php _e('Enable reCaptcha', 'pcl'); ?></label></th>
 				<td>
-					<input name="enable_recaptcha" type="checkbox" id="enable_recaptcha" value="1" <?php checked($enable_recaptcha,1); ?>>
+					<input name="enable_recaptcha" type="checkbox" id="enable_recaptcha" value="1" <?php checked(pcl_enable_recaptcha(), 1); ?>>
 					<p class="description" id="enable_recaptcha_description"><?php _e('Enable reCaptcha form on registration page.', 'pcl'); ?></p></td>
 				</td>
 			</tr>

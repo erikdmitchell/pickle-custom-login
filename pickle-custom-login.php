@@ -30,6 +30,8 @@ final class PickleCustomLogin {
 	public $activation='';
 	
 	public $admin='';
+	
+	public $pages=array();
 
 	protected static $_instance=null;
 
@@ -92,6 +94,7 @@ final class PickleCustomLogin {
 	public function init() {
 		$this->activation=new Pickle_Custom_Login_User_Activation();
 		$this->errors=new Pickle_Custom_Login_Errors();
+		$this->pages=get_option('pcl_pages');
 	}
 
 }

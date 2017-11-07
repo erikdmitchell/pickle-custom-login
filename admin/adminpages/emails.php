@@ -1,5 +1,18 @@
 <h2>Emails</h2>
 
+$require_activation_key_sub_classes='hide-if-js';
+
+
+
+if ($require_activation_key)
+	$require_activation_key_sub_classes='';
+	
+	pcl_require_activation_key()
+	
+	$settings=array(
+	'media_buttons' => false,
+);
+
 <table class="form-table customize-emails">
 	<tbody>
 		<tr>
