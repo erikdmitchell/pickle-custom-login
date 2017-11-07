@@ -19,10 +19,11 @@
 				</td>
 			</tr>
 	
-			<tr class="activation-key-details-field hidden">
+			<tr>
 				<th scope="row"><label for="account_activation_email"><?php _e('Account Creation Email', 'pcl'); ?></label></th>
 				<td>
 					<?php pickle_custom_login()->admin->email_editor('pcl-account-activation-email', 'account_activation_email'); ?>
+					<p class="description"><?php _e('When "Require Account Activation" is active.', 'pcl'); ?></p>
 				</td>
 			</tr>
 		</tbody>
