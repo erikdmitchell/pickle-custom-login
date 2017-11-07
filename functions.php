@@ -150,9 +150,7 @@ function pcl_is_user_authenticated($user_id=0) {
 }
 
 function pcl_activate_user() {
-	global $EMCustomLoginUserActivation;
-
-	return $EMCustomLoginUserActivation->activate_user();
+	return pickle_custom_login()->activation->activate_user();
 }
 
 function pcl_logged_in_links($args=array()) {

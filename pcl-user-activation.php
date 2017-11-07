@@ -1,24 +1,20 @@
 <?php
-/**
- * EMCustomLoginUserActivation class.
- *
- * @since 0.1.0
- */
-class EMCustomLoginUserActivation {
+
+class Pickle_Custom_Login_User_Activation {
 
 	/**
 	 * __construct function.
-	 *
+	 * 
 	 * @access public
 	 * @return void
 	 */
 	public function __construct() {
-		add_shortcode('pcl-user-activation',array($this,'user_activation_form'));
+		add_shortcode('pcl-user-activation', array($this, 'user_activation_form'));
 	}
 
 	/**
 	 * user_activation_form function.
-	 *
+	 * 
 	 * @access public
 	 * @return void
 	 */
@@ -31,7 +27,7 @@ class EMCustomLoginUserActivation {
 
 	/**
 	 * activate_user function.
-	 *
+	 * 
 	 * @access public
 	 * @return void
 	 */
@@ -56,7 +52,7 @@ class EMCustomLoginUserActivation {
 
 	/**
 	 * is_user_authenticated function.
-	 *
+	 * 
 	 * @access public
 	 * @param mixed $user
 	 * @return void
@@ -65,13 +61,11 @@ class EMCustomLoginUserActivation {
 		if (!$user || is_wp_error($user))
 			return false;
 
-		if (get_user_meta($user->ID,'has_to_be_activated',true)!=false)
+		if (get_user_meta($user->ID, 'has_to_be_activated', true)!=false)
 			return false;
 
 		return true;
 	}
 
 }
-
-$EMCustomLoginUserActivation=new EMCustomLoginUserActivation();
 ?>
