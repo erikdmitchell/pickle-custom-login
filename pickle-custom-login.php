@@ -24,6 +24,8 @@ if (!defined('PCL_PLUGIN_FILE')) {
 final class PickleCustomLogin {
 
 	public $version='1.0.0';
+	
+	public $errors='';
 
 	protected static $_instance=null;
 
@@ -60,7 +62,7 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'pcl-deprecated-functions.php');
 		
 		include_once(PCL_PATH.'functions.php');
-		include_once(PCL_PATH.'error.php');
+		include_once(PCL_PATH.'pcl-errors.php');
 		include_once(PCL_PATH.'login.php');
 		include_once(PCL_PATH.'register.php');
 		include_once(PCL_PATH.'password.php');
@@ -76,7 +78,7 @@ final class PickleCustomLogin {
 	}
 
 	public function init() {
-
+		$this->errors=new Pickle_Custom_Login_Errors();
 	}
 
 }
