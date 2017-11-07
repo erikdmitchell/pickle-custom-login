@@ -1,5 +1,5 @@
 <?php
-$pages=get_option('pcl-pages');
+$pages=get_option('pcl_pages');
 $settings=array(
 	'media_buttons' => false,
 );

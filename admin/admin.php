@@ -63,14 +63,14 @@ class Pickle_Custom_Login_Admin {
 	public function update_admin_settings() {
 		if (isset($_POST['custom_login_admin']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 			// update pages //
-			$pages=get_option('pcl-pages');
+			$pages=get_option('pcl_pages');
 			$pages['login']=$_POST['login_page'];
 			$pages['register']=$_POST['register_page'];
 			$pages['forgot-password']=$_POST['forgot_password_page'];
 			$pages['reset-password']=$_POST['reset_page'];
 			$pages['activate-account']=$_POST['activate_page'];
 
-			update_option('pcl-pages',$pages);
+			update_option('pcl_pages',$pages);
 
 			// update redirects //
 			if ($_POST['redirect_users']!='')
@@ -195,14 +195,14 @@ class Pickle_Custom_Login_Admin {
 	 * @return void
 	 */
 	public function check_pcl_pages_on_trash($post_id) {
-		$pages=get_option('pcl-pages');
+		$pages=get_option('pcl_pages');
 
 		foreach ($pages as $slug => $id) :
 			if ($post_id==$id)
 				$pages[$slug]=null;
 		endforeach;
 
-		update_option('pcl-pages',$pages);
+		update_option('pcl_pages',$pages);
 	}
 
 	/**
@@ -220,7 +220,7 @@ class Pickle_Custom_Login_Admin {
 
 		do_action('pcl_before_admin_'.$template_name);
 
-		include(PCL_PATH.'adminpages/'.$template_name.'.php');
+		include(PCL_PATH.'admin/adminpages/'.$template_name.'.php');
 
 		do_action('pcl_after_admin_'.$template_name);
 
