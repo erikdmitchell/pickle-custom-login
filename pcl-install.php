@@ -33,9 +33,9 @@ class Pickle_Custom_Login_Install {
 		set_transient('pcl_installing', 'yes', MINUTE_IN_SECONDS*10);
 
 		self::create_pages();
-		self::update();
 		self::update_version();
-
+		self::update();
+	
 		delete_transient('pcl_installing');
 	}
 
@@ -96,9 +96,8 @@ class Pickle_Custom_Login_Install {
 
 	private static function update() {
 		$current_version=get_option('pcl_version');
-		$update_queued=false;
 
-		foreach (self::get_db_update_callbacks() as $version => $update_callbacks ) :
+		foreach (self::get_update_callbacks() as $version => $update_callbacks ) :	
 			if (version_compare($current_version, $version, '<')) :
 				foreach ($update_callbacks as $update_callback) :
 					$update_callback();
@@ -118,6 +117,16 @@ class Pickle_Custom_Login_Install {
 	}
 
 }
+
+/*
+	global $wpdb;
+	
+	$wpdb->query("
+		UPDATE $wpdb->options
+		SET post_content = REPLACE(post_content, '[emcl-', '[xcl-')
+		WHERE post_content LIKE '%emcl-%'
+	");
+*/
 
 Pickle_Custom_Login_Install::init();
 ?>
