@@ -138,13 +138,13 @@ if ($require_activation_key)
 				<tr>
 					<th scope="row"><label for="retrieve_password_email"><?php _e('Reset Password Email', 'pcl'); ?></label></th>
 					<td>
-						<?php wp_editor(stripslashes(get_option('pcl-retrieve-password-email',$this->default_email_content('retrieve_password_email'))),'retrieve_password_email',$settings); ?>
+						<?php wp_editor(stripslashes(get_option('pcl-retrieve-password-email', $this->default_email_content('retrieve_password_email'))), 'retrieve_password_email', $settings); ?>
 					</td>
 				</tr>
 				<tr class="hide-if-activation-key">
 					<th scope="row"><label for="account_creation_email"><?php _e('Retrieve Password Email', 'pcl'); ?></label></th>
 					<td>
-						<?php wp_editor(stripslashes(get_option('pcl-account-creation-email',$this->default_email_content('account_creation_email'))),'account_creation_email',$settings); ?>
+						<?php wp_editor(stripslashes(get_option('pcl-account-creation-email', $this->default_email_content('account_creation_email'))), 'account_creation_email', $settings); ?>
 					</td>
 				</tr>
 				<tr>

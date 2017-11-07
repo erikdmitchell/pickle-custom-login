@@ -160,7 +160,7 @@ class Pickle_Custom_Login_Admin {
 				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n";
 				$content.="If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.\r\n\r\n";
 				$content.="To reset your password, visit the following address:\r\n\r\n";
-				$content.="{password_reset}\r\n\r\n";
+				$content.="{password_reset_link}\r\n\r\n";
 				$content.="Thanks!\r\n\r\n";
 				break;
 			case 'account_activation_email':
