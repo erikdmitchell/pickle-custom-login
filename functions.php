@@ -101,6 +101,13 @@ function pcl_format_error_message($code='', $message=false, $type='') {
 	pickle_custom_login()->errors->format_error($code, $message, $type);
 }
 
+/**
+ * pcl_login_extras function.
+ * 
+ * @access public
+ * @param array $args (default: array())
+ * @return void
+ */
 function pcl_login_extras($args=array()) {
 	$html=null;
 	$default_args=array(
@@ -130,6 +137,12 @@ function pcl_login_extras($args=array()) {
 	echo $html;
 }
 
+/**
+ * pcl_is_activation_required function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_is_activation_required() {
 	$require_activation_key=get_option('pcl-require-activation-key', 0);
 
@@ -139,6 +152,13 @@ function pcl_is_activation_required() {
 	return false;
 }
 
+/**
+ * pcl_is_user_authenticated function.
+ * 
+ * @access public
+ * @param int $user_id (default: 0)
+ * @return void
+ */
 function pcl_is_user_authenticated($user_id=0) {
 	if (!$user_id)
 		return false;
