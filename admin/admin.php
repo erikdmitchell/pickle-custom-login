@@ -1,10 +1,6 @@
 <?php
-/**
- * EMCustomLoginAdmin class.
- *
- * @sonce 0.1.0
- */
-class EMCustomLoginAdmin {
+
+class Pickle_Custom_Login_Admin {
 
 	protected $admin_notices=array();
 
@@ -19,7 +15,7 @@ class EMCustomLoginAdmin {
 		add_action('admin_notices', array($this, 'admin_notices'));
 		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
 		add_action('init', array($this, 'update_admin_settings'));
-		add_action('wp_trash_post', array($this, 'check_emcl_pages_on_trash'));
+		add_action('wp_trash_post', array($this, 'check_pcl_pages_on_trash'));
 	}
 
 	/**
@@ -29,7 +25,7 @@ class EMCustomLoginAdmin {
 	 * @return void
 	 */
 	public function admin_menu() {
-		add_options_page('EM Custom Login','EM Custom Login','manage_options','em_custom_login',array($this,'admin_page'));
+		add_options_page('Pickle Custom Login', 'Pickle Custom Login', 'manage_options', 'pickle_custom_login', array($this, 'admin_page'));
 	}
 
 	/**
@@ -40,12 +36,12 @@ class EMCustomLoginAdmin {
 	 * @return void
 	 */
 	public function admin_scripts_styles($hook) {
-		if ($hook!='settings_page_em_custom_login')
+		if ($hook!='settings_page_pickle_custom_login')
 			return false;
 
-		wp_enqueue_script('emcl-admin-script', plugins_url('/js/admin.js', __FILE__), array('jquery'), '0.1.0', true);
+		wp_enqueue_script('pcl-admin-script', plugins_url('/js/admin.js', __FILE__), array('jquery'), '0.1.0', true);
 
-		wp_enqueue_style('emcl-admin-style', plugins_url('/css/admin.css', __FILE__));
+		wp_enqueue_style('pcl-admin-style', plugins_url('/css/admin.css', __FILE__));
 	}
 
 	/**
@@ -67,63 +63,63 @@ class EMCustomLoginAdmin {
 	public function update_admin_settings() {
 		if (isset($_POST['custom_login_admin']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 			// update pages //
-			$pages=get_option('emcl-pages');
+			$pages=get_option('pcl_pages');
 			$pages['login']=$_POST['login_page'];
 			$pages['register']=$_POST['register_page'];
 			$pages['forgot-password']=$_POST['forgot_password_page'];
 			$pages['reset-password']=$_POST['reset_page'];
 			$pages['activate-account']=$_POST['activate_page'];
 
-			update_option('emcl-pages',$pages);
+			update_option('pcl_pages',$pages);
 
 			// update redirects //
 			if ($_POST['redirect_users']!='')
-				update_option('emcl-login-redirect',$_POST['redirect_users']);
+				update_option('pcl-login-redirect',$_POST['redirect_users']);
 
 			if ($_POST['redirect_after_registration']!='')
-				update_option('emcl-register-redirect',$_POST['redirect_after_registration']);
+				update_option('pcl-register-redirect',$_POST['redirect_after_registration']);
 
 			if ($_POST['redirect_after_logout']!='')
-				update_option('emcl-logout-redirect', $_POST['redirect_after_logout']);
+				update_option('pcl-logout-redirect', $_POST['redirect_after_logout']);
 
 			// update admin bar //
 			if (isset($_POST['hide_admin_bar'])) :
-				update_option('emcl-hide-admin-bar',$_POST['hide_admin_bar']);
+				update_option('pcl-hide-admin-bar',$_POST['hide_admin_bar']);
 			else :
-				delete_option('emcl-hide-admin-bar');
+				delete_option('pcl-hide-admin-bar');
 			endif;
 
 			// update reCaptcha //
 			if (isset($_POST['enable_recaptcha'])) :
-				update_option('emcl-enable-recaptcha',$_POST['enable_recaptcha']);
+				update_option('pcl-enable-recaptcha',$_POST['enable_recaptcha']);
 			else :
-				delete_option('emcl-enable-recaptcha');
+				delete_option('pcl-enable-recaptcha');
 			endif;
 
 			if ($_POST['recaptcha_site_key']!='')
-				update_option('emcl-recaptcha-site-key',$_POST['recaptcha_site_key']);
+				update_option('pcl-recaptcha-site-key',$_POST['recaptcha_site_key']);
 
 			if ($_POST['recaptcha_secret_key']!='')
-				update_option('emcl-recaptcha-secret-key',$_POST['recaptcha_secret_key']);
+				update_option('pcl-recaptcha-secret-key',$_POST['recaptcha_secret_key']);
 
 			// update retrieve password email //
 			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')
-				update_option('emcl-retrieve-password-email',wp_kses_post($_POST['retrieve_password_email']));
+				update_option('pcl-retrieve-password-email',wp_kses_post($_POST['retrieve_password_email']));
 
 			// require activation key //
 			if (isset($_POST['require_activation_key'])) :
-				update_option('emcl-require-activation-key',$_POST['require_activation_key']);
+				update_option('pcl-require-activation-key',$_POST['require_activation_key']);
 			else :
-				delete_option('emcl-require-activation-key');
+				delete_option('pcl-require-activation-key');
 			endif;
 
 			// update account creation email //
 			if (isset($_POST['account_creation_email']) && $_POST['account_creation_email']!='')
-				update_option('emcl-account-creation-email',wp_kses_post($_POST['account_creation_email']));
+				update_option('pcl-account-creation-email',wp_kses_post($_POST['account_creation_email']));
 
 			// update account activation email //
 			if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
-				update_option('emcl-account-activation-email',wp_kses_post($_POST['account_activation_email']));
+				update_option('pcl-account-activation-email',wp_kses_post($_POST['account_activation_email']));
 
 			$this->admin_notices['updated']='Settings Updated!';
 		endif;
@@ -164,7 +160,7 @@ class EMCustomLoginAdmin {
 				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n";
 				$content.="If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.\r\n\r\n";
 				$content.="To reset your password, visit the following address:\r\n\r\n";
-				$content.="{password_reset}\r\n\r\n";
+				$content.="{password_reset_link}\r\n\r\n";
 				$content.="Thanks!\r\n\r\n";
 				break;
 			case 'account_activation_email':
@@ -190,7 +186,7 @@ class EMCustomLoginAdmin {
 	}
 
 	/**
-	 * check_emcl_pages_on_trash function.
+	 * check_pcl_pages_on_trash function.
 	 *
 	 * if a user trashes one of our set pages, we need to remove the id from our settings (option)
 	 *
@@ -198,15 +194,15 @@ class EMCustomLoginAdmin {
 	 * @param mixed $post_id
 	 * @return void
 	 */
-	public function check_emcl_pages_on_trash($post_id) {
-		$pages=get_option('emcl-pages');
+	public function check_pcl_pages_on_trash($post_id) {
+		$pages=get_option('pcl_pages');
 
 		foreach ($pages as $slug => $id) :
 			if ($post_id==$id)
 				$pages[$slug]=null;
 		endforeach;
 
-		update_option('emcl-pages',$pages);
+		update_option('pcl_pages',$pages);
 	}
 
 	/**
@@ -222,11 +218,11 @@ class EMCustomLoginAdmin {
 
 		ob_start();
 
-		do_action('emcl_before_admin_'.$template_name);
+		do_action('pcl_before_admin_'.$template_name);
 
-		include(EMCL_PATH.'adminpages/'.$template_name.'.php');
+		include(PCL_PATH.'admin/adminpages/'.$template_name.'.php');
 
-		do_action('emcl_after_admin_'.$template_name);
+		do_action('pcl_after_admin_'.$template_name);
 
 		$html=ob_get_contents();
 
@@ -236,6 +232,4 @@ class EMCustomLoginAdmin {
 	}
 
 }
-
-$EMCustomLoginAdmin=new EMCustomLoginAdmin();
 ?>

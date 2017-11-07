@@ -1,4 +1,4 @@
-<div class="emcl-login-form">
+<div class="pcl-login-form">
 	<form id="custom_login_form" class="custom_form" action="" method="post">
 		<fieldset>
 			<p>
@@ -15,5 +15,5 @@
 			</p>
 		</fieldset>
 	</form>
-	<?php emcl_login_extras(); ?>
+	<?php pcl_login_extras(); ?>
 </div>

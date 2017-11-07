@@ -1,4 +1,4 @@
-<div class="emcl-registration">
+<div class="pcl-registration">
 	<form id="custom_registration_form" class="custom_form" action="" method="POST">
 		<fieldset>
 			<p>
@@ -26,11 +26,11 @@
 				<input name="custom_user_pass_confirm" id="password_again" class="password" type="password"/>
 			</p>
 
-			<?php do_action('emcl_registraion_before_recaptcha'); ?>
+			<?php do_action('pcl_registraion_before_recaptcha'); ?>
 
-			<?php if (get_option('emcl-enable-recaptcha', false)) : ?>
+			<?php if (get_option('pcl-enable-recaptcha', false)) : ?>
 				<p>
-					<div class="g-recaptcha" data-sitekey="<?php echo get_option('emcl-recaptcha-site-key',''); ?>"></div>
+					<div class="g-recaptcha" data-sitekey="<?php echo get_option('pcl-recaptcha-site-key',''); ?>"></div>
 				</p>
 			<?php endif; ?>
 
@@ -40,5 +40,5 @@
 			</p>
 		</fieldset>
 	</form>
-	<?php emcl_login_extras(array('loginout' => true,'register' => false,'password' => false)); ?>
+	<?php pcl_login_extras(array('loginout' => true,'register' => false,'password' => false)); ?>
 </div>
