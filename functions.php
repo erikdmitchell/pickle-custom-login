@@ -37,16 +37,26 @@ function pcl_get_template_html($template_name=false,$attributes=null) {
 	return $html;
 }
 
+/**
+ * pcl_add_error_message function.
+ * 
+ * @access public
+ * @param string $slug (default: '')
+ * @param string $message (default: '')
+ * @return void
+ */
 function pcl_add_error_message($slug='',$message='') {
-	global $custom_login_errors;
-
-	$custom_login_errors->register_errors()->add($slug,__($message));
+	pickle_custom_login()->errors->register_errors()->add($slug,__($message));
 }
 
+/**
+ * pcl_has_error_messages function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_has_error_messages() {
-	global $custom_login_errors;
-
-	$errors=$custom_login_errors->register_errors()->get_error_messages();
+	$errors=pickle_custom_login()->errors->register_errors()->get_error_messages();
 
 	if (empty($errors))
 		return false;
@@ -54,16 +64,27 @@ function pcl_has_error_messages() {
 	return true;
 }
 
+/**
+ * pcl_show_error_messages function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_show_error_messages() {
-	global $custom_login_errors;
-
-	$custom_login_errors->show_error_messages();
+	pickle_custom_login()->errors->show_error_messages();
 }
 
-function pcl_format_error_message($code='',$message=false,$type='') {
-	global $custom_login_errors;
-
-	return $custom_login_errors->format_error($code,$message,$type);
+/**
+ * pcl_format_error_message function.
+ * 
+ * @access public
+ * @param string $code (default: '')
+ * @param bool $message (default: false)
+ * @param string $type (default: '')
+ * @return void
+ */
+function pcl_format_error_message($code='', $message=false, $type='') {
+	pickle_custom_login()->errors->format_error($code, $message, $type);
 }
 
 function pcl_login_extras($args=array()) {
