@@ -28,6 +28,8 @@ final class PickleCustomLogin {
 	public $errors='';
 	
 	public $activation='';
+	
+	public $admin='';
 
 	protected static $_instance=null;
 
@@ -78,7 +80,7 @@ final class PickleCustomLogin {
 		new Pickle_Custom_Login_Reset_Password();
 		
 		if (is_admin()) :
-			new Pickle_Custom_Login_Admin();
+			$this->admin=new PickleCustomLoginAdmin();
 		endif;
 	}
 
