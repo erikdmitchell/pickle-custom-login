@@ -51,7 +51,39 @@ class Pickle_Custom_Login_Admin {
 	 * @return void
 	 */
 	public function admin_page() {
-		echo $this->get_admin_page('settings');
+		$html=null;
+		$tabs=array(
+			'settings' => 'Settings',
+			'emails' => 'Emails',
+		);
+		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
+			
+		$html.='<div class="wrap pcl-admin">';
+			$html.='<h1>Pickle Custom Login</h1>';
+			
+			$html.='<h2 class="nav-tab-wrapper">';
+				foreach ($tabs as $key => $name) :
+					if ($active_tab==$key) :
+						$class='nav-tab-active';
+					else :
+						$class=null;
+					endif;
+
+					$html.='<a href="?page=pickle_custom_login&tab='.$key.'" class="nav-tab '.$class.'">'.$name.'</a>';
+				endforeach;
+			$html.='</h2>';
+
+			switch ($active_tab) :
+				case 'emails':
+					$html.=$this->get_admin_page('emails');
+					break;					
+				default:
+					$html.=$this->get_admin_page('settings');
+			endswitch;
+
+		$html.='</div>';
+
+		echo $html;
 	}
 
 	/**
