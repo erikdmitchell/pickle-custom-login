@@ -13,7 +13,7 @@ if ($require_activation_key)
 ?>
 
 <div class="custom-login-admin wrap">
-	<h1>EM Custom Login</h1>
+	<h1>Pickle Custom Login</h1>
 
 	<form method="post" action="" method="post">
 		<input type="hidden" name="custom_login_admin" value="update">
