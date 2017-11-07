@@ -1,10 +1,6 @@
 <?php
-/**
- * EMCustomRegistration class.
- *
- * @since 0.1.0
- */
-class EMCustomRegistration {
+
+class Pickle_Custom_Login_Registration {
 
 	protected $registration_success_notice=false;
 
@@ -62,7 +58,7 @@ class EMCustomRegistration {
 	public function add_new_user() {
 		$redirect=get_option('pcl-register-redirect', home_url());
 
-	  if (isset($_POST["custom_user_login_reg"]) && wp_verify_nonce($_POST['custom_register_nonce'],'custom-register-nonce')) :
+	  if (isset($_POST["custom_user_login_reg"]) && wp_verify_nonce($_POST['custom_register_nonce'], 'custom-register-nonce')) :
 			$user_login=$_POST["custom_user_login_reg"];
 			$user_email=$_POST["custom_user_email"];
 			$user_first=$_POST["custom_user_first"];
@@ -155,6 +151,4 @@ class EMCustomRegistration {
 	}
 
 }
-
-new EMCustomRegistration();
 ?>

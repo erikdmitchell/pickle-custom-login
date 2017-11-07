@@ -2,6 +2,12 @@
 
 class Pickle_Custom_Login {
 
+	/**
+	 * __construct function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		add_action('init', array($this, 'login_member'));
 		add_action('init', array($this, 'redirect_login_page'));
@@ -14,6 +20,12 @@ class Pickle_Custom_Login {
 		add_shortcode('pcl-login-form', array($this, 'login_form'));
 	}
 
+	/**
+	 * login_form function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function login_form() {
 		if (is_user_logged_in())
 			return pcl_get_template_html('logged-in');
@@ -27,6 +39,12 @@ class Pickle_Custom_Login {
 		return pcl_get_template_html('login-form');
 	}
 
+	/**
+	 * login_member function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function login_member() {
 		$redirect=get_option('pcl-login-redirect', home_url());
 
@@ -65,6 +83,12 @@ class Pickle_Custom_Login {
 		endif;
 	}
 
+	/**
+	 * redirect_login_page function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function redirect_login_page() {
 		$slug=pcl_page_slug('login');
 		$page_viewed=basename($_SERVER['REQUEST_URI']);
@@ -79,6 +103,12 @@ class Pickle_Custom_Login {
 		endif;
 	}
 
+	/**
+	 * login_failed function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function login_failed() {
 		$slug=pcl_page_slug('login');
 
@@ -90,6 +120,12 @@ class Pickle_Custom_Login {
 		endif;
 	}
 
+	/**
+	 * logout_page function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function logout_page() {
 		$redirect=get_option('pcl-logout-redirect', home_url());
 
@@ -97,7 +133,16 @@ class Pickle_Custom_Login {
 		exit;
 	}
 
-	public function verify_username_password( $user, $username, $password ) {
+	/**
+	 * verify_username_password function.
+	 * 
+	 * @access public
+	 * @param mixed $user
+	 * @param mixed $username
+	 * @param mixed $password
+	 * @return void
+	 */
+	public function verify_username_password($user, $username, $password) {
 		$slug=pcl_page_slug('login');
 
 		if ($slug) :

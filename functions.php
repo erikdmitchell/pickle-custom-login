@@ -1,10 +1,24 @@
 <?php
 
+/**
+ * pcl_scripts_styles function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_scripts_styles() {
-	wp_enqueue_style('pcl-frontend-style', plugins_url('css/style.css', __FILE__));	
+	wp_enqueue_style('pcl-frontend-style', PCL_URL.'css/style.css', '', PCL_VERSION);	
 }
 add_action('wp_enqueue_scripts', 'pcl_scripts_styles');
 
+/**
+ * pcl_get_template_html function.
+ * 
+ * @access public
+ * @param bool $template_name (default: false)
+ * @param mixed $attributes (default: null)
+ * @return void
+ */
 function pcl_get_template_html($template_name=false,$attributes=null) {
 	if (!$attributes )
 		$attributes = array();
@@ -162,10 +176,17 @@ function pcl_logged_in_links($args=array()) {
 	echo $html;
 }
 
+/**
+ * pcl_page_slug function.
+ * 
+ * @access public
+ * @param string $page_type (default: '')
+ * @return void
+ */
 function pcl_page_slug($page_type='') {
 	global $EMCustomLoginAdmin;
 
-	$pages=get_option('pcl-pages');
+	$pages=get_option('pcl_pages');
 
 	if (isset($pages[$page_type])) :
 		$post=get_post($pages[$page_type]);

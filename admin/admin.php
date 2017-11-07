@@ -36,7 +36,7 @@ class Pickle_Custom_Login_Admin {
 	 * @return void
 	 */
 	public function admin_scripts_styles($hook) {
-		if ($hook!='settings_page_em_custom_login')
+		if ($hook!='settings_page_pickle_custom_login')
 			return false;
 
 		wp_enqueue_script('pcl-admin-script', plugins_url('/js/admin.js', __FILE__), array('jquery'), '0.1.0', true);
