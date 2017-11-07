@@ -1,24 +1,10 @@
 <?php
 
-/**
- * pcl_scripts_styles function.
- * 
- * @access public
- * @return void
- */
 function pcl_scripts_styles() {
 	wp_enqueue_style('pcl-frontend-style', plugins_url('css/style.css', __FILE__));	
 }
 add_action('wp_enqueue_scripts', 'pcl_scripts_styles');
 
-/**
- * pcl_get_template_html function.
- *
- * @access public
- * @param bool $template_name (default: false)
- * @param mixed $attributes (default: null)
- * @return void
- */
 function pcl_get_template_html($template_name=false,$attributes=null) {
 	if (!$attributes )
 		$attributes = array();
@@ -51,26 +37,12 @@ function pcl_get_template_html($template_name=false,$attributes=null) {
 	return $html;
 }
 
-/**
- * pcl_add_error_message function.
- *
- * @access public
- * @param string $slug (default: '')
- * @param string $message (default: '')
- * @return void
- */
 function pcl_add_error_message($slug='',$message='') {
 	global $custom_login_errors;
 
 	$custom_login_errors->register_errors()->add($slug,__($message));
 }
 
-/**
- * pcl_has_error_messages function.
- *
- * @access public
- * @return void
- */
 function pcl_has_error_messages() {
 	global $custom_login_errors;
 
@@ -82,40 +54,18 @@ function pcl_has_error_messages() {
 	return true;
 }
 
-/**
- * pcl_show_error_messages function.
- *
- * @access public
- * @return void
- */
 function pcl_show_error_messages() {
 	global $custom_login_errors;
 
 	$custom_login_errors->show_error_messages();
 }
 
-/**
- * pcl_format_error_message function.
- *
- * @access public
- * @param string $code (default: '')
- * @param bool $message (default: false)
- * @param string $type (default: '')
- * @return void
- */
 function pcl_format_error_message($code='',$message=false,$type='') {
 	global $custom_login_errors;
 
 	return $custom_login_errors->format_error($code,$message,$type);
 }
 
-/**
- * pcl_login_extras function.
- *
- * @access public
- * @param array $args (default: array())
- * @return void
- */
 function pcl_login_extras($args=array()) {
 	$html=null;
 	$default_args=array(
@@ -145,12 +95,6 @@ function pcl_login_extras($args=array()) {
 	echo $html;
 }
 
-/**
- * pcl_is_activation_required function.
- *
- * @access public
- * @return void
- */
 function pcl_is_activation_required() {
 	$require_activation_key=get_option('pcl-require-activation-key',0);
 
@@ -160,13 +104,6 @@ function pcl_is_activation_required() {
 	return false;
 }
 
-/**
- * pcl_is_user_authenticated function.
- *
- * @access public
- * @param int $user_id (default: 0)
- * @return void
- */
 function pcl_is_user_authenticated($user_id=0) {
 	if (!$user_id)
 		return false;
@@ -177,25 +114,12 @@ function pcl_is_user_authenticated($user_id=0) {
 	return true;
 }
 
-/**
- * pcl_activate_user function.
- *
- * @access public
- * @return void
- */
 function pcl_activate_user() {
 	global $EMCustomLoginUserActivation;
 
 	return $EMCustomLoginUserActivation->activate_user();
 }
 
-/**
- * pcl_logged_in_links function.
- *
- * @access public
- * @param array $args (default: array())
- * @return void
- */
 function pcl_logged_in_links($args=array()) {
 	$html=null;
 	$default_args=array(
@@ -217,12 +141,6 @@ function pcl_logged_in_links($args=array()) {
 	echo $html;
 }
 
-/**
- * pcl_get_pages function.
- *
- * @access public
- * @return void
- */
 function pcl_page_slug($page_type='') {
 	global $EMCustomLoginAdmin;
 
@@ -243,12 +161,6 @@ function pcl_page_slug($page_type='') {
 	return $slug;
 }
 
-/**
- * pcl_remove_admin_bar function.
- *
- * @access public
- * @return void
- */
 function pcl_remove_admin_bar() {
 	$hide_admin_bar=get_option('pcl-hide-admin-bar',false);
 
@@ -258,12 +170,6 @@ function pcl_remove_admin_bar() {
 }
 add_action('after_setup_theme','pcl_remove_admin_bar');
 
-/**
- * pcl_recaptcha_scripts_styles function.
- *
- * @access public
- * @return void
- */
 function pcl_recaptcha_scripts_styles() {
 	if (!is_page(pcl_page_slug('register')))
 		return false;
