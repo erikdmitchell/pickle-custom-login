@@ -90,7 +90,7 @@
 
 	<h3 class="title"><?php _e('reCaptcha', 'pcl'); ?></h3>
 
-	<table class="form-table general">
+	<table class="form-table recaptcha">
 		<tbody>
 			<tr>
 				<th scope="row"><label for="enable_recaptcha"><?php _e('Enable reCaptcha', 'pcl'); ?></label></th>
@@ -99,13 +99,13 @@
 					<p class="description" id="enable_recaptcha_description"><?php _e('Enable reCaptcha form on registration page.', 'pcl'); ?></p></td>
 				</td>
 			</tr>
-			<tr>
+			<tr class="recaptcha-details-field hidden">
 				<th scope="row"><label for="recaptcha_site_key"><?php _e('Site Key', 'pcl'); ?></label></th>
 				<td>
 					<input name="pcl_settings[recaptcha_site_key]" type="text" id="recaptcha_site_key" value="<?php echo get_option('pcl-recaptcha-site-key', ''); ?>" class="regular-text code">
 				</td>
 			</tr>
-			<tr>
+			<tr class="recaptcha-details-field hidden">
 				<th scope="row"><label for="recaptcha_secret_key"><?php _e('Secret Key</label', 'pcl'); ?>></th>
 				<td>
 					<input name="pcl_settings[recaptcha_secret_key]" type="text" id="recaptcha_secret_key" value="<?php echo get_option('pcl-recaptcha-secret-key', ''); ?>" class="regular-text code">
