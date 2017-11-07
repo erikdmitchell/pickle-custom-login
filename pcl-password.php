@@ -1,10 +1,6 @@
 <?php
-/**
- * EMCustomPasswordReset class.
- *
- * @since 0.1.0
- */
-class EMCustomPasswordReset {
+
+class Pickle_Custom_Login_Reset_Password {
 
 	/**
 	 * __construct function.
@@ -13,18 +9,18 @@ class EMCustomPasswordReset {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action('pcl_before_forgot-password','pcl_show_error_messages');
-		add_action('login_form_lostpassword',array($this,'process_reset_password_form'));
-		add_action('login_form_lostpassword',array($this,'redirect_to_password_reset'));
-		add_action('login_form_rp',array($this,'redirect_to_custom_password_reset'));
-		add_action('login_form_resetpass',array($this,'redirect_to_custom_password_reset'));
-		add_action('login_form_rp',array($this,'reset_password'));
-		add_action('login_form_resetpass',array($this,'reset_password'));
+		add_action('pcl_before_forgot-password', 'pcl_show_error_messages');
+		add_action('login_form_lostpassword', array($this, 'process_reset_password_form'));
+		add_action('login_form_lostpassword', array($this, 'redirect_to_password_reset'));
+		add_action('login_form_rp', array($this, 'redirect_to_custom_password_reset'));
+		add_action('login_form_resetpass', array($this, 'redirect_to_custom_password_reset'));
+		add_action('login_form_rp', array($this, 'reset_password'));
+		add_action('login_form_resetpass', array($this, 'reset_password'));
 
-		add_filter('retrieve_password_message',array($this,'replace_retrieve_password_message'),10,4);
+		add_filter('retrieve_password_message', array($this, 'replace_retrieve_password_message'), 10, 4);
 
-		add_shortcode('pcl-forgot-password-form',array($this,'forgot_password_form'));
-		add_shortcode('pcl-reset-password-form',array($this,'password_reset_form'));
+		add_shortcode('pcl-forgot-password-form', array($this, 'forgot_password_form'));
+		add_shortcode('pcl-reset-password-form', array($this, 'password_reset_form'));
 	}
 
 	/**
@@ -35,7 +31,7 @@ class EMCustomPasswordReset {
 	 */
 	public function forgot_password_form() {
 		if (is_user_logged_in())
-			return __('You are already signed in.','dummy');
+			return __('You are already signed in.', 'pcl');
 
 		if (isset($_GET['errors']))
 			$this->process_error_codes($_GET['errors']);
@@ -51,7 +47,7 @@ class EMCustomPasswordReset {
 	 */
 	public function password_reset_form() {
 		if (is_user_logged_in())
-			return __('You are already signed in.','dummy');
+			return __('You are already signed in.', 'pcl');
 
 		if (isset($_REQUEST['login']) && isset($_REQUEST['key'])) :
 			if (isset($_REQUEST['error']))
@@ -59,7 +55,7 @@ class EMCustomPasswordReset {
 
 			return pcl_get_template_html('reset-password');
 		else:
-			return __('Invalid password reset link.','dummy');
+			return __('Invalid password reset link.', 'pcl');
 		endif;
 
 		if (isset($_GET['login'])) :
@@ -181,8 +177,8 @@ class EMCustomPasswordReset {
 	 * @param mixed $user_data
 	 * @return void
 	 */
-	public function replace_retrieve_password_message($message,$key,$user_login,$user_data) {
-		return pcl_get_custom_email_message('password_reset',$message,$key,$user_login);
+	public function replace_retrieve_password_message($message, $key, $user_login, $user_data) {
+		return pcl_get_custom_email_message('password_reset', $message, $key, $user_login);
 	}
 
 	/**
@@ -287,6 +283,4 @@ class EMCustomPasswordReset {
 	}
 
 }
-
-new EMCustomPasswordReset();
 ?>
