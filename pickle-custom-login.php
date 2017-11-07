@@ -17,77 +17,71 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define('PCL_PATH', plugin_dir_path(__FILE__));
-
-include_once(PCL_PATH.'functions.php');
-include_once(PCL_PATH.'error.php');
-include_once(PCL_PATH.'login.php');
-include_once(PCL_PATH.'register.php');
-include_once(PCL_PATH.'password.php');
-include_once(PCL_PATH.'admin.php');
-include_once(PCL_PATH.'user-activation.php');
-include_once(PCL_PATH.'emails.php');
-include_once(PCL_PATH.'recaptchalib.php'); // google recaptcha library
-
-/**
- * pcl_plugin_activated function.
- * 
- * @access public
- * @return void
- */
-function pcl_plugin_activated() {
-	$pages_arr=array();
-	// Information needed for creating the plugin's pages
-	$page_definitions = array(
-		'login' => array(
-			'title' => __('Login','pcl'),
-			'content' => '[pcl-login-form]'
-		),
-		'register' => array(
-			'title' => __('Register','pcl'),
-			'content' => '[pcl-registration-form]'
-		),
-		'forgot-password' => array(
-			'title' => __('Forgot Password','pcl'),
-			'content' => '[pcl-forgot-password-form]'
-		),
-		'reset-password' => array(
-			'title' => __('Reset Password','pcl'),
-			'content' => '[pcl-reset-password-form]'
-		),
-		'activate-account' => array(
-			'title' => __('Activate Account','pcl'),
-			'content' => '[pcl-user-activation]'
-		),
-	);
-
-	foreach ($page_definitions as $slug => $page) :
-		// Check that the page doesn't exist already
-		$query=new WP_Query('pagename='.$slug);
-
-		if (!$query->have_posts()) :
-			// Add the page using the data from the array above
-			$post_id=wp_insert_post(
-				array(
-					'post_content'   => $page['content'],
-					'post_name'      => $slug,
-					'post_title'     => $page['title'],
-					'post_status'    => 'publish',
-					'post_type'      => 'page',
-					'ping_status'    => 'closed',
-					'comment_status' => 'closed',
-				)
-			);
-		else :
-			$post_id=$query->queried_object_id;
-		endif;
-
-		$pages_arr[$slug]=$post_id;
-	endforeach;
-
-	// if this plugin existed before, keep their settings //
-	if (!get_option('pcl-pages'))
-		update_option('pcl-pages', $pages_arr);
+if (!defined('PCL_PLUGIN_FILE')) {
+	define('PCL_PLUGIN_FILE', __FILE__);
 }
-register_activation_hook( __FILE__, 'pcl_plugin_activated');
+
+final class PickleCustomLogin {
+
+	public $version='1.0.0';
+
+	protected static $_instance=null;
+
+	public static function instance() {
+		if (is_null(self::$_instance)) {
+			self::$_instance=new self();
+		}
+		
+		return self::$_instance;
+	}
+
+	public function __construct() {
+		$this->define_constants();
+		$this->includes();
+		$this->init_hooks();
+	}
+
+	private function define_constants() {
+		$this->define('PCL_VERSION', $this->version);
+		$this->define('PCL_PATH', plugin_dir_path(__FILE__));
+		$this->define('PCL_URL', plugin_dir_url(__FILE__));
+		
+	}
+
+	private function define($name, $value) {
+		if (!defined($name)) {
+			define($name, $value);
+		}
+	}
+
+	public function includes() {
+		include_once(PCL_PATH.'pcl-install.php');
+		include_once(PCL_PATH.'functions.php');
+		include_once(PCL_PATH.'error.php');
+		include_once(PCL_PATH.'login.php');
+		include_once(PCL_PATH.'register.php');
+		include_once(PCL_PATH.'password.php');
+		include_once(PCL_PATH.'admin.php');
+		include_once(PCL_PATH.'user-activation.php');
+		include_once(PCL_PATH.'emails.php');
+		include_once(PCL_PATH.'recaptchalib.php'); // google recaptcha library
+	}
+
+	private function init_hooks() {
+		register_activation_hook(PCL_PLUGIN_FILE, array(Pickle_Custom_Login_Install, 'install'));
+		add_action('init', array($this, 'init'), 0);
+	}
+
+	public function init() {
+
+	}
+
+}
+
+function pickle_custom_login() {
+	return PickleCustomLogin::instance();
+}
+
+// Global for backwards compatibility.
+$GLOBALS['pickle_custom_login']=pickle_custom_login();
 ?>
