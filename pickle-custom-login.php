@@ -17,17 +17,17 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define('EMCL_PATH', plugin_dir_path(__FILE__));
+define('PCL_PATH', plugin_dir_path(__FILE__));
 
-include_once(plugin_dir_path(__FILE__).'functions.php');
-include_once(plugin_dir_path(__FILE__).'error.php');
-include_once(plugin_dir_path(__FILE__).'login.php');
-include_once(plugin_dir_path(__FILE__).'register.php');
-include_once(plugin_dir_path(__FILE__).'password.php');
-include_once(plugin_dir_path(__FILE__).'admin.php');
-include_once(plugin_dir_path(__FILE__).'user-activation.php');
-include_once(plugin_dir_path(__FILE__).'emails.php');
-include_once(plugin_dir_path(__FILE__).'recaptchalib.php'); // google recaptcha library
+include_once(PCL_PATH.'functions.php');
+include_once(PCL_PATH.'error.php');
+include_once(PCL_PATH.'login.php');
+include_once(PCL_PATH.'register.php');
+include_once(PCL_PATH.'password.php');
+include_once(PCL_PATH.'admin.php');
+include_once(PCL_PATH.'user-activation.php');
+include_once(PCL_PATH.'emails.php');
+include_once(PCL_PATH.'recaptchalib.php'); // google recaptcha library
 
 /**
  * emcl_plugin_activated function.

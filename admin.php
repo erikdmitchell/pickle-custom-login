@@ -224,7 +224,7 @@ class EMCustomLoginAdmin {
 
 		do_action('emcl_before_admin_'.$template_name);
 
-		include(EMCL_PATH.'adminpages/'.$template_name.'.php');
+		include(PCL_PATH.'adminpages/'.$template_name.'.php');
 
 		do_action('emcl_after_admin_'.$template_name);
 
