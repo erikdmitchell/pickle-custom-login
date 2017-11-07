@@ -215,12 +215,8 @@ function pcl_logged_in_links($args=array()) {
  * @return void
  */
 function pcl_page_slug($page_type='') {
-	global $EMCustomLoginAdmin;
-
-	$pages=get_option('pcl_pages');
-
-	if (isset($pages[$page_type])) :
-		$post=get_post($pages[$page_type]);
+	if (isset(pickle_custom_login()->pages[$page_type])) :
+		$post=get_post(pickle_custom_login()->pages[$page_type]);
 
 		if (isset($post->post_name)) :
 			$slug=$post->post_name;
@@ -273,11 +269,53 @@ function pcl_hide_admin_bar() {
 	return get_option('pcl-hide-admin-bar', false);
 }
 
+/**
+ * pcl_enable_recaptcha function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_enable_recaptcha() {
 	return get_option('pcl-enable-recaptcha', false);
 }
 
+/**
+ * pcl_require_activation_key function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_require_activation_key() {
 	return get_option('pcl-require-activation-key', 0);
 }
+
+/**
+ * pcl_login_redirect_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_login_redirect_url() {
+	return get_option('pcl-login-redirect', home_url());
+}
+
+/**
+ * pcl_register_redirect_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_register_redirect_url() {
+	return get_option('pcl-register-redirect', home_url());
+}
+
+/**
+ * pcl_logout_redirect_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_logout_redirect_url() {
+	return get_option('pcl-logout-redirect', home_url());
+}	 
 ?>

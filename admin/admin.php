@@ -40,7 +40,7 @@ final class PickleCustomLoginAdmin {
 		add_action('admin_menu', array($this, 'admin_menu'));
 		add_action('admin_notices', array($this, 'admin_notices'));
 		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
-		add_action('admin_init', array($this, 'update_settings'));
+		add_action('admin_init', array($this, 'update_settings'), 0);
 		add_action('wp_trash_post', array($this, 'check_pages_on_trash'));		
 	}
 
@@ -106,51 +106,43 @@ final class PickleCustomLoginAdmin {
 		wp_enqueue_style('pcl-admin-style', PCL_ADMIN_URL.'css/admin.css', '', PCL_VERSION);
 	}
 
-	public function update_settings() {
-echo '<pre>';
-print_r($_POST);
-echo '</pre>';		
-		if (isset($_POST['custom_login_admin']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
-			// update pages //
-			$pages=get_option('pcl_pages');
-			$pages['login']=$_POST['login_page'];
-			$pages['register']=$_POST['register_page'];
-			$pages['forgot-password']=$_POST['forgot_password_page'];
-			$pages['reset-password']=$_POST['reset_page'];
-			$pages['activate-account']=$_POST['activate_page'];
+	public function update_settings() {	
+		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'update_settings'))
+			return;
+			
+		$settings_data=$_POST['pcl_settings'];
+			
+		// update pages //
+		$pages=wp_parse_args($settings_data['pages'], get_option('pcl_pages', array()));
+		
+		update_option('pcl_pages', $pages);
 
-			update_option('pcl_pages',$pages);
+		// update redirects //
+		foreach ($settings_data['redirect'] as $option => $url) :
+			if ($url!='')
+				update_option($option, $url);
+		endforeach;
 
-			// update redirects //
-			if ($_POST['redirect_users']!='')
-				update_option('pcl-login-redirect',$_POST['redirect_users']);
+		// update admin bar //
+		if (isset($settings_data['hide_admin_bar'])) :
+			update_option('pcl-hide-admin-bar', 1);
+		else :
+			delete_option('pcl-hide-admin-bar');
+		endif;
 
-			if ($_POST['redirect_after_registration']!='')
-				update_option('pcl-register-redirect',$_POST['redirect_after_registration']);
+		// update reCaptcha //
+		if (isset($settings_data['enable_recaptcha'])) :
+			update_option('pcl-enable-recaptcha', 1);
+		else :
+			delete_option('pcl-enable-recaptcha');
+		endif;
 
-			if ($_POST['redirect_after_logout']!='')
-				update_option('pcl-logout-redirect', $_POST['redirect_after_logout']);
-
-			// update admin bar //
-			if (isset($_POST['hide_admin_bar'])) :
-				update_option('pcl-hide-admin-bar',$_POST['hide_admin_bar']);
-			else :
-				delete_option('pcl-hide-admin-bar');
-			endif;
-
-			// update reCaptcha //
-			if (isset($_POST['enable_recaptcha'])) :
-				update_option('pcl-enable-recaptcha',$_POST['enable_recaptcha']);
-			else :
-				delete_option('pcl-enable-recaptcha');
-			endif;
-
-			if ($_POST['recaptcha_site_key']!='')
-				update_option('pcl-recaptcha-site-key',$_POST['recaptcha_site_key']);
-
-			if ($_POST['recaptcha_secret_key']!='')
-				update_option('pcl-recaptcha-secret-key',$_POST['recaptcha_secret_key']);
-
+		if ($settings_data['recaptcha_site_key']!='')
+			update_option('pcl-recaptcha-site-key', $settings_data['recaptcha_site_key']);
+	
+		if ($settings_data['recaptcha_secret_key']!='')
+			update_option('pcl-recaptcha-secret-key', $settings_data['recaptcha_secret_key']);
+/*
 			// update retrieve password email //
 			if (isset($_POST['retrieve_password_email']) && $_POST['retrieve_password_email']!='')
 				update_option('pcl-retrieve-password-email',wp_kses_post($_POST['retrieve_password_email']));
@@ -169,9 +161,9 @@ echo '</pre>';
 			// update account activation email //
 			if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
 				update_option('pcl-account-activation-email',wp_kses_post($_POST['account_activation_email']));
+*/
 
-			$this->admin_notices['updated']='Settings Updated!';
-		endif;
+		$this->admin_notices['updated']='Settings Updated!';
 	}
 
 	public function check_pages_on_trash($post_id) {
@@ -219,9 +211,17 @@ echo '</pre>';
 		return $content;
 	}
 	
+	/**
+	 * pcl_admin_dropdown_pages function.
+	 * 
+	 * @access public
+	 * @param string $name (default: '')
+	 * @param string $selected (default: '')
+	 * @return void
+	 */
 	public function pcl_admin_dropdown_pages($name='', $selected='') {
 		$args=array(
-			'name' => "pcl_settings[$name]",
+			'name' => "pcl_settings[pages][$name]",
 			'id' => $name,
 			'show_option_none' => '-- '.__('Choose One', 'pcl').' --',
 			'selected' => $selected,
