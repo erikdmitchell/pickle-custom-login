@@ -56,6 +56,8 @@ final class PickleCustomLogin {
 
 	public function includes() {
 		include_once(PCL_PATH.'pcl-install.php');
+		include_once(PCL_PATH.'pcl-update-functions.php');
+		
 		include_once(PCL_PATH.'functions.php');
 		include_once(PCL_PATH.'error.php');
 		include_once(PCL_PATH.'login.php');
@@ -68,7 +70,7 @@ final class PickleCustomLogin {
 	}
 
 	private function init_hooks() {
-		register_activation_hook(PCL_PLUGIN_FILE, array(Pickle_Custom_Login_Install, 'install'));
+		register_activation_hook(PCL_PLUGIN_FILE, array('Pickle_Custom_Login_Install', 'install'));
 		add_action('init', array($this, 'init'), 0);
 	}
 
