@@ -29,7 +29,7 @@ class EMCustomLoginAdmin {
 	 * @return void
 	 */
 	public function admin_menu() {
-		add_options_page('EM Custom Login','EM Custom Login','manage_options','em_custom_login',array($this,'admin_page'));
+		add_options_page('Pickle Custom Login', 'Pickle Custom Login', 'manage_options', 'pickle_custom_login', array($this, 'admin_page'));
 	}
 
 	/**
