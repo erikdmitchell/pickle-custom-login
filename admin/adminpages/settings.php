@@ -12,8 +12,7 @@ if ($require_activation_key)
 	$require_activation_key_sub_classes='';
 ?>
 
-<div class="custom-login-admin wrap">
-	<h1>Pickle Custom Login</h1>
+
 
 	<form method="post" action="" method="post">
 		<input type="hidden" name="custom_login_admin" value="update">
@@ -166,4 +165,3 @@ if ($require_activation_key)
 
 		<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes', 'pcl'); ?>"></p>
 	</form>
-</div><!-- .wrap -->
