@@ -13,7 +13,7 @@ class EMCustomLoginUserActivation {
 	 * @return void
 	 */
 	public function __construct() {
-		add_shortcode('emcl-user-activation',array($this,'user_activation_form'));
+		add_shortcode('pcl-user-activation',array($this,'user_activation_form'));
 	}
 
 	/**
@@ -24,9 +24,9 @@ class EMCustomLoginUserActivation {
 	 */
 	public function user_activation_form() {
 		if (is_user_logged_in())
-			return emcl_get_template_html('logged-in');
+			return pcl_get_template_html('logged-in');
 
-		return emcl_get_template_html('user-activation-form');
+		return pcl_get_template_html('user-activation-form');
 	}
 
 	/**

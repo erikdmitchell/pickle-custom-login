@@ -8,7 +8,7 @@
  * Author URI: http://erikmitchell.net
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: emcl
+ * Text Domain: pcl
  * Domain Path: /languages
 */
 
@@ -30,34 +30,34 @@ include_once(PCL_PATH.'emails.php');
 include_once(PCL_PATH.'recaptchalib.php'); // google recaptcha library
 
 /**
- * emcl_plugin_activated function.
+ * pcl_plugin_activated function.
  * 
  * @access public
  * @return void
  */
-function emcl_plugin_activated() {
+function pcl_plugin_activated() {
 	$pages_arr=array();
 	// Information needed for creating the plugin's pages
 	$page_definitions = array(
 		'login' => array(
-			'title' => __('Login','emcl'),
-			'content' => '[emcl-login-form]'
+			'title' => __('Login','pcl'),
+			'content' => '[pcl-login-form]'
 		),
 		'register' => array(
-			'title' => __('Register','emcl'),
-			'content' => '[emcl-registration-form]'
+			'title' => __('Register','pcl'),
+			'content' => '[pcl-registration-form]'
 		),
 		'forgot-password' => array(
-			'title' => __('Forgot Password','emcl'),
-			'content' => '[emcl-forgot-password-form]'
+			'title' => __('Forgot Password','pcl'),
+			'content' => '[pcl-forgot-password-form]'
 		),
 		'reset-password' => array(
-			'title' => __('Reset Password','emcl'),
-			'content' => '[emcl-reset-password-form]'
+			'title' => __('Reset Password','pcl'),
+			'content' => '[pcl-reset-password-form]'
 		),
 		'activate-account' => array(
-			'title' => __('Activate Account','emcl'),
-			'content' => '[emcl-user-activation]'
+			'title' => __('Activate Account','pcl'),
+			'content' => '[pcl-user-activation]'
 		),
 	);
 
@@ -86,8 +86,8 @@ function emcl_plugin_activated() {
 	endforeach;
 
 	// if this plugin existed before, keep their settings //
-	if (!get_option('emcl-pages'))
-		update_option('emcl-pages',$pages_arr);
+	if (!get_option('pcl-pages'))
+		update_option('pcl-pages', $pages_arr);
 }
-register_activation_hook( __FILE__, 'emcl_plugin_activated');
+register_activation_hook( __FILE__, 'pcl_plugin_activated');
 ?>

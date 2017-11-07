@@ -1,5 +1,5 @@
 <?php
-function emcl_get_custom_email_message($type=false,$original_message='',$key='',$user_login=false,$user_id=false) {
+function pcl_get_custom_email_message($type=false,$original_message='',$key='',$user_login=false,$user_id=false) {
 	$user=false;
 	$message='';
 
@@ -24,13 +24,13 @@ function emcl_get_custom_email_message($type=false,$original_message='',$key='',
 
 	switch ($type) :
 		case 'password_reset':
-			$message=emcl_password_reset_email($original_message,$key,$user->user_login);
+			$message=pcl_password_reset_email($original_message,$key,$user->user_login);
 			break;
 		case 'account_creation_activation_required':
-			$message=emcl_account_creation_activation_email($original_message,$key,$user->user_login);
+			$message=pcl_account_creation_activation_email($original_message,$key,$user->user_login);
 			break;
 		case 'account_creation':
-			$message=emcl_account_creation_email($original_message,$key,$user->user_login);
+			$message=pcl_account_creation_email($original_message,$key,$user->user_login);
 			break;
 		default:
 			break;
@@ -40,7 +40,7 @@ function emcl_get_custom_email_message($type=false,$original_message='',$key='',
 }
 
 /**
- * emcl_password_reset_email function.
+ * pcl_password_reset_email function.
  *
  * @access public
  * @param mixed $message
@@ -48,20 +48,20 @@ function emcl_get_custom_email_message($type=false,$original_message='',$key='',
  * @param mixed $user_login
  * @return void
  */
-function emcl_password_reset_email($message,$key,$user_login) {
+function pcl_password_reset_email($message,$key,$user_login) {
 	$custom_message=$message;
 
 	// check if custom message exists //
-	if ($custom_message=get_option('emcl-retrieve-password-email')) :
+	if ($custom_message=get_option('pcl-retrieve-password-email')) :
 		$custom_message=stripslashes($custom_message); // clean from db
-		$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+		$custom_message=pcl_clean_up_placeholders($custom_message,$user_login,$key);
 	endif;
 
 	return $custom_message;
 }
 
 /**
- * emcl_account_creation_activation_email function.
+ * pcl_account_creation_activation_email function.
  *
  * @access public
  * @param mixed $message
@@ -69,20 +69,20 @@ function emcl_password_reset_email($message,$key,$user_login) {
  * @param mixed $user_login
  * @return void
  */
-function emcl_account_creation_activation_email($message,$key,$user_login) {
+function pcl_account_creation_activation_email($message,$key,$user_login) {
 	$custom_message=$message;
 
 	// check if custom message exists //
-	if ($custom_message=get_option('emcl-account-activation-email')) :
+	if ($custom_message=get_option('pcl-account-activation-email')) :
 		$custom_message=stripslashes($custom_message); // clean from db
-		$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+		$custom_message=pcl_clean_up_placeholders($custom_message,$user_login,$key);
 	endif;
 
 	return $custom_message;
 }
 
 /**
- * emcl_account_creation_email function.
+ * pcl_account_creation_email function.
  *
  * @access public
  * @param mixed $message
@@ -90,20 +90,20 @@ function emcl_account_creation_activation_email($message,$key,$user_login) {
  * @param mixed $user_login
  * @return void
  */
-function emcl_account_creation_email($message,$key,$user_login) {
+function pcl_account_creation_email($message,$key,$user_login) {
 	$custom_message=$message;
 
 	// check if custom message exists //
-	if ($custom_message=get_option('emcl-account-creation-email')) :
+	if ($custom_message=get_option('pcl-account-creation-email')) :
 		$custom_message=stripslashes($custom_message); // clean from db
-		$custom_message=emcl_clean_up_placeholders($custom_message,$user_login,$key);
+		$custom_message=pcl_clean_up_placeholders($custom_message,$user_login,$key);
 	endif;
 
 	return $custom_message;
 }
 
 /**
- * emcl_clean_up_placeholders function.
+ * pcl_clean_up_placeholders function.
  *
  * @access public
  * @param string $message (default: '')
@@ -111,12 +111,12 @@ function emcl_account_creation_email($message,$key,$user_login) {
  * @param string $key (default: '')
  * @return void
  */
-function emcl_clean_up_placeholders($message='',$user_login='',$key='') {
+function pcl_clean_up_placeholders($message='',$user_login='',$key='') {
 	$placeholders=array(
 		'{user_login}' => $user_login,
 		'{password_reset_link}' => site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
 		'{username}' => $user_login,
-		'{activate_account_link}' => home_url("/".emcl_page_slug('activate-account')."/?key=$key&user_login=$user_login"),
+		'{activate_account_link}' => home_url("/".pcl_page_slug('activate-account')."/?key=$key&user_login=$user_login"),
 		'{admin_email_link}' => get_option('admin_email'),
 		'{set_password_link}' => network_site_url("wp-login.php?action=rp&key=$key&login=".rawurlencode($user_login),'login'),
 		'{login_url}' => wp_login_url(),
@@ -128,7 +128,7 @@ function emcl_clean_up_placeholders($message='',$user_login='',$key='') {
 }
 
 /**
- * emcl_user_activation_email function.
+ * pcl_user_activation_email function.
  *
  * email sent when a new user registers
  *
@@ -137,7 +137,7 @@ function emcl_clean_up_placeholders($message='',$user_login='',$key='') {
  * @param string $notify (default: '')
  * @return void
  */
-function emcl_user_activation_email($user_id,$notify='') {
+function pcl_user_activation_email($user_id,$notify='') {
 	if (!$user_id || is_wp_error($user_id))
 		return false;
 
@@ -171,14 +171,14 @@ function emcl_user_activation_email($user_id,$notify='') {
 	$hashed = time() . ':' . $wp_hasher->HashPassword( $key );
 	$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user->user_login ) );
 
-	if (emcl_is_activation_required()) :
+	if (pcl_is_activation_required()) :
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";
-		$message .= '<' . home_url("/".emcl_page_slug('activate-account')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
+		$message .= '<' . home_url("/".pcl_page_slug('activate-account')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
 	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
-		$message=emcl_get_custom_email_message('account_creation_activation_required',$message,$hashed,$user->user_login);
+		$message=pcl_get_custom_email_message('account_creation_activation_required',$message,$hashed,$user->user_login);
 
 		add_user_meta($user_id,'has_to_be_activated',$hashed,true);
 		// send notice to reg //
@@ -191,7 +191,7 @@ function emcl_user_activation_email($user_id,$notify='') {
 	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
-		$message=emcl_get_custom_email_message('account_creation',$message,$key,$user->user_login);
+		$message=pcl_get_custom_email_message('account_creation',$message,$key,$user->user_login);
 	endif;
 
 	wp_mail($user->user_email, sprintf(__('[%s] Your username and password info'), $blogname), $message);
