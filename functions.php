@@ -131,7 +131,7 @@ function pcl_login_extras($args=array()) {
 }
 
 function pcl_is_activation_required() {
-	$require_activation_key=get_option('pcl-require-activation-key',0);
+	$require_activation_key=get_option('pcl-require-activation-key', 0);
 
 	if ($require_activation_key)
 		return true;
@@ -143,7 +143,7 @@ function pcl_is_user_authenticated($user_id=0) {
 	if (!$user_id)
 		return false;
 
-	if (get_user_meta($user_id,'has_to_be_activated',true))
+	if (get_user_meta($user_id, 'has_to_be_activated', true))
 		return false;
 
 	return true;
@@ -167,10 +167,10 @@ function pcl_logged_in_links($args=array()) {
 
 	$html.='<ul class="loggedin-extras">';
 		if ($edit_profile)
-			$html.='<li class="edit-profile"><a href="'.get_edit_user_link().'">'.__('Edit Profile','pcl').'</a></li>';
+			$html.='<li class="edit-profile"><a href="'.get_edit_user_link().'">'.__('Edit Profile', 'pcl').'</a></li>';
 
 		if ($logout)
-			$html.='<li class="logout"><a href="'.wp_logout_url().'">'.__('Log Out','pcl').'</a></li>';
+			$html.='<li class="logout"><a href="'.wp_logout_url().'">'.__('Log Out', 'pcl').'</a></li>';
 	$html.='</ul>';
 
 	echo $html;
@@ -203,6 +203,12 @@ function pcl_page_slug($page_type='') {
 	return $slug;
 }
 
+/**
+ * pcl_remove_admin_bar function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_remove_admin_bar() {
 	$hide_admin_bar=get_option('pcl-hide-admin-bar',false);
 
@@ -212,6 +218,12 @@ function pcl_remove_admin_bar() {
 }
 add_action('after_setup_theme','pcl_remove_admin_bar');
 
+/**
+ * pcl_recaptcha_scripts_styles function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_recaptcha_scripts_styles() {
 	if (!is_page(pcl_page_slug('register')))
 		return false;
