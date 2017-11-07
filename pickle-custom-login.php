@@ -68,7 +68,7 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'password.php');
 		include_once(PCL_PATH.'admin/admin.php');
 		include_once(PCL_PATH.'user-activation.php');
-		include_once(PCL_PATH.'emails.php');
+		include_once(PCL_PATH.'pcl-email-functions.php');
 		include_once(PCL_PATH.'libraries/recaptchalib.php'); // google recaptcha library
 		
 		new Pickle_Custom_Login();

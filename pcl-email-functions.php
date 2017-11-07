@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * pcl_get_custom_email_message function.
+ * 
+ * @access public
+ * @param bool $type (default: false)
+ * @param string $original_message (default: '')
+ * @param string $key (default: '')
+ * @param bool $user_login (default: false)
+ * @param bool $user_id (default: false)
+ * @return void
+ */
 function pcl_get_custom_email_message($type=false, $original_message='', $key='', $user_login=false, $user_id=false) {
 	$user=false;
 	$message='';
@@ -39,6 +51,15 @@ function pcl_get_custom_email_message($type=false, $original_message='', $key=''
 	return $message;
 }
 
+/**
+ * pcl_password_reset_email function.
+ * 
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
 function pcl_password_reset_email($message, $key, $user_login) {
 	$custom_message=$message;
 
@@ -51,6 +72,15 @@ function pcl_password_reset_email($message, $key, $user_login) {
 	return $custom_message;
 }
 
+/**
+ * pcl_account_creation_activation_email function.
+ * 
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
 function pcl_account_creation_activation_email($message, $key, $user_login) {
 	$custom_message=$message;
 
@@ -63,6 +93,15 @@ function pcl_account_creation_activation_email($message, $key, $user_login) {
 	return $custom_message;
 }
 
+/**
+ * pcl_account_creation_email function.
+ * 
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
 function pcl_account_creation_email($message, $key, $user_login) {
 	$custom_message=$message;
 
@@ -75,6 +114,15 @@ function pcl_account_creation_email($message, $key, $user_login) {
 	return $custom_message;
 }
 
+/**
+ * pcl_clean_up_placeholders function.
+ * 
+ * @access public
+ * @param string $message (default: '')
+ * @param string $user_login (default: '')
+ * @param string $key (default: '')
+ * @return void
+ */
 function pcl_clean_up_placeholders($message='', $user_login='', $key='') {
 	$placeholders=array(
 		'{user_login}' => $user_login,
@@ -91,6 +139,14 @@ function pcl_clean_up_placeholders($message='', $user_login='', $key='') {
 	return $message;
 }
 
+/**
+ * pcl_user_activation_email function.
+ * 
+ * @access public
+ * @param mixed $user_id
+ * @param string $notify (default: '')
+ * @return void
+ */
 function pcl_user_activation_email($user_id, $notify='') {
 	if (!$user_id || is_wp_error($user_id))
 		return false;
