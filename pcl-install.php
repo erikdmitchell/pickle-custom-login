@@ -12,15 +12,36 @@ class Pickle_Custom_Login_Install {
 		),
 	);
 
+	/**
+	 * init function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function init() {
 		add_action('init', array(__CLASS__, 'check_version'), 5);
 	}
 
+	/**
+	 * check_version function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function check_version() {
 		if (get_option('pcl_version')!==pickle_custom_login()->version)
 			self::install();
 	}
 
+	/**
+	 * install function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function install() {
 		if (!is_blog_installed())
 			return;
@@ -39,6 +60,13 @@ class Pickle_Custom_Login_Install {
 		delete_transient('pcl_installing');
 	}
 
+	/**
+	 * create_pages function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function create_pages() {
 		$pages_arr=array();
 		// Information needed for creating the plugin's pages
@@ -94,6 +122,13 @@ class Pickle_Custom_Login_Install {
 			update_option('pcl_pages', $pages_arr);
 	}
 
+	/**
+	 * update function.
+	 * 
+	 * @access private
+	 * @static
+	 * @return void
+	 */
 	private static function update() {
 		$current_version=get_option('pcl_version');
 
@@ -106,10 +141,24 @@ class Pickle_Custom_Login_Install {
 		endforeach;
 	}
 
+	/**
+	 * get_update_callbacks function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function get_update_callbacks() {
 		return self::$updates;
 	}
 
+	/**
+	 * update_version function.
+	 * 
+	 * @access private
+	 * @static
+	 * @return void
+	 */
 	private static function update_version() {
 		delete_option('pcl_version');
 		
@@ -117,16 +166,6 @@ class Pickle_Custom_Login_Install {
 	}
 
 }
-
-/*
-	global $wpdb;
-	
-	$wpdb->query("
-		UPDATE $wpdb->options
-		SET post_content = REPLACE(post_content, '[emcl-', '[xcl-')
-		WHERE post_content LIKE '%emcl-%'
-	");
-*/
 
 Pickle_Custom_Login_Install::init();
 ?>
