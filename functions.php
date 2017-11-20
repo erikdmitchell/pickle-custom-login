@@ -60,7 +60,7 @@ function pcl_get_template_html($template_name=false,$attributes=null) {
  * @return void
  */
 function pcl_add_error_message($slug='',$message='') {
-	pickle_custom_login()->errors->register_errors()->add($slug,__($message));
+	pickle_custom_login()->errors->register_errors()->add($slug, __($message));
 }
 
 /**
@@ -98,7 +98,7 @@ function pcl_show_error_messages() {
  * @return void
  */
 function pcl_format_error_message($code='', $message=false, $type='') {
-	pickle_custom_login()->errors->format_error($code, $message, $type);
+	return pickle_custom_login()->errors->format_error($code, $message, $type);
 }
 
 /**

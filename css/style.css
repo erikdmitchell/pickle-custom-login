@@ -46,7 +46,6 @@
 /**
  * register form
  */
-.emcl-registration label.required::after,
-.pcl-registration label.required::after, {
+.pcl-registration label.required::after {
 	content: ' *';
 }
