@@ -206,14 +206,26 @@ class Pickle_Custom_Login_Registration {
     protected function add_user($fields=array(), $post_data=array()) {
         $user_login=$fields['username'];
         $user_pass=$fields['password'];
-       $redirect=get_option('pcl-register-redirect', home_url());
+        $redirect=get_option('pcl-register-redirect', home_url());
+        
+        if (!isset($fields['firstname'])) :
+            $first_name='';
+        else :
+            $first_name=$fields['firstname'];
+        endif;
+
+        if (!isset($fields['lastname'])) :
+            $last_name='';
+        else :
+            $last_name=$fields['lastname'];
+        endif;
         
     	$new_user_id = wp_insert_user(array(
 			'user_login'		=> $user_login,
 			'user_pass'	 		=> $user_pass,
 			'user_email'		=> $fields['email'],
-			'first_name'		=> $fields['firstname'],
-			'last_name'			=> $fields['lastname'],
+			'first_name'		=> $first_name,
+			'last_name'			=> $last_name,
 			'user_registered'	=> date('Y-m-d H:i:s'),
 			'role'				=> 'subscriber'
         ));
