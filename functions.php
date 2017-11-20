@@ -353,6 +353,13 @@ function pcl_wp_login_url($login_url, $redirect, $force_reauth) {
 }
 add_filter('login_url', 'pcl_wp_login_url', 10, 3);
 
+/**
+ * pcl_force_login_whitelist function.
+ * 
+ * @access public
+ * @param mixed $urls
+ * @return void
+ */
 function pcl_force_login_whitelist($urls) {
     foreach (pickle_custom_login()->pages as $slug => $page_id) :
         $urls[]=get_permalink($page_id);    
@@ -361,4 +368,14 @@ function pcl_force_login_whitelist($urls) {
     return $urls;
 }
 add_filter('pcl_force_login_whitelist', 'pcl_force_login_whitelist');
+
+/**
+ * pcl_logout_page_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_logout_page_url() {
+	return get_option('pcl-logout-redirect', home_url());   
+}
 ?>
