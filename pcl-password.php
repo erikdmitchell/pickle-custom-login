@@ -61,15 +61,13 @@ class Pickle_Custom_Login_Reset_Password {
 		if (isset($_GET['login'])) :
 			switch ($_GET['login']) :
 				case 'expiredkey':
-					return pcl_format_error_message('Error','Your key has expired. Try again.','error');
+					return pcl_format_error_message('Error', 'Your key has expired. Try again.', 'error');
 					break;
 				case 'invalidkey':
-		    	return pcl_format_error_message('Error','You need to have a valid key. Try again.','error');
-		    	break;
+		    	    return pcl_format_error_message('Error', 'You need to have a valid key. Try again.', 'error');
+                    break;
 		  endswitch;
 		endif;
-
-		//return pcl_get_template_html('reset-password');
 	}
 
 	/**
@@ -146,20 +144,20 @@ class Pickle_Custom_Login_Reset_Password {
 		foreach ($codes as $code) :
 			switch ($code) :
 				case 'empty_username':
-					echo pcl_format_error_message('Error','You need to enter your email address to continue.','error');
+					echo pcl_format_error_message('Error', 'You need to enter your email address to continue.', 'error');
 					break;
 				case 'invalid_email':
 				case 'invalidcombo':
-		    	echo pcl_format_error_message('Error','There are no users registered with this email address.','error');
+		    	echo pcl_format_error_message('Error', 'There are no users registered with this email address.', 'error');
 		    	break;
 		    case 'password_reset_empty':
-		    	echo pcl_format_error_message('Error','Please enter a new password.','error');
+		    	echo pcl_format_error_message('Error', 'Please enter a new password.', 'error');
 		    	break;
 		    case 'password_reset_mismatch':
-		    	echo pcl_format_error_message('Error','The passwords do not match.','error');
+		    	echo pcl_format_error_message('Error', 'The passwords do not match.', 'error');
 		    	break;
 		    default:
-		    	echo pcl_format_error_message('Error','There was an error, please try again.','error');
+		    	echo pcl_format_error_message('Error', 'There was an error, please try again.', 'error');
 		    	break;
 		  endswitch;
 		 endforeach;
