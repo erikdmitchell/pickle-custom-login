@@ -43,21 +43,19 @@ class Pickle_Custom_Login_Profile {
 
 
 
-        // Update user password //
+        // update user password //
         $this->update_password($_POST['password'], $_POST['password_check']);
-
-    // Update user information.
-    if ( !empty( $_POST['url'] ) )
-       wp_update_user( array ('ID' => $current_user->ID, 'user_url' => esc_attr( $_POST['url'] )));
-    if ( !empty( $_POST['email'] ) ){
-        if (!is_email(esc_attr( $_POST['email'] )))
-            $error[] = __('The Email you entered is not valid.  please try again.', 'profile');
-        elseif(email_exists(esc_attr( $_POST['email'] )) != $current_user->id )
-            $error[] = __('This email is already used by another user.  try a different one.', 'profile');
-        else{
-            wp_update_user( array ('ID' => $current_user->ID, 'user_email' => esc_attr( $_POST['email'] )));
-        }
-    }
+        
+        // update user url //
+        if (!empty($_POST['url'])) :
+            wp_update_user(array(
+                'ID' => $current_user->ID, 
+                'user_url' => esc_attr($_POST['url'])
+            ));
+        endif;
+        
+        // update email //
+        $this->update_email($_POST['email']);
 
     if ( !empty( $_POST['first-name'] ) )
         update_user_meta( $current_user->ID, 'first_name', esc_attr( $_POST['first-name'] ) );
@@ -99,6 +97,24 @@ class Pickle_Custom_Login_Profile {
         else :
             $error[]=__('The passwords you entered do not match. Your password was not updated.', 'pcl');
         endif;        
+    }
+    
+    protected function update_email($email='') {
+        $current_user = wp_get_current_user();
+        
+        if (empty($email))
+            return;
+            
+        if (!is_email(esc_attr($email))) :
+            $error[]=__('The Email you entered is not valid. Please try again.', 'pcl');
+        elseif (email_exists(esc_attr($email)) != $current_user->id) :
+            $error[]=__('This email is already used by another user. Try a different one.', 'pcl');
+        else :
+            wp_update_user(array(
+                'ID' => $current_user->ID, 
+                'user_email' => esc_attr($email)
+            ));
+        endif;  
     }
 
 }
