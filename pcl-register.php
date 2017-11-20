@@ -133,8 +133,7 @@ class Pickle_Custom_Login_Registration {
 	public function add_new_user() {
         if (!isset($_POST["pcl_registration_form"]) || !wp_verify_nonce($_POST['pcl_registration_form'], 'pcl-register'))
             return;
-        
-        $redirect=get_option('pcl-register-redirect', home_url());    
+            
         $fields=$_POST['pcl_registration'];
 
         // check username //
@@ -181,7 +180,7 @@ class Pickle_Custom_Login_Registration {
     
     protected function check_password($password='', $password_check='') {
 		// passwords empty
-		if ($password=='' || $password_check='')
+		if ($password=='' || $password_check=='')
 			pcl_add_error_message('password_empty', 'Please enter a password');
 
 		// passwords do not match
@@ -205,16 +204,19 @@ class Pickle_Custom_Login_Registration {
 	}
 	
     protected function add_user($fields=array(), $post_data=array()) {
+        $user_login=$fields['username'];
+        $user_pass=$fields['password'];
+       $redirect=get_option('pcl-register-redirect', home_url());
+        
     	$new_user_id = wp_insert_user(array(
-    			'user_login'		=> $fields['username'],
-    			'user_pass'	 		=> $user_pass,
-    			'user_email'		=> $fields['email'],
-    			'first_name'		=> $fields['firstname'],
-    			'last_name'			=> $fields['lastname'],
-    			'user_registered'	=> date('Y-m-d H:i:s'),
-    			'role'				=> 'subscriber'
-    		)
-    	);
+			'user_login'		=> $user_login,
+			'user_pass'	 		=> $user_pass,
+			'user_email'		=> $fields['email'],
+			'first_name'		=> $fields['firstname'],
+			'last_name'			=> $fields['lastname'],
+			'user_registered'	=> date('Y-m-d H:i:s'),
+			'role'				=> 'subscriber'
+        ));
     
     	do_action('pcl_after_user_registration', $new_user_id, $fields, $_POST);
     
@@ -225,7 +227,7 @@ class Pickle_Custom_Login_Registration {
     		// if activation is required, we skip
     		if (!pcl_is_activation_required()) :
     			// log the new user in
-    			wp_setcookie($user_login, $user_pass, true);
+    			wp_set_auth_cookie($new_user_id);
     			wp_set_current_user($new_user_id, $user_login);
     			do_action('wp_login', $user_login);
     
