@@ -60,7 +60,7 @@ function pcl_get_template_html($template_name=false,$attributes=null) {
  * @return void
  */
 function pcl_add_error_message($slug='',$message='') {
-	pickle_custom_login()->errors->register_errors()->add($slug,__($message));
+	pickle_custom_login()->errors->register_errors()->add($slug, __($message));
 }
 
 /**
@@ -98,7 +98,7 @@ function pcl_show_error_messages() {
  * @return void
  */
 function pcl_format_error_message($code='', $message=false, $type='') {
-	pickle_custom_login()->errors->format_error($code, $message, $type);
+	return pickle_custom_login()->errors->format_error($code, $message, $type);
 }
 
 /**
@@ -317,5 +317,68 @@ function pcl_register_redirect_url() {
  */
 function pcl_logout_redirect_url() {
 	return get_option('pcl-logout-redirect', home_url());
-}	 
+}
+
+/**
+ * pcl_force_login function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_force_login() {
+    return get_option('pcl-force-login', 0);
+}
+
+/**
+ * pcl_login_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_login_url() {
+	return home_url(pcl_page_slug('login'));
+}
+
+/**
+ * pcl_wp_login_url function.
+ * 
+ * @access public
+ * @param mixed $login_url
+ * @param mixed $redirect
+ * @param mixed $force_reauth
+ * @return void
+ */
+function pcl_wp_login_url($login_url, $redirect, $force_reauth) {
+    return home_url(pcl_page_slug('login'));
+}
+add_filter('login_url', 'pcl_wp_login_url', 10, 3);
+
+/**
+ * pcl_force_login_whitelist function.
+ * 
+ * @access public
+ * @param mixed $urls
+ * @return void
+ */
+function pcl_force_login_whitelist($urls) {
+    foreach (pickle_custom_login()->pages as $slug => $page_id) :
+        $urls[]=get_permalink($page_id);    
+    endforeach;
+    
+    if (pcl_logout_page_url() != home_url())
+        $urls[]=pcl_logout_page_url();
+
+    return $urls;
+}
+add_filter('pcl_force_login_whitelist', 'pcl_force_login_whitelist');
+
+/**
+ * pcl_logout_page_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_logout_page_url() {
+	return get_option('pcl-logout-redirect', home_url());   
+}
 ?>

@@ -14,6 +14,7 @@ class Pickle_Custom_Login_Registration {
 		add_action('init', array($this, 'add_new_user'));
 		add_action('login_form_register', array($this, 'register_form_redirect'));
 		add_action('pcl_before_register-form', 'pcl_show_error_messages');
+		
 		add_shortcode('pcl-registration-form', array($this, 'registration_form'));
 	}
 

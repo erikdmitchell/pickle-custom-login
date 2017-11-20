@@ -168,6 +168,13 @@ final class PickleCustomLoginAdmin {
 			delete_option('pcl-hide-admin-bar');
 		endif;
 
+		// update admin bar //
+		if (isset($settings_data['force_login'])) :
+			update_option('pcl-force-login', 1);
+		else :
+			delete_option('pcl-force-login');
+		endif;
+
 		// update reCaptcha //
 		if (isset($settings_data['enable_recaptcha'])) :
 			update_option('pcl-enable-recaptcha', 1);
