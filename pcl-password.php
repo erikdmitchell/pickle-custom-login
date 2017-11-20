@@ -111,7 +111,7 @@ class Pickle_Custom_Login_Reset_Password {
 					$redirect_url=wp_lostpassword_url();
 				endif;
 
-				$redirect_url=add_query_arg('errors',join(',',$errors->get_error_codes()),$redirect_url);
+				$redirect_url=add_query_arg('errors', join(',', $errors->get_error_codes()), $redirect_url);
 			else :
 				// Email sent
 				if ($slug=pcl_page_slug('login')) :
