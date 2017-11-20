@@ -136,7 +136,10 @@ class Pickle_Custom_Login_Profile {
     }
     
     public function has_errors() {
-        
+        if (count($this->errors))
+            return true;
+            
+        return false;
     }
     
     public function display_errors() {
