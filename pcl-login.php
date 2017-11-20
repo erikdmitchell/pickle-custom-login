@@ -129,7 +129,7 @@ class Pickle_Custom_Login {
 	public function logout_page() {
 		$redirect=get_option('pcl-logout-redirect', home_url());
 
-		wp_safe_redirect($redirect.'?login=false');
+		wp_safe_redirect($redirect.'?login=false'); // logged_out=true
 		exit;
 	}
 
