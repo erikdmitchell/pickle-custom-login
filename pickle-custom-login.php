@@ -48,7 +48,7 @@ final class PickleCustomLogin {
 	public function __construct() {
 		$this->define_constants();
 		$this->includes();
-		$this->init_hooks();		
+		$this->init_hooks();				
 	}
 
 	private function define_constants() {
@@ -107,4 +107,3 @@ function pickle_custom_login() {
 
 // Global for backwards compatibility.
 $GLOBALS['pickle_custom_login']=pickle_custom_login();
-?>
