@@ -1,3 +1,13 @@
+<?php
+/**
+ * The template for displaying the registration form
+ *
+ * This template can be overridden by copying it to yourtheme/pickle-custom-login/register-form.php.
+ *
+ * NOTICE: These fields are required: username, email, password. Please make sure you use the default functions for those fields.
+ */    
+?>
+
 <div class="pcl-registration">
 	<form id="pcl-registration-form" class="pcl-custom-form" action="" method="POST">    	
     	
