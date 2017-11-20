@@ -220,17 +220,22 @@ class Pickle_Custom_Login_Registration {
             $last_name=$fields['lastname'];
         endif;
         
-    	$new_user_id = wp_insert_user(array(
-			'user_login'		=> $user_login,
-			'user_pass'	 		=> $user_pass,
-			'user_email'		=> $fields['email'],
-			'first_name'		=> $first_name,
-			'last_name'			=> $last_name,
-			'user_registered'	=> date('Y-m-d H:i:s'),
-			'role'				=> 'subscriber'
-        ));
+        do_action('pcl_before_user_registration', $fields, $post_data);
+        
+        $user_args=array(
+ 			'user_login' => $user_login,
+			'user_pass' => $user_pass,
+			'user_email' => $fields['email'],
+			'first_name' => $first_name,
+			'last_name' => $last_name,
+			'user_registered' => date('Y-m-d H:i:s'),
+			'role' => 'subscriber'           
+        );
+        $user_args=apply_filters('pcl_insert_user_args', $user_args, $fields, $post_data);
+        
+    	$new_user_id=wp_insert_user($user_args);
     
-    	do_action('pcl_after_user_registration', $new_user_id, $fields, $_POST);
+    	do_action('pcl_after_user_registration', $new_user_id, $fields, $post_data);
     
     	if ($new_user_id) :
     		// send an email to the admin alerting them of the registration
