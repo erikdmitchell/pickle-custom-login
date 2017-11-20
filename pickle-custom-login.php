@@ -48,14 +48,13 @@ final class PickleCustomLogin {
 	public function __construct() {
 		$this->define_constants();
 		$this->includes();
-		$this->init_hooks();
+		$this->init_hooks();		
 	}
 
 	private function define_constants() {
 		$this->define('PCL_VERSION', $this->version);
 		$this->define('PCL_PATH', plugin_dir_path(__FILE__));
-		$this->define('PCL_URL', plugin_dir_url(__FILE__));
-		
+		$this->define('PCL_URL', plugin_dir_url(__FILE__));		
 	}
 
 	private function define($name, $value) {
