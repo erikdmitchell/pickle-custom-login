@@ -1,5 +1,5 @@
 <div class="pcl-registration">
-	<form id="custom_registration_form" class="custom_form" action="" method="POST">
+	<form id="pcl-registration-form" class="pcl-custom-form" action="" method="POST">
 		<fieldset>
 			<p>
 				<label for="custom_user_login_reg" class="required"><?php _e('Username'); ?></label>
@@ -30,7 +30,7 @@
 
 			<?php if (get_option('pcl-enable-recaptcha', false)) : ?>
 				<p>
-					<div class="g-recaptcha" data-sitekey="<?php echo get_option('pcl-recaptcha-site-key',''); ?>"></div>
+					<div class="g-recaptcha" data-sitekey="<?php echo get_option('pcl-recaptcha-site-key', ''); ?>"></div>
 				</p>
 			<?php endif; ?>
 
@@ -40,5 +40,5 @@
 			</p>
 		</fieldset>
 	</form>
-	<?php pcl_login_extras(array('loginout' => true,'register' => false,'password' => false)); ?>
+	<?php pcl_login_extras(array('loginout' => true, 'register' => false, 'password' => false)); ?>
 </div>
