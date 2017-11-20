@@ -381,4 +381,35 @@ add_filter('pcl_force_login_whitelist', 'pcl_force_login_whitelist');
 function pcl_logout_page_url() {
 	return get_option('pcl-logout-redirect', home_url());   
 }
-?>
+
+/**
+ * pcl_get_edit_user_link function.
+ * 
+ * @access public
+ * @param mixed $link
+ * @param mixed $user_id
+ * @return void
+ */
+function pcl_get_edit_user_link($link, $user_id) {
+    $pcl_link=pcl_page_slug('profile');
+    
+    if ($pcl_link!=$link)
+        return $pcl_link;
+        
+    return $link;
+}
+add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
+
+/**
+ * pcl_change_profile_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_change_profile_url() {
+    if (strpos($_SERVER['REQUEST_URI'], 'wp-admin/profile.php')) :
+        wp_redirect(get_edit_user_link());
+        exit;
+    endif;
+}
+add_action ('init' , 'pcl_change_profile_url');
