@@ -11,10 +11,9 @@ class Pickle_Custom_Login_Registration {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action('pcl_before_register-form', 'pcl_show_error_messages');
 		add_action('init', array($this, 'add_new_user'));
 		add_action('login_form_register', array($this, 'register_form_redirect'));
-
+		add_action('pcl_before_register-form', 'pcl_show_error_messages');
 		add_shortcode('pcl-registration-form', array($this, 'registration_form'));
 	}
 
@@ -33,7 +32,82 @@ class Pickle_Custom_Login_Registration {
 
 		return pcl_get_template_html('register-form');
 	}
+	
+	/**
+	 * form_username_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_username_field() {
+ 		echo '<label for="custom_user_login_reg" class="required">'.__('Username').'</label>';
+		echo '<input name="custom_user_login_reg" id="custom_user_login_reg" class="" type="text"/>'; 	
+	}
 
+	/**
+	 * form_email_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_email_field() {
+		echo '<label for="custom_user_email" class="required">'.__('Email').'</label>';
+		echo '<input name="custom_user_email" id="custom_user_email" class="email" type="email"/>';  	
+	}
+
+	/**
+	 * form_name_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_name_field() {
+		echo '<label for="custom_user_first">'.__('First Name').'</label>';
+		echo '<input name="custom_user_first" id="custom_user_first" type="text"/>';
+	
+		echo '<label for="custom_user_last">'.__('Last Name').'</label>';
+		echo '<input name="custom_user_last" id="custom_user_last" type="text"/>';    	
+	}
+
+	/**
+	 * form_password_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_password_field() {
+ 		echo '<label for="password" class="required">'.__('Password').'</label>';
+		echo '<input name="custom_user_pass" id="password" class="password" type="password"/>';
+	
+		echo '<label for="password_again" class="required">'.__('Password Again').'</label>';
+		echo '<input name="custom_user_pass_confirm" id="password_again" class="password" type="password"/>';
+	}
+
+	/**
+	 * form_recaptcha_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_recaptcha_field() {
+ 		do_action('pcl_registraion_before_recaptcha');
+
+		if (get_option('pcl-enable-recaptcha', false)) :
+            echo '<div class="g-recaptcha" data-sitekey="'.get_option('pcl-recaptcha-site-key', '').'"></div>';
+		 endif;	
+	}
+
+	/**
+	 * form_register_button function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_register_button() {
+        echo '<input type="hidden" name="custom_register_nonce" value="'.wp_create_nonce('custom-register-nonce').'" />';
+        echo '<input type="submit" value="'.__('Register').'" />';
+	}
+	
 	/**
 	 * register_form_redirect function.
 	 *
