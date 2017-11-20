@@ -317,5 +317,9 @@ function pcl_register_redirect_url() {
  */
 function pcl_logout_redirect_url() {
 	return get_option('pcl-logout-redirect', home_url());
+}
+
+function pcl_force_Login() {
+    return get_option('pcl-force-login', 0);
 }	 
 ?>

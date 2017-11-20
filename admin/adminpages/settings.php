@@ -1,5 +1,3 @@
-<h2>Settings</h2>
-
 <form method="post" action="" method="post">
 	<?php wp_nonce_field('update_settings', 'pcl_admin_update'); ?>
 
@@ -83,6 +81,14 @@
 				<td>
 					<input name="pcl_settings[hide_admin_bar]" type="checkbox" id="hide_admin_bar" value="1" <?php checked(pcl_hide_admin_bar(), 1); ?>>
 					<p class="description" id="hide_admin_bar_description"><?php _e('If checked, the admin bar would be hidden for non administrators.', 'pcl'); ?></p></td>
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row"><label for="force_login"><?php _e('Force Login', 'pcl'); ?></label></th>
+				<td>
+					<input name="pcl_settings[force_login]" type="checkbox" id="force_login" value="1" <?php checked(pcl_force_login(), 1); ?>>
+					<p class="description" id="force_login_description"><?php _e('If checked, users would be forced to login before viewing the site.', 'pcl'); ?></p></td>
 				</td>
 			</tr>
 		</tbody>
