@@ -364,6 +364,9 @@ function pcl_force_login_whitelist($urls) {
     foreach (pickle_custom_login()->pages as $slug => $page_id) :
         $urls[]=get_permalink($page_id);    
     endforeach;
+    
+    if (pcl_logout_page_url() != home_url())
+        $urls[]=pcl_logout_page_url();
 
     return $urls;
 }

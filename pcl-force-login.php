@@ -32,7 +32,7 @@ function pcl_force_login_redirect() {
 		$url_clean=preg_replace('/\?.*/', '', $url);
 
         // check and redirect //
-		if ($redirect_url_clean != $login_url_clean && !in_array($url_clean, $whitelist) && !$bypass) :	
+		if ($redirect_url_clean != $login_url_clean && !in_array($url_clean, $whitelist) && !$bypass) :			
 			wp_safe_redirect(wp_login_url(), 302); 
 			exit();
     	endif;
