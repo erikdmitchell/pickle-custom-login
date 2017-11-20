@@ -410,6 +410,10 @@ function pcl_updated_profile_message() {
     if ($_GET['updated'] == 'true') : 
         echo '<div id="message" class="updated published"><p>Your profile has been updated.</p></div>';
     endif;
+    
+    if (pickle_custom_login()->profile->has_errors()) :
+echo "display errors";    
+    endif;
      
     //if ( count($error) > 0 ) echo '<p class="error">' . implode("<br />", $error) . '</p>';   
 }

@@ -1,6 +1,8 @@
 <?php
 
 class Pickle_Custom_Login_Profile {
+    
+    public $errors=array();
 
 	/**
 	 * __construct function.
@@ -16,10 +18,22 @@ class Pickle_Custom_Login_Profile {
 		add_shortcode('pcl-profile', array($this, 'profile_page'));
 	}
 
+	/**
+	 * profile_page function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function profile_page() {
 		return pcl_get_template_html('profile');
 	}
 
+    /**
+     * pcl_change_profile_url function.
+     * 
+     * @access public
+     * @return void
+     */
     public function pcl_change_profile_url() {
         if (strpos($_SERVER['REQUEST_URI'], 'wp-admin/profile.php')) :
             wp_redirect(get_edit_user_link());
@@ -34,14 +48,7 @@ class Pickle_Custom_Login_Profile {
         $error = array();    
         
         if (!isset($_POST['pcl_update_profile']) || !wp_verify_nonce($_POST['pcl_update_profile'], 'update-user_'.$current_user->ID))
-            return false;
-            
-        echo '<pre>';
-        print_r($_POST);
-        echo '</pre>';            
-
-
-
+            return false;           
 
         // update user password //
         $this->update_password($_POST['password'], $_POST['password_check']);
@@ -78,7 +85,7 @@ class Pickle_Custom_Login_Profile {
         
         // "redirect" to show updated info //
         
-        if (count($error) == 0) :
+        if (!$this->has_errors()) :
             // action hook for plugins and extra fields saving //
             do_action('edit_user_profile_update', $current_user->ID);
             
@@ -99,7 +106,7 @@ class Pickle_Custom_Login_Profile {
                 'user_pass' => esc_attr($password),
             ));
         else :
-            $error[]=__('The passwords you entered do not match. Your password was not updated.', 'pcl');
+            $this->add_error('The passwords you entered do not match. Your password was not updated.');
         endif;        
     }
     
@@ -119,6 +126,21 @@ class Pickle_Custom_Login_Profile {
                 'user_email' => esc_attr($email)
             ));
         endif;  
+    }
+    
+    protected function add_error($message='') {
+        if (empty($message))
+            return;
+            
+        $this->errors[]=$message;
+    }
+    
+    public function has_errors() {
+        
+    }
+    
+    public function display_errors() {
+        
     }
 
 }

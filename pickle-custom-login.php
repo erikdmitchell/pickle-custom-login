@@ -33,6 +33,8 @@ final class PickleCustomLogin {
 	
 	public $registration='';
 	
+	public $profile='';
+	
 	public $pages=array();
 
 	protected static $_instance=null;
@@ -82,7 +84,6 @@ final class PickleCustomLogin {
 		
 		new Pickle_Custom_Login();
 		new Pickle_Custom_Login_Reset_Password();
-		new Pickle_Custom_Login_Profile();
 		
 		if (is_admin()) :
 			$this->admin=new PickleCustomLoginAdmin();
@@ -97,6 +98,7 @@ final class PickleCustomLogin {
 	public function init() {
 		$this->activation=new Pickle_Custom_Login_User_Activation();
 		$this->registration=new Pickle_Custom_Login_Registration();
+		$this->profile=new Pickle_Custom_Login_Profile();
 		$this->errors=new Pickle_Custom_Login_Errors();
 		$this->pages=get_option('pcl_pages');
 	}
