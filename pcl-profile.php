@@ -56,17 +56,26 @@ class Pickle_Custom_Login_Profile {
         
         // update email //
         $this->update_email($_POST['email']);
+        
+        // update basic user information //
 
-    if ( !empty( $_POST['first-name'] ) )
-        update_user_meta( $current_user->ID, 'first_name', esc_attr( $_POST['first-name'] ) );
-    if ( !empty( $_POST['last-name'] ) )
-        update_user_meta($current_user->ID, 'last_name', esc_attr( $_POST['last-name'] ) );
-    if ( !empty( $_POST['display_name'] ) )
-        wp_update_user(array('ID' => $current_user->ID, 'display_name' => esc_attr( $_POST['display_name'] )));
-      update_user_meta($current_user->ID, 'display_name' , esc_attr( $_POST['display_name'] ));
-    if ( !empty( $_POST['description'] ) )
-        update_user_meta( $current_user->ID, 'description', esc_attr( $_POST['description'] ) );
-
+        if (!empty($_POST['firstname']))
+            update_user_meta($current_user->ID, 'first_name', esc_attr($_POST['firstname']));
+        
+        if( !empty($_POST['lastname']))
+            update_user_meta($current_user->ID, 'last_name', esc_attr($_POST['lastname']));
+            
+        if (!empty($_POST['display_name'])) :
+            wp_update_user(array(
+                'ID' => $current_user->ID, 
+                'display_name' => esc_attr($_POST['display_name'])
+            ));
+            update_user_meta($current_user->ID, 'display_name', esc_attr($_POST['display_name']));
+        endif;
+      
+        if (!empty($_POST['description']))
+            update_user_meta($current_user->ID, 'description', esc_attr($_POST['description']));
+/*
     // Redirect so the page will show updated info.
   // I am not Author of this Code- i dont know why but it worked for me after changing below line to if ( count($error) == 0 ){ 
     if ( count($error) == 0 ) {

@@ -15,13 +15,13 @@
         <form method="post" id="adduser" class="pcl-profile-form" action="" method="post">
                        
             <p class="form-username">
-                <label for="first-name"><?php _e('First Name', 'profile'); ?></label>
-                <input class="text-input" name="first-name" type="text" id="first-name" value="<?php the_author_meta( 'first_name', $current_user->ID ); ?>" />
+                <label for="firstname"><?php _e('First Name', 'profile'); ?></label>
+                <input class="text-input" name="firstname" type="text" id="firstname" value="<?php the_author_meta( 'first_name', $current_user->ID ); ?>" />
             </p>
             
             <p class="form-username">
-                <label for="last-name"><?php _e('Last Name', 'profile'); ?></label>
-                <input class="text-input" name="last-name" type="text" id="last-name" value="<?php the_author_meta( 'last_name', $current_user->ID ); ?>" />
+                <label for="lastname"><?php _e('Last Name', 'profile'); ?></label>
+                <input class="text-input" name="lastname" type="text" id="lastname" value="<?php the_author_meta( 'last_name', $current_user->ID ); ?>" />
             </p>
             
             <p class="form-display_name">
