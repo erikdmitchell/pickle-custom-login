@@ -10,6 +10,7 @@ class Pickle_Custom_Login_Profile {
 	 */
 	public function __construct() {
 		add_action ('init' , array($this, 'pcl_change_profile_url'));
+		add_action ('init' , array($this, 'update_user_profile'));
 		add_action('pcl_before_profile', 'pcl_show_error_messages');	
 
 		add_shortcode('pcl-profile', array($this, 'profile_page'));
@@ -27,22 +28,23 @@ class Pickle_Custom_Login_Profile {
     }
 
     public function update_user_profile() {
-/*        
- global $current_user, $wp_roles;
-get_currentuserinfo();
+        global $wp_roles;
+        
+        $current_user = wp_get_current_user();
+        $error = array();    
+        
+        if (!isset($_POST['pcl_update_profile']) || !wp_verify_nonce($_POST['pcl_update_profile'], 'update-user_'.$current_user->ID))
+            return false;
+            
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';            
 
 
-$error = array();    
-// If profile was saved, update profile. 
-if ( 'POST' == $_SERVER['REQUEST_METHOD'] && !empty( $_POST['action'] ) && $_POST['action'] == 'update-user' ) {
 
-    // Update user password.
-    if ( !empty($_POST['pass1'] ) && !empty( $_POST['pass2'] ) ) {
-        if ( $_POST['pass1'] == $_POST['pass2'] )
-            wp_update_user( array( 'ID' => $current_user->ID, 'user_pass' => esc_attr( $_POST['pass1'] ) ) );
-        else
-            $error[] = __('The passwords you entered do not match.  Your password was not updated.', 'profile');
-    }
+
+        // Update user password //
+        $this->update_password($_POST['password'], $_POST['password_check']);
 
     // Update user information.
     if ( !empty( $_POST['url'] ) )
@@ -74,13 +76,29 @@ if ( 'POST' == $_SERVER['REQUEST_METHOD'] && !empty( $_POST['action'] ) && $_POS
         do_action('edit_user_profile_update', $current_user->ID);
         wp_redirect( get_permalink().'?updated=true' ); exit;
     }       
-}
 
+*/
 
+/*
             <?php if ( $_GET['updated'] == 'true' ) : ?> <div id="message" class="updated"><p>Your profile has been updated.</p></div> <?php endif; ?>
                 <?php if ( count($error) > 0 ) echo '<p class="error">' . implode("<br />", $error) . '</p>'; ?>
 */
-       
+    }
+    
+    protected function update_password($password='', $password_check='') {
+        $current_user = wp_get_current_user();
+        
+        if (empty($password) || empty($password_check))
+            return;
+            
+        if ($password == $password_check) :
+            wp_update_user(array(
+                'ID' => $current_user->ID, 
+                'user_pass' => esc_attr($password),
+            ));
+        else :
+            $error[]=__('The passwords you entered do not match. Your password was not updated.', 'pcl');
+        endif;        
     }
 
 }

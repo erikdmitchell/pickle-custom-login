@@ -70,13 +70,13 @@
             </p>
             
             <p class="form-password">
-                <label for="pass1"><?php _e('Password *', 'profile'); ?> </label>
-                <input class="text-input" name="pass1" type="password" id="pass1" />
+                <label for="password"><?php _e('Password *', 'profile'); ?> </label>
+                <input class="text-input" name="password" type="password" id="password" />
             </p>
             
             <p class="form-password">
-                <label for="pass2"><?php _e('Repeat Password *', 'profile'); ?></label>
-                <input class="text-input" name="pass2" type="password" id="pass2" />
+                <label for="password_check"><?php _e('Repeat Password *', 'profile'); ?></label>
+                <input class="text-input" name="password_check" type="password" id="password_check" />
             </p>
             
             <p class="form-textarea">
@@ -89,8 +89,8 @@
             <p class="form-submit">                
                 <input name="updateuser" type="submit" id="updateuser" class="submit button" value="<?php _e('Update', 'profile'); ?>" />
                 
-                <?php wp_nonce_field( 'update-user_'. $current_user->ID ) ?>
-                
+                <?php wp_nonce_field('update-user_'.$current_user->ID, 'pcl_update_profile', true); ?>
+
                 <input name="action" type="hidden" id="action" value="update-user" />
             </p>
         
