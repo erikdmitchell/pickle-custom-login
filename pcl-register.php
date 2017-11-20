@@ -11,10 +11,9 @@ class Pickle_Custom_Login_Registration {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action('pcl_before_register-form', 'pcl_show_error_messages');
 		add_action('init', array($this, 'add_new_user'));
 		add_action('login_form_register', array($this, 'register_form_redirect'));
-
+		add_action('pcl_before_register-form', 'pcl_show_error_messages');
 		add_shortcode('pcl-registration-form', array($this, 'registration_form'));
 	}
 
@@ -33,7 +32,83 @@ class Pickle_Custom_Login_Registration {
 
 		return pcl_get_template_html('register-form');
 	}
+	
+	/**
+	 * form_username_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_username_field() {
+ 		echo '<label for="pcl_username" class="required">'.__('Username').'</label>';
+		echo '<input name="pcl_registration[username]" id="pcl_username" class="" type="text"/>'; 	
+	}
 
+	/**
+	 * form_email_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_email_field() {
+		echo '<label for="pcl_email" class="required">'.__('Email').'</label>';
+		echo '<input name="pcl_registration[email]" id="pcl_email" class="email" type="email"/>';  	
+	}
+
+	/**
+	 * form_name_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_name_field() {
+		echo '<label for="pcl_firstname">'.__('First Name').'</label>';
+		echo '<input name="pcl_registration[firstname]" id="pcl_firstname" type="text"/>';
+	
+		echo '<label for="pcl_lastname">'.__('Last Name').'</label>';
+		echo '<input name="pcl_registration[lastname]" id="pcl_lastname" type="text"/>';    	
+	}
+
+	/**
+	 * form_password_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_password_field() {
+ 		echo '<label for="pcl_password" class="required">'.__('Password').'</label>';
+		echo '<input name="pcl_registration[password]" id="pcl_password" class="password" type="password"/>';
+	
+		echo '<label for="pcl_password_check" class="required">'.__('Password Again').'</label>';
+		echo '<input name="pcl_registration[password_check]" id="pcl_password_check" class="password" type="password"/>';
+	}
+
+	/**
+	 * form_recaptcha_field function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_recaptcha_field() {
+ 		do_action('pcl_registraion_before_recaptcha');
+
+		if (get_option('pcl-enable-recaptcha', false)) :
+            echo '<div class="g-recaptcha" data-sitekey="'.get_option('pcl-recaptcha-site-key', '').'"></div>';
+		 endif;	
+	}
+
+	/**
+	 * form_register_button function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function form_register_button() {
+        echo '<input type="hidden" name="custom_register_nonce" value="'.wp_create_nonce('custom-register-nonce').'" />';
+        echo wp_nonce_field('pcl-register', 'pcl_registration_form', true, false);
+        echo '<input type="submit" value="'.__('Register').'" />';
+	}
+	
 	/**
 	 * register_form_redirect function.
 	 *
@@ -56,99 +131,130 @@ class Pickle_Custom_Login_Registration {
 	 * @return void
 	 */
 	public function add_new_user() {
-		$redirect=get_option('pcl-register-redirect', home_url());
+        if (!isset($_POST["pcl_registration_form"]) || !wp_verify_nonce($_POST['pcl_registration_form'], 'pcl-register'))
+            return;
+            
+        $fields=$_POST['pcl_registration'];
 
-	  if (isset($_POST["custom_user_login_reg"]) && wp_verify_nonce($_POST['custom_register_nonce'], 'custom-register-nonce')) :
-			$user_login=$_POST["custom_user_login_reg"];
-			$user_email=$_POST["custom_user_email"];
-			$user_first=$_POST["custom_user_first"];
-			$user_last=$_POST["custom_user_last"];
-			$user_pass=$_POST["custom_user_pass"];
-			$pass_confirm=$_POST["custom_user_pass_confirm"];
+        // check username //
+        $this->check_username($fields['username']);
 
-			// Username already registered
-			if (username_exists($user_login))
-				pcl_add_error_message('username_unavailable', 'Username already taken');
+        // check email //
+        $this->check_email($fields['email']);
 
-			// invalid username
-			if (!validate_username($user_login))
-				pcl_add_error_message('username_invalid', 'Invalid username');
+        // check password //
+        $this->check_password($fields['password'], $fields['password_check']);
 
-			// empty username
-			if ($user_login == '')
-				pcl_add_error_message('username_empty', 'Please enter a username');
+		// check recaptcha, if active
+		if (get_option('pcl-enable-recaptcha', false))
+		    $this->check_recaptcha($_POST['g-recaptcha-response']);
 
-			//invalid email
-			if (!is_email($user_email))
-				pcl_add_error_message('email_invalid', 'Invalid email');
+		// only create the user in if there are no errors
+		if (!pcl_has_error_messages())
+		    $this->add_user($fields, $_POST);
+	}
+	
+	protected function check_username($username='') {
+		// Username already registered
+		if (username_exists($username))
+			pcl_add_error_message('username_unavailable', 'Username already taken');
 
-			//Email address already registered
-			if (email_exists($user_email))
-				pcl_add_error_message('email_used', 'Email already registered');
+		// invalid username
+		if (!validate_username($username))
+			pcl_add_error_message('username_invalid', 'Invalid username');
 
-			// passwords do not match
-			if ($user_pass == '')
-				pcl_add_error_message('password_empty', 'Please enter a password');
-
-			// passwords do not match
-			if ($user_pass != $pass_confirm)
-				pcl_add_error_message('password_mismatch', 'Passwords do not match');
-
-			// check recaptcha, if active
-			if (get_option('pcl-enable-recaptcha', false)) :
-
-				$secret=get_option('pcl-recaptcha-secret-key', ''); // secret key
-				$response=null; // empty response
-				$reCaptcha=new ReCaptcha($secret); // check secret key
-
-				if (isset($_POST['g-recaptcha-response']))
-					$response=$reCaptcha->verifyResponse(
-						$_SERVER["REMOTE_ADDR"],
-						$_POST["g-recaptcha-response"]
-					);
-
-				if ($response==null || !$response->success)
-					pcl_add_error_message('recaptcha','Issue with the recaptcha');
-
-			endif;
-
-			// only create the user in if there are no errors
-			if (!pcl_has_error_messages()) :
-				$new_user_id = wp_insert_user(array(
-						'user_login'		=> $user_login,
-						'user_pass'	 		=> $user_pass,
-						'user_email'		=> $user_email,
-						'first_name'		=> $user_first,
-						'last_name'			=> $user_last,
-						'user_registered'	=> date('Y-m-d H:i:s'),
-						'role'				=> 'subscriber'
-					)
-				);
-
-				do_action('pcl_after_user_registration',$new_user_id,$_POST);
-
-				if ($new_user_id) :
-					// send an email to the admin alerting them of the registration
-					pcl_user_activation_email($new_user_id,'both');
-
-					// if activation is required, we skip
-					if (!pcl_is_activation_required()) :
-						// log the new user in
-						wp_setcookie($user_login, $user_pass, true);
-						wp_set_current_user($new_user_id, $user_login);
-						do_action('wp_login', $user_login);
-
-						// send the newly created user to the redirect page after logging them in
-						wp_safe_redirect($redirect);
-						exit;
-					else :
-						$this->registration_success_notice=true;
-					endif;
-				endif;
-			endif;
-
-		endif;
+		// empty username
+		if ($username == '')
+			pcl_add_error_message('username_empty', 'Please enter a username');    	
 	}
 
+    protected function check_email($email='') {
+		//invalid email
+		if (!is_email($email))
+			pcl_add_error_message('email_invalid', 'Invalid email');
+
+		//Email address already registered
+		if (email_exists($email))
+			pcl_add_error_message('email_used', 'Email already registered');        
+    }
+    
+    protected function check_password($password='', $password_check='') {
+		// passwords empty
+		if ($password=='' || $password_check=='')
+			pcl_add_error_message('password_empty', 'Please enter a password');
+
+		// passwords do not match
+		if ($password != $password_check)
+			pcl_add_error_message('password_mismatch', 'Passwords do not match');        
+    }
+	
+	protected function check_recaptcha($recaptcha_response='') {
+    	$secret=get_option('pcl-recaptcha-secret-key', ''); // secret key
+    	$response=null; // empty response
+    	$reCaptcha=new ReCaptcha($secret); // check secret key
+    
+    	if (isset($recaptcha_response))
+    		$response=$reCaptcha->verifyResponse(
+    			$_SERVER["REMOTE_ADDR"],
+    			$recaptcha_response
+    		);
+    
+    	if ($response==null || !$response->success)
+    		pcl_add_error_message('recaptcha', 'Issue with the recaptcha');    	
+	}
+	
+    protected function add_user($fields=array(), $post_data=array()) {
+        $user_login=$fields['username'];
+        $user_pass=$fields['password'];
+        $redirect=get_option('pcl-register-redirect', home_url());
+        
+        if (!isset($fields['firstname'])) :
+            $first_name='';
+        else :
+            $first_name=$fields['firstname'];
+        endif;
+
+        if (!isset($fields['lastname'])) :
+            $last_name='';
+        else :
+            $last_name=$fields['lastname'];
+        endif;
+        
+        do_action('pcl_before_user_registration', $fields, $post_data);
+        
+        $user_args=array(
+ 			'user_login' => $user_login,
+			'user_pass' => $user_pass,
+			'user_email' => $fields['email'],
+			'first_name' => $first_name,
+			'last_name' => $last_name,
+			'user_registered' => date('Y-m-d H:i:s'),
+			'role' => 'subscriber'           
+        );
+        $user_args=apply_filters('pcl_insert_user_args', $user_args, $fields, $post_data);
+        
+    	$new_user_id=wp_insert_user($user_args);
+    
+    	do_action('pcl_after_user_registration', $new_user_id, $fields, $post_data);
+    
+    	if ($new_user_id) :
+    		// send an email to the admin alerting them of the registration
+    		pcl_user_activation_email($new_user_id, 'both');
+    
+    		// if activation is required, we skip
+    		if (!pcl_is_activation_required()) :
+    			// log the new user in
+    			wp_set_auth_cookie($new_user_id);
+    			wp_set_current_user($new_user_id, $user_login);
+    			do_action('wp_login', $user_login);
+    
+    			// send the newly created user to the redirect page after logging them in
+    			wp_safe_redirect($redirect);
+    			exit;
+    		else :
+    			$this->registration_success_notice=true;
+    		endif;
+    	endif;        
+    }	
+
 }
-?>
