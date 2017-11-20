@@ -72,6 +72,7 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'pcl-errors.php');
 		include_once(PCL_PATH.'pcl-force-login.php');
 		include_once(PCL_PATH.'pcl-login.php');
+		include_once(PCL_PATH.'pcl-profile.php');
 		include_once(PCL_PATH.'pcl-register.php');
 		include_once(PCL_PATH.'pcl-password.php');
 		include_once(PCL_PATH.'admin/admin.php');
@@ -81,6 +82,7 @@ final class PickleCustomLogin {
 		
 		new Pickle_Custom_Login();
 		new Pickle_Custom_Login_Reset_Password();
+		new Pickle_Custom_Login_Profile();
 		
 		if (is_admin()) :
 			$this->admin=new PickleCustomLoginAdmin();

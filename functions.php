@@ -399,17 +399,3 @@ function pcl_get_edit_user_link($link, $user_id) {
     return $link;
 }
 add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
-
-/**
- * pcl_change_profile_url function.
- * 
- * @access public
- * @return void
- */
-function pcl_change_profile_url() {
-    if (strpos($_SERVER['REQUEST_URI'], 'wp-admin/profile.php')) :
-        wp_redirect(get_edit_user_link());
-        exit;
-    endif;
-}
-add_action ('init' , 'pcl_change_profile_url');
