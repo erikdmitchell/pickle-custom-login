@@ -75,21 +75,16 @@ class Pickle_Custom_Login_Profile {
       
         if (!empty($_POST['description']))
             update_user_meta($current_user->ID, 'description', esc_attr($_POST['description']));
-/*
-    // Redirect so the page will show updated info.
-  // I am not Author of this Code- i dont know why but it worked for me after changing below line to if ( count($error) == 0 ){ 
-    if ( count($error) == 0 ) {
-        //action hook for plugins and extra fields saving
-        do_action('edit_user_profile_update', $current_user->ID);
-        wp_redirect( get_permalink().'?updated=true' ); exit;
-    }       
-
-*/
-
-/*
-            <?php if ( $_GET['updated'] == 'true' ) : ?> <div id="message" class="updated"><p>Your profile has been updated.</p></div> <?php endif; ?>
-                <?php if ( count($error) > 0 ) echo '<p class="error">' . implode("<br />", $error) . '</p>'; ?>
-*/
+        
+        // "redirect" to show updated info //
+        
+        if (count($error) == 0) :
+            // action hook for plugins and extra fields saving //
+            do_action('edit_user_profile_update', $current_user->ID);
+            
+            wp_redirect(get_permalink().'?updated=true'); 
+            exit;
+        endif;
     }
     
     protected function update_password($password='', $password_check='') {

@@ -9,6 +9,8 @@
     <?php else : ?>
         
         <?php $current_user = wp_get_current_user(); ?>
+        
+        <?php pcl_updated_profile_message(); ?>
             
         <h3>Update Information for <?php echo $current_user->user_login ?></h3>
         

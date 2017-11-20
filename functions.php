@@ -399,3 +399,17 @@ function pcl_get_edit_user_link($link, $user_id) {
     return $link;
 }
 add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
+
+/**
+ * pcl_updated_profile_message function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_updated_profile_message() {
+    if ($_GET['updated'] == 'true') : 
+        echo '<div id="message" class="updated published"><p>Your profile has been updated.</p></div>';
+    endif;
+     
+    //if ( count($error) > 0 ) echo '<p class="error">' . implode("<br />", $error) . '</p>';   
+}
