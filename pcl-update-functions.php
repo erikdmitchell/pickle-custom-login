@@ -16,6 +16,12 @@ function pcl_update_100_shortcodes() {
 	");
 }
 
+/**
+ * pcl_add_edit_profile_page function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_add_edit_profile_page() {
     $pages=get_option('pcl_pages', '');
     
