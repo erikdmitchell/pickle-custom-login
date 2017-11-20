@@ -24,15 +24,18 @@ function pcl_force_login_redirect() {
         // Apply filters //
 		$bypass=apply_filters('pcl_force_login_bypass', false);
 		$whitelist=apply_filters('pcl_force_login_whitelist', array());
-		$redirect_url=apply_filters('pcl_force_login_redirect', $url);		
+		$redirect_url=apply_filters('pcl_force_login_redirect', $url);
 
-		// Redirect visitors //
-		if (preg_replace('/\?.*/', '', rtrim($url, '/')) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) && !$bypass) :
+        // setup raw urls for cleaner comparison //
+		$redirect_url_clean=rtrim(preg_replace('/\?.*/', '', $redirect_url), '/');
+		$login_url_clean=preg_replace('/\?.*/', '', wp_login_url());
+		$url_clean=preg_replace('/\?.*/', '', $url);
+
+        // check and redirect //
+		if ($redirect_url_clean != $login_url_clean && !in_array($url_clean, $whitelist) && !$bypass) :	
 			wp_safe_redirect(wp_login_url(), 302); 
 			exit();
     	endif;
 	endif;
-
-
 }
 add_action('template_redirect', 'pcl_force_login_redirect');

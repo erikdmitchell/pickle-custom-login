@@ -352,4 +352,13 @@ function pcl_wp_login_url($login_url, $redirect, $force_reauth) {
     return home_url(pcl_page_slug('login'));
 }
 add_filter('login_url', 'pcl_wp_login_url', 10, 3);
+
+function pcl_force_login_whitelist($urls) {
+    foreach (pickle_custom_login()->pages as $slug => $page_id) :
+        $urls[]=get_permalink($page_id);    
+    endforeach;
+
+    return $urls;
+}
+add_filter('pcl_force_login_whitelist', 'pcl_force_login_whitelist');
 ?>
