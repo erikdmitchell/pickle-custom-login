@@ -24,8 +24,7 @@
             </p>
             
             <p>
-            	<?php pickle_custom_login()->registration->form_register_button(); ?>			
-            	
+            	<?php pickle_custom_login()->registration->form_register_button(); ?>
             </p>
 
 		</fieldset>
