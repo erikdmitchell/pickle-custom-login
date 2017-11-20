@@ -31,6 +31,8 @@ final class PickleCustomLogin {
 	
 	public $admin='';
 	
+	public $registration='';
+	
 	public $pages=array();
 
 	protected static $_instance=null;
@@ -78,7 +80,6 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'libraries/recaptchalib.php'); // google recaptcha library
 		
 		new Pickle_Custom_Login();
-		new Pickle_Custom_Login_Registration();
 		new Pickle_Custom_Login_Reset_Password();
 		
 		if (is_admin()) :
@@ -93,6 +94,7 @@ final class PickleCustomLogin {
 
 	public function init() {
 		$this->activation=new Pickle_Custom_Login_User_Activation();
+		$this->registration=new Pickle_Custom_Login_Registration();
 		$this->errors=new Pickle_Custom_Login_Errors();
 		$this->pages=get_option('pcl_pages');
 	}
