@@ -319,7 +319,37 @@ function pcl_logout_redirect_url() {
 	return get_option('pcl-logout-redirect', home_url());
 }
 
-function pcl_force_Login() {
+/**
+ * pcl_force_login function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_force_login() {
     return get_option('pcl-force-login', 0);
-}	 
+}
+
+/**
+ * pcl_login_url function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_login_url() {
+	return home_url(pcl_page_slug('login'));
+}
+
+/**
+ * pcl_wp_login_url function.
+ * 
+ * @access public
+ * @param mixed $login_url
+ * @param mixed $redirect
+ * @param mixed $force_reauth
+ * @return void
+ */
+function pcl_wp_login_url($login_url, $redirect, $force_reauth) {
+    return home_url(pcl_page_slug('login'));
+}
+add_filter('login_url', 'pcl_wp_login_url', 10, 3);
 ?>
