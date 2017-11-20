@@ -71,6 +71,7 @@ final class PickleCustomLogin {
 		
 		include_once(PCL_PATH.'functions.php');
 		include_once(PCL_PATH.'pcl-errors.php');
+		include_once(PCL_PATH.'pcl-force-login.php');
 		include_once(PCL_PATH.'pcl-login.php');
 		include_once(PCL_PATH.'pcl-register.php');
 		include_once(PCL_PATH.'pcl-password.php');
