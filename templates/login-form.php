@@ -1,5 +1,14 @@
+<?php
+/**
+ * The template for displaying the login form
+ *
+ * This template can be overridden by copying it to yourtheme/pickle-custom-login/login-form.php.
+ *
+ */    
+?>
+
 <div class="pcl-login-form">
-	<form id="custom_login_form" class="custom_form" action="" method="post">
+	<form id="pcl-login-form" class="pl-login-form" action="" method="post">
 		<fieldset>
 			<p>
 				<label for="custom_user_login">Username</label>
@@ -15,5 +24,7 @@
 			</p>
 		</fieldset>
 	</form>
+	
 	<?php pcl_login_extras(); ?>
+	
 </div>
