@@ -70,8 +70,6 @@ class Pickle_Custom_Login {
 
 			// only log the user in if there are no errors
 			if (!pcl_has_error_messages()) {
-				//wp_setcookie($_POST['custom_user_login'], $_POST['custom_user_pass'], true);
-
 				// remember me/set auth cookie //
 				if (isset($_POST['rememberme']) && $_POST['rememberme'] == 1) :
 				    wp_set_auth_cookie($user->ID, true);
