@@ -33,6 +33,8 @@ final class PickleCustomLogin {
 	
 	public $registration='';
 	
+	public $profile='';
+	
 	public $pages=array();
 
 	protected static $_instance=null;
@@ -48,14 +50,13 @@ final class PickleCustomLogin {
 	public function __construct() {
 		$this->define_constants();
 		$this->includes();
-		$this->init_hooks();
+		$this->init_hooks();				
 	}
 
 	private function define_constants() {
 		$this->define('PCL_VERSION', $this->version);
 		$this->define('PCL_PATH', plugin_dir_path(__FILE__));
-		$this->define('PCL_URL', plugin_dir_url(__FILE__));
-		
+		$this->define('PCL_URL', plugin_dir_url(__FILE__));		
 	}
 
 	private function define($name, $value) {
@@ -73,6 +74,7 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'pcl-errors.php');
 		include_once(PCL_PATH.'pcl-force-login.php');
 		include_once(PCL_PATH.'pcl-login.php');
+		include_once(PCL_PATH.'pcl-profile.php');
 		include_once(PCL_PATH.'pcl-register.php');
 		include_once(PCL_PATH.'pcl-password.php');
 		include_once(PCL_PATH.'admin/admin.php');
@@ -96,6 +98,7 @@ final class PickleCustomLogin {
 	public function init() {
 		$this->activation=new Pickle_Custom_Login_User_Activation();
 		$this->registration=new Pickle_Custom_Login_Registration();
+		$this->profile=new Pickle_Custom_Login_Profile();
 		$this->errors=new Pickle_Custom_Login_Errors();
 		$this->pages=get_option('pcl_pages');
 	}
@@ -108,4 +111,3 @@ function pickle_custom_login() {
 
 // Global for backwards compatibility.
 $GLOBALS['pickle_custom_login']=pickle_custom_login();
-?>

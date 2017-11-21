@@ -19,6 +19,15 @@
 					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-registration-form]</p>
 				</td>
 			</tr>
+
+			<tr>
+				<th scope="row"><label for="profile_page"><?php _e('Profile Page', 'pcl'); ?></label></th>
+				<td>
+					<?php pickle_custom_login()->admin->pcl_admin_dropdown_pages('profile', pickle_custom_login()->pages['profile']); ?>
+					<p class="description"><?php _e('Include the shortcode', 'pcl'); ?> [pcl-profile]</p>
+				</td>
+			</tr>
+
 			<tr>
 				<th scope="row"><label for="forgot_password_page"><?php _e('Forgot Password Page', 'pcl'); ?></label></th>
 				<td>
