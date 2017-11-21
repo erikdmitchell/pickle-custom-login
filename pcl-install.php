@@ -9,6 +9,7 @@ class Pickle_Custom_Login_Install {
 	private static $updates = array(
 		'1.0.0' => array(
 			'pcl_update_100_shortcodes',
+			'pcl_add_edit_profile_page',
 		),
 	);
 
@@ -82,6 +83,10 @@ class Pickle_Custom_Login_Install {
 			'login' => array(
 				'title' => __('Login', 'pcl'),
 				'content' => '[pcl-login-form]'
+			),
+			'profile' => array(
+				'title' => __('Profile', 'pcl'),
+				'content' => '[pcl-profile]'    			
 			),
 			'register' => array(
 				'title' => __('Register', 'pcl'),

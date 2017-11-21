@@ -381,4 +381,37 @@ add_filter('pcl_force_login_whitelist', 'pcl_force_login_whitelist');
 function pcl_logout_page_url() {
 	return get_option('pcl-logout-redirect', home_url());   
 }
-?>
+
+/**
+ * pcl_get_edit_user_link function.
+ * 
+ * @access public
+ * @param mixed $link
+ * @param mixed $user_id
+ * @return void
+ */
+function pcl_get_edit_user_link($link, $user_id) {
+    $pcl_link=pcl_page_slug('profile');
+    
+    if ($pcl_link!=$link)
+        return $pcl_link;
+        
+    return $link;
+}
+add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
+
+/**
+ * pcl_updated_profile_message function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_updated_profile_message() {
+    if (isset($_GET['updated']) && $_GET['updated'] == 'true' && !pickle_custom_login()->profile->has_errors()) : 
+        echo '<div id="message" class="updated published"><p>Your profile has been updated.</p></div>';
+    endif;
+    
+    if (pickle_custom_login()->profile->has_errors()) :
+       pickle_custom_login()->profile->display_errors();    
+    endif;
+}

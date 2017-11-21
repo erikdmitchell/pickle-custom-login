@@ -165,4 +165,3 @@ class Pickle_Custom_Login {
 	}
 
 }
-?>
