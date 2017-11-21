@@ -97,8 +97,14 @@ class Pickle_Custom_Login_Profile {
     protected function update_password($password='', $password_check='') {
         $current_user = wp_get_current_user();
         
-        if (empty($password) || empty($password_check))
+        if (empty($password) && empty($password_check))
             return;
+        
+        if (empty($password) || empty($password_check)) :
+            $this->add_error('A password field was left empty. Your password was not updated.');
+            
+            return;
+        endif;
             
         if ($password == $password_check) :
             wp_update_user(array(
@@ -128,6 +134,13 @@ class Pickle_Custom_Login_Profile {
         endif;  
     }
     
+    /**
+     * add_error function.
+     * 
+     * @access protected
+     * @param string $message (default: '')
+     * @return void
+     */
     protected function add_error($message='') {
         if (empty($message))
             return;
@@ -135,7 +148,13 @@ class Pickle_Custom_Login_Profile {
         $this->errors[]=$message;
     }
     
-    public function has_errors() {
+    /**
+     * has_errors function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function has_errors() {        
         if (count($this->errors))
             return true;
             
@@ -143,7 +162,9 @@ class Pickle_Custom_Login_Profile {
     }
     
     public function display_errors() {
-        
+        foreach ($this->errors as $error) :
+            echo '<div id="message" class="error"><p>'.$error.'</p></div>';
+        endforeach;      
     }
 
 }

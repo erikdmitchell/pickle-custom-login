@@ -407,13 +407,11 @@ add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
  * @return void
  */
 function pcl_updated_profile_message() {
-    if ($_GET['updated'] == 'true') : 
+    if (isset($_GET['updated']) && $_GET['updated'] == 'true') : 
         echo '<div id="message" class="updated published"><p>Your profile has been updated.</p></div>';
     endif;
     
     if (pickle_custom_login()->profile->has_errors()) :
-echo "display errors";    
+       pickle_custom_login()->profile->display_errors();    
     endif;
-     
-    //if ( count($error) > 0 ) echo '<p class="error">' . implode("<br />", $error) . '</p>';   
 }
