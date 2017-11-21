@@ -161,6 +161,12 @@ class Pickle_Custom_Login_Profile {
         return false;
     }
     
+    /**
+     * display_errors function.
+     * 
+     * @access public
+     * @return void
+     */
     public function display_errors() {
         foreach ($this->errors as $error) :
             echo '<div id="message" class="error"><p>'.$error.'</p></div>';
