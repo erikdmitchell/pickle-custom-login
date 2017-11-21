@@ -50,7 +50,7 @@ class Pickle_Custom_Login {
 
 		if (isset($_POST['custom_user_login']) && wp_verify_nonce($_POST['custom_login_nonce'], 'custom-login-nonce')) :
 			// this returns the user ID and other info from the user name
-			$user=get_user_by('login',$_POST['custom_user_login']);
+			$user=get_user_by('login', $_POST['custom_user_login']);
 
 			// if the user name doesn't exist
 			if (!$user)
@@ -70,8 +70,17 @@ class Pickle_Custom_Login {
 
 			// only log the user in if there are no errors
 			if (!pcl_has_error_messages()) {
-				wp_setcookie($_POST['custom_user_login'], $_POST['custom_user_pass'], true);
+				//wp_setcookie($_POST['custom_user_login'], $_POST['custom_user_pass'], true);
+
+				// remember me/set auth cookie //
+				if (isset($_POST['rememberme']) && $_POST['rememberme'] == 1) :
+				    wp_set_auth_cookie($user->ID, true);
+				else: 
+				    wp_set_auth_cookie($user->ID, false);
+				endif;
+				
 				wp_set_current_user($user->ID, $_POST['custom_user_login']);
+				
 				do_action('wp_login', $_POST['custom_user_login']);
 
 				if (current_user_can('administrator'))
