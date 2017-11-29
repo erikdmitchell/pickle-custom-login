@@ -1,15 +1,15 @@
 <?php
 /*
- * Plugin Name: Pickle Custom Login
- * Plugin URI: https://wordpress.org/plugins/em-custom-login/
- * Description: Enables a completely customizable WordPress login, registration and password form.
- * Version: 1.0.0alpha
- * Author: Erik Mitchell
- * Author URI: http://erikmitchell.net
- * License: GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: pcl
- * Domain Path: /languages
+  Plugin Name: Pickle Custom Login
+  Plugin URI: https://wordpress.org/plugins/em-custom-login/
+  Description: Enables a completely customizable WordPress login, registration and password form.
+  Version: 1.0.0alpha
+  Author: Erik Mitchell
+  Author URI: http://erikmitchell.net
+  License: GPL-2.0+
+  License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+  Text Domain: pcl
+  Domain Path: /languages
 */
 
 // If this file is called directly, abort.
