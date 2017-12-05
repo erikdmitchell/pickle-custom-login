@@ -1,9 +1,9 @@
 <?php
 /*
   Plugin Name: Pickle Custom Login
-  Plugin URI: https://wordpress.org/plugins/em-custom-login/
+  Plugin URI: 
   Description: Enables a completely customizable WordPress login, registration and password form.
-  Version: 1.0.0
+  Version: 1.0.0-alpha
   Author: Erik Mitchell
   Author URI: http://erikmitchell.net
   License: GPL-2.0+
@@ -23,7 +23,7 @@ if (!defined('PCL_PLUGIN_FILE')) {
 
 final class PickleCustomLogin {
 
-	public $version='1.0.0';
+	public $version='1.0.0-alpha';
 	
 	public $errors='';
 	
