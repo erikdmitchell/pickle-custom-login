@@ -21,44 +21,44 @@ class Pickle_Custom_Login_Email {
     	
     	$this->notify_admin($user);
     	
-        if ('admin' === $notify || empty($notify))
+        if ('admin' === $args['notify'] || empty($args['notify']))
             return;
 
         // The blogname option is escaped with esc_html on the way into the database in sanitize_option we want to reverse this for the plain text arena of emails.
-        $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+        $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);        
         $hashed=$this->update_user_activation_hash($user);
 
         switch ($args['type']) :
             default:
                 if (pcl_require_admin_activation()) :
+                    $title=sprintf(__('[%s] Thank you for registering'), $blogname);
                     $message=$this->get_email_message(array(
                         'type' => 'admin_activation_required', 
-                        'original_message' => $message, 
-                        'key' => 1, 
+                        'key' => $hashed, 
                         'user_login' => $user->user_login,                       
                     ));
                     
                     add_user_meta($user_id, 'has_to_be_approved', 1, true); // THIS PROBABLY NEEDS TO CHANGE
                 elseif (pcl_is_activation_required()) :
+                    $title=sprintf(__('[%s] Account verification'), $blogname);
                     $message=$this->get_email_message(array(
-                        'type' => 'account_creation_activation_required', 
-                        'original_message' => $message, 
+                        'type' => 'account_creation_activation_required',  
                         'key' => $hashed, 
                         'user_login' => $user->user_login,                       
                     ));
 
                     add_user_meta($user_id, 'has_to_be_activated', $hashed, true);
                 else:
+                    $title=sprintf(__('[%s] Your username and password info'), $blogname);
                     $message=$this->get_email_message(array(
-                        'type' => 'account_creation', 
-                        'original_message' => $message, 
-                        'key' => $key, 
+                        'type' => 'account_creation',  
+                        'key' => wp_generate_password(20, false), 
                         'user_login' => $user->user_login,                       
                     ));
                 endif;                
         endswitch;
 
-        wp_mail($user->user_email, sprintf(__('[%s] Your username and password info'), $blogname), $message); // EDIT    	    
+        wp_mail($user->user_email, $title, $message);                    	    
     }
     
     protected function get_email_message($args='') {
@@ -82,10 +82,10 @@ class Pickle_Custom_Login_Email {
     		return false;
     
     	// get user details //
-    	if ($user_id) :
-    		$user=get_userdata($user_id);
+    	if ($args['user_id']) :
+    		$user=get_userdata($args['user_id']);
     	else :
-    		$user=get_user_by('login', $user_login);
+    		$user=get_user_by('login', $args['user_login']);
     	endif;
     
     	// one last check //

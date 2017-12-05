@@ -282,7 +282,7 @@ class Pickle_Custom_Login_Registration {
     
     	if ($new_user_id) :
     		// send an email to the admin alerting them of the registration //
-    		pcl_user_activation_email($new_user_id, 'both');
+    		pickle_custom_login()->email->send_email(array('user_id' => $new_user_id));
     
             // check our activation flags - admin activation, user (email) activation, other //
             if (pcl_require_admin_activation()) :

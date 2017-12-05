@@ -5,8 +5,6 @@ final class Pickle_Custom_Login_Admin {
 	protected $admin_notices=array();
 
 	protected static $_instance=null;
-	
-	public $email='';
 
 	/**
 	 * instance function.
@@ -61,9 +59,6 @@ final class Pickle_Custom_Login_Admin {
 	}
 
 	public function includes() {
-        include_once(PCL_ADMIN_PATH.'email.php');
-        
-        $this->email=new 
 	}
 
 	/**

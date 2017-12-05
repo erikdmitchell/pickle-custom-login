@@ -35,6 +35,8 @@ final class PickleCustomLogin {
 	
 	public $profile='';
 	
+	public $email='';
+	
 	public $pages=array();
 
 	protected static $_instance=null;
@@ -80,6 +82,7 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'admin/admin.php');
 		include_once(PCL_PATH.'pcl-user-activation.php');
 		//include_once(PCL_PATH.'pcl-email-functions.php');
+		include_once(PCL_PATH.'pcl-email.php');
 		include_once(PCL_PATH.'libraries/recaptchalib.php'); // google recaptcha library
 		include_once(PCL_PATH.'updater/updater.php'); // git hub update
 		
@@ -102,6 +105,7 @@ final class PickleCustomLogin {
 		$this->registration=new Pickle_Custom_Login_Registration();
 		$this->profile=new Pickle_Custom_Login_Profile();
 		$this->errors=new Pickle_Custom_Login_Errors();
+		$this->email=new Pickle_Custom_Login_Email();
 		$this->pages=get_option('pcl_pages');
 	}
 	
