@@ -215,6 +215,7 @@ function pcl_user_activation_email($user_id, $notify='') {
 		$message=pcl_get_custom_email_message('admin_activation_required', $message, $hashed, $user->user_login);
 
 		add_user_meta($user_id, 'has_to_be_approved', $hashed, true); // THIS PROBABLY NEEDS TO CHANGE
+		//add_user_meta($user_id, 'has_to_be_activated', $hashed, true); -- do we want this?
 	elseif (pcl_is_activation_required()) :
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";

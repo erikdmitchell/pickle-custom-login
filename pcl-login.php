@@ -64,6 +64,10 @@ class Pickle_Custom_Login {
 			if (!isset($user->user_pass) || !wp_check_password($_POST['custom_user_pass'], $user->user_pass, $user->ID))
 				pcl_add_error_message('empty_password', 'Incorrect password');
 
+            // check if admin activation is required and they have been approved //
+ 			if (isset($user->ID) && pcl_require_admin_activation() && !pcl_is_user_approved($user->ID))
+				pcl_add_error_message('not_approved', 'An admin must approve your account before logging in.');           
+
 			// check if activation is required and if so, user is active //
 			if (isset($user->ID) && pcl_is_activation_required() && !pcl_is_user_authenticated($user->ID))
 				pcl_add_error_message('not_activated', 'You must activate your account before logging in.');

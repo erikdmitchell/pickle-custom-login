@@ -170,6 +170,23 @@ function pcl_is_user_authenticated($user_id=0) {
 }
 
 /**
+ * pcl_is_user_approved function.
+ * 
+ * @access public
+ * @param int $user_id (default: 0)
+ * @return void
+ */
+function pcl_is_user_approved($user_id=0) {
+	if (!$user_id)
+		return false;
+
+	if (get_user_meta($user_id, 'has_to_be_approved', true))
+		return false;
+
+	return true;
+}
+
+/**
  * pcl_activate_user function.
  * 
  * @access public
