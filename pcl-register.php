@@ -238,6 +238,14 @@ class Pickle_Custom_Login_Registration {
     		pcl_add_error_message('recaptcha', 'Issue with the recaptcha');    	
 	}
 	
+    /**
+     * add_user function.
+     * 
+     * @access protected
+     * @param array $fields (default: array())
+     * @param array $post_data (default: array())
+     * @return void
+     */
     protected function add_user($fields=array(), $post_data=array()) {
         $user_login=$fields['username'];
         $user_pass=$fields['password'];

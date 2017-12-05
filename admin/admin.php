@@ -1,11 +1,20 @@
 <?php
 
-final class PickleCustomLoginAdmin {
+final class Pickle_Custom_Login_Admin {
 	
 	protected $admin_notices=array();
 
 	protected static $_instance=null;
+	
+	public $email='';
 
+	/**
+	 * instance function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
 			self::$_instance=new self();
@@ -14,18 +23,37 @@ final class PickleCustomLoginAdmin {
 		return self::$_instance;
 	}
 
+	/**
+	 * __construct function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		$this->define_constants();
 		$this->includes();
 		$this->init_hooks();
 	}
 
+	/**
+	 * define_constants function.
+	 * 
+	 * @access private
+	 * @return void
+	 */
 	private function define_constants() {
 		$this->define('PCL_ADMIN_PATH', plugin_dir_path(__FILE__));
 		$this->define('PCL_ADMIN_URL', plugin_dir_url(__FILE__));
-		
 	}
 
+	/**
+	 * define function.
+	 * 
+	 * @access private
+	 * @param mixed $name
+	 * @param mixed $value
+	 * @return void
+	 */
 	private function define($name, $value) {
 		if (!defined($name)) {
 			define($name, $value);
@@ -33,7 +61,9 @@ final class PickleCustomLoginAdmin {
 	}
 
 	public function includes() {
-
+        include_once(PCL_ADMIN_PATH.'email.php');
+        
+        $this->email=new 
 	}
 
 	/**
@@ -48,6 +78,7 @@ final class PickleCustomLoginAdmin {
 		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
 		add_action('admin_init', array($this, 'update_settings'), 0);
 		add_action('admin_init', array($this, 'update_emails'), 0);
+		add_action('admin_init', array($this, 'approve_users'), 9);
 		add_action('wp_trash_post', array($this, 'check_pages_on_trash'));		
 	}
 
@@ -337,6 +368,24 @@ final class PickleCustomLoginAdmin {
 
 		wp_editor($content, $id, array('media_buttons' => false));
 	}
+
+    public function approve_users() {
+		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'approve_users'))
+			return;  
+			
+        if (!isset($_POST['pcl_users']) || empty($_POST['pcl_users']))
+            return;
+			
+        $users=$_POST['pcl_users'];
+        
+print_r($users);
+/*
+  change meta
+  setup approval meta
+  send approval email  
+*/
+exit;        
+    }
 
 	/**
 	 * get_admin_page function.

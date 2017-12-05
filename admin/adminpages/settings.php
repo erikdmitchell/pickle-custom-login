@@ -145,7 +145,7 @@
 				<th scope="row"><label for="require_admin_activation"><?php _e('Require Admin Account Activation', 'pcl'); ?></label></th>
 				<td>
 					<input name="pcl_settings[require_admin_activation]" type="checkbox" id="require_admin_activation" value="1" <?php checked(pcl_require_admin_activation(), 1); ?>>
-					<span class="description" id="require_admin_activation_description"><?php _e('If checked, users would receive need to be activated by an admin before the can login. This overrides "Require Account Activation".', 'pcl'); ?></span>
+					<span class="description" id="require_admin_activation_description"><?php _e('If checked, users would receive need to be activated by an admin before the can login. This overrides "Require Account Activation". Users will be required to activate their account after aprroval', 'pcl'); ?></span>
 				</td>
 			</tr>
 		</tbody>

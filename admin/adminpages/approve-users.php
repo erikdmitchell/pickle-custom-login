@@ -36,7 +36,7 @@
                 <tr id="user-<?php echo $user->ID; ?>">
                     <th scope="row" class="check-column">
                         <label class="screen-reader-text" for="user_<?php echo $user->ID; ?>">Select <?php echo $user->data->user_login; ?></label>
-                        <input type="checkbox" name="users[]" id="user_<?php echo $user->ID; ?>" class="" value="<?php echo $user->ID; ?>">
+                        <input type="checkbox" name="pcl_users[]" id="user_<?php echo $user->ID; ?>" class="" value="<?php echo $user->ID; ?>">
                     </th>
                     
                     <td class="username column-username has-row-actions column-primary" data-colname="Username">

@@ -185,7 +185,7 @@ function pcl_user_activation_email($user_id, $notify='') {
 	$message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 	$message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
 
-	@wp_mail(get_option('admin_email'), sprintf(__('[%s] New User Registration'), $blogname), $message);
+	@wp_mail(get_option('admin_email'), sprintf(__('[%s] New User Registration'), $blogname), $message); // THIS NEEDS TO BE CUSTOMIZED
 
 	if ( 'admin' === $notify || empty( $notify ) ) {
 		return;
@@ -235,7 +235,7 @@ function pcl_user_activation_email($user_id, $notify='') {
         $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
-		$message=pcl_get_custom_email_message('account_creation',$message,$key,$user->user_login);
+		$message=pcl_get_custom_email_message('account_creation', $message, $key, $user->user_login);
 	endif;
 
 	wp_mail($user->user_email, sprintf(__('[%s] Your username and password info'), $blogname), $message);
