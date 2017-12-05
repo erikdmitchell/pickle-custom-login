@@ -51,7 +51,7 @@ class Pickle_Custom_Login_Email {
                         'user_login' => $user->user_login,                       
                     ));
                     
-                    add_user_meta($user_id, 'has_to_be_approved', 1, true); // THIS PROBABLY NEEDS TO CHANGE
+                    add_user_meta($user->ID, 'has_to_be_approved', 1, true); // THIS PROBABLY NEEDS TO CHANGE
                 elseif (pcl_is_activation_required()) :
                     $title=sprintf(__('[%s] Account verification'), $blogname);
                     $message=$this->get_email_message(array(
@@ -60,7 +60,7 @@ class Pickle_Custom_Login_Email {
                         'user_login' => $user->user_login,                       
                     ));
 
-                    add_user_meta($user_id, 'has_to_be_activated', $hashed, true);
+                    add_user_meta($user->ID, 'has_to_be_activated', $hashed, true);
                 else:
                     $title=sprintf(__('[%s] Your username and password info'), $blogname);
                     $message=$this->get_email_message(array(
