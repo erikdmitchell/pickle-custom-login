@@ -418,9 +418,13 @@ function pcl_logout_page_url() {
  * @return void
  */
 function pcl_get_edit_user_link($link, $user_id) {
-    $pcl_link=pcl_page_slug('profile');
+    $pcl_link=home_url(pcl_page_slug('profile'));
+    $url_parsed=parse_url($link);
     
-    if ($pcl_link!=$link)
+    if (isset($url_parsed['query']))
+        $pcl_link.='?'.$url_parsed['query'];
+    
+    if ($pcl_link != $link)
         return $pcl_link;
         
     return $link;
@@ -441,4 +445,24 @@ function pcl_updated_profile_message() {
     if (pickle_custom_login()->profile->has_errors()) :
        pickle_custom_login()->profile->display_errors();    
     endif;
+}
+
+function pcl_users_to_be_activated_count() {
+    $users=get_users(array(
+       'meta_key' => 'has_to_be_approved',
+       'meta_value' => 1,
+       'meta_compare' => '=', // default 
+    ));
+    
+    echo count($users);
+}
+
+function pcl_users_to_be_activated() {
+    $users=get_users(array(
+       'meta_key' => 'has_to_be_approved',
+       'meta_value' => 1,
+       'meta_compare' => '=', // default 
+    ));
+    
+    return $users;
 }
