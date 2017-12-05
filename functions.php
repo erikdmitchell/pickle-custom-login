@@ -19,7 +19,7 @@ add_action('wp_enqueue_scripts', 'pcl_scripts_styles');
  * @param mixed $attributes (default: null)
  * @return void
  */
-function pcl_get_template_html($template_name=false,$attributes=null) {
+function pcl_get_template_html($template_name=false, $attributes=null) {
 	if (!$attributes )
 		$attributes = array();
 
@@ -447,6 +447,12 @@ function pcl_updated_profile_message() {
     endif;
 }
 
+/**
+ * pcl_users_to_be_activated_count function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_users_to_be_activated_count() {
     $users=get_users(array(
        'meta_key' => 'has_to_be_approved',
@@ -457,6 +463,12 @@ function pcl_users_to_be_activated_count() {
     echo count($users);
 }
 
+/**
+ * pcl_users_to_be_activated function.
+ * 
+ * @access public
+ * @return void
+ */
 function pcl_users_to_be_activated() {
     $users=get_users(array(
        'meta_key' => 'has_to_be_approved',
@@ -465,4 +477,22 @@ function pcl_users_to_be_activated() {
     ));
     
     return $users;
+}
+
+function pcl_get_edit_profile_user($user_id=0) {
+    if (isset($_GET['user_id'])) :
+        $user_id=$_GET['user_id'];
+    elseif (!$user_id) :
+        $user_id = get_current_user_id();
+    endif;
+ 
+    if (empty($user_id) || !current_user_can('edit_user', $user_id))
+        return false;
+ 
+    $user=get_userdata($user_id);
+ 
+    if (!$user)
+        return false;
+ 
+    return $user;   
 }

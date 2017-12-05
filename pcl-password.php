@@ -286,4 +286,3 @@ class Pickle_Custom_Login_Reset_Password {
 	}
 
 }
-?>

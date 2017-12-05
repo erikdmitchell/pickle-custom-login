@@ -1,3 +1,5 @@
+<?php $current_user = pcl_get_edit_profile_user(); ?>
+
 <div class="pcl-profile">
 
     <?php if (!is_user_logged_in()) : ?>
@@ -5,11 +7,15 @@
         <p class="warning">
             <?php _e('You must be logged in to edit your profile.', 'pcl'); ?>
         </p><!-- .warning -->
-            
+
+    <?php elseif (!$current_user) : ?>
+
+        <p class="warning">
+            <?php _e('User not found, or you do not have permissions to edit this user.', 'pcl'); ?>
+        </p><!-- .warning -->
+        
+    
     <?php else : ?>
-        
-        <?php $current_user = wp_get_current_user(); ?>
-        
         <?php pcl_updated_profile_message(); ?>
             
         <h3>Update Information for <?php echo $current_user->user_login ?></h3>
