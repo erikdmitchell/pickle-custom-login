@@ -373,13 +373,13 @@ final class Pickle_Custom_Login_Admin {
 			
         $users=$_POST['pcl_users'];
         
-print_r($users);
-/*
-  change meta
-  setup approval meta
-  send approval email  
-*/
-exit;        
+        foreach ($users as $user_id) :
+            update_user_meta($user_id, 'has_to_be_approved', 0);
+            pickle_custom_login()->email->send_email(array(
+                'user_id' => $user_id,
+                'type' => 'account_verification',
+            ));
+        endforeach;       
     }
 
 	/**

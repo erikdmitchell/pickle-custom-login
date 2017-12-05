@@ -42,6 +42,16 @@ class Pickle_Custom_Login_Email {
         $hashed=$this->update_user_activation_hash($user);
 
         switch ($args['type']) :
+            case 'account_verification':
+                $title=sprintf(__('[%s] Account verification'), $blogname);
+                $message=$this->get_email_message(array(
+                    'type' => 'account_creation_activation_required',  
+                    'key' => $hashed, 
+                    'user_login' => $user->user_login,                       
+                ));
+
+                add_user_meta($user->ID, 'has_to_be_activated', $hashed, true);            
+                break;
             default:
                 if (pcl_require_admin_activation()) :
                     $title=sprintf(__('[%s] Thank you for registering'), $blogname);
