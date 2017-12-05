@@ -2,10 +2,23 @@
 
 class Pickle_Custom_Login_Email {
     
+    /**
+     * __construct function.
+     * 
+     * @access public
+     * @return void
+     */
     public function __construct() {
         
     }
     
+    /**
+     * send_email function.
+     * 
+     * @access public
+     * @param string $args (default: '')
+     * @return void
+     */
     public function send_email($args='') {        
         $default_args=array(
             'user_id' => 0,
@@ -61,7 +74,14 @@ class Pickle_Custom_Login_Email {
         wp_mail($user->user_email, $title, $message);                    	    
     }
     
-    protected function get_email_message($args='') {
+    /**
+     * get_email_message function.
+     * 
+     * @access public
+     * @param string $args (default: '')
+     * @return void
+     */
+    public function get_email_message($args='') {
         $default_args=array(
             'type' => '', 
             'original_message' => '', 
@@ -136,6 +156,13 @@ class Pickle_Custom_Login_Email {
     	return $message;        
     }
     
+    /**
+     * add_custom_message function.
+     * 
+     * @access protected
+     * @param string $args (default: '')
+     * @return void
+     */
     protected function add_custom_message($args='') {
         $default_args=array(
             'option' => '',
@@ -158,6 +185,15 @@ class Pickle_Custom_Login_Email {
     	return $message;       
     }
         
+    /**
+     * clean_placeholders function.
+     * 
+     * @access protected
+     * @param string $message (default: '')
+     * @param string $user_login (default: '')
+     * @param string $key (default: '')
+     * @return void
+     */
     protected function clean_placeholders($message='', $user_login='', $key='') {
     	$placeholders=array(
     		'{user_login}' => $user_login,
@@ -174,6 +210,13 @@ class Pickle_Custom_Login_Email {
     	return $message;
     }
     
+    /**
+     * notify_admin function.
+     * 
+     * @access private
+     * @param string $user (default: '')
+     * @return void
+     */
     private function notify_admin($user='') {
         // The blogname option is escaped with esc_html on the way into the database in sanitize_option we want to reverse this for the plain text arena of emails.
         $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
@@ -185,6 +228,13 @@ class Pickle_Custom_Login_Email {
         @wp_mail(get_option('admin_email'), sprintf(__('[%s] New User Registration'), $blogname), $message); // THIS NEEDS TO BE CUSTOMIZED
     }
     
+    /**
+     * update_user_activation_hash function.
+     * 
+     * @access protected
+     * @param string $user (default: '')
+     * @return void
+     */
     protected function update_user_activation_hash($user='') {
         global $wpdb, $wp_hasher;
         
