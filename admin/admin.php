@@ -227,6 +227,10 @@ final class PickleCustomLoginAdmin {
 		if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
 			update_option('pcl-account-activation-email', wp_kses_post($_POST['account_activation_email']));
 
+		// update admin activation email //
+		if (isset($_POST['admin_activation_email']) && $_POST['admin_activation_email']!='')
+			update_option('pcl-admin-activation-email', wp_kses_post($_POST['admin_activation_email']));
+
 		$this->admin_notices['updated']='Emails Updated!';
 	}
 
@@ -259,6 +263,13 @@ final class PickleCustomLoginAdmin {
 		$content='';
 
 		switch ($slug) :
+		    case 'admin_activation_email':
+				$content="Username: {username}\r\n\r\n";
+				$content.="Thank you for registering with us.\r\n\r\n";
+				$content.="Once an administrator approves your account, you will receive an email on how to access the site.\r\n\r\n";
+                $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
+				$content.="Cheers!\r\n\r\n";		    
+		        break;
 			case 'retrieve_password_email':
 				$content.="Hello!\r\n\r\n";
 				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n";
@@ -271,7 +282,7 @@ final class PickleCustomLoginAdmin {
 				$content="Username: {username}\r\n\r\n";
 				$content.="To activate your account, visit the following address:\r\n\r\n";
 				$content.="{activate_account_link}\r\n\r\n";
-			  $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
+                $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";
 				break;
 			case 'account_creation_email':
@@ -280,7 +291,7 @@ final class PickleCustomLoginAdmin {
 				$content.="{set_password_link}\r\n\r\n";
 				$content.="Or, login here:\r\n\r\n";
 				$content.="{login_url}\r\n\r\n";
-			  $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
+                $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";
 			default:
 				break;

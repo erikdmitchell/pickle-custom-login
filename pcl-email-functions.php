@@ -154,7 +154,7 @@ function pcl_user_activation_email($user_id, $notify='') {
 	global $wpdb, $wp_hasher;
 	$user = get_userdata( $user_id );
 
-  // The blogname option is escaped with esc_html on the way into the database in sanitize_option we want to reverse this for the plain text arena of emails.
+    // The blogname option is escaped with esc_html on the way into the database in sanitize_option we want to reverse this for the plain text arena of emails.
 	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
 	$message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
@@ -181,24 +181,33 @@ function pcl_user_activation_email($user_id, $notify='') {
 	$hashed = time() . ':' . $wp_hasher->HashPassword( $key );
 	$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user->user_login ) );
 
-	if (pcl_is_activation_required()) :
+    if (pcl_require_admin_activation()) :
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";
 		$message .= '<' . home_url("/".pcl_page_slug('activate-account')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
-	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
+        $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
-		$message=pcl_get_custom_email_message('account_creation_activation_required',$message,$hashed,$user->user_login);
+		$message=pcl_get_custom_email_message('admin_approval_required', $message, $hashed, $user->user_login);
 
-		add_user_meta($user_id,'has_to_be_activated',$hashed,true);
-		// send notice to reg //
+		add_user_meta($user_id, 'has_to_be_approved', $hashed, true); // THIS PROBABLY NEEDS TO CHANGE
+	elseif (pcl_is_activation_required()) :
+		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
+		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";
+		$message .= '<' . home_url("/".pcl_page_slug('activate-account')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
+        $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
+		$message .= __('Cheers!') . "\r\n\r\n";
+
+		$message=pcl_get_custom_email_message('account_creation_activation_required', $message, $hashed, $user->user_login);
+
+		add_user_meta($user_id, 'has_to_be_activated', $hashed, true);
 	else:
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
 		$message .= __('To set your password, visit the following address:') . "\r\n\r\n";
 		$message .= '<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user->user_login), 'login') . ">\r\n\r\n";
 		$message .= __('Login here:') . "\r\n\r\n";
 		$message .= wp_login_url() . "\r\n\r\n";
-	  $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
+        $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
 		$message=pcl_get_custom_email_message('account_creation',$message,$key,$user->user_login);
