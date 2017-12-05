@@ -212,7 +212,7 @@ function pcl_user_activation_email($user_id, $notify='') {
         $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
-		$message=pcl_get_custom_email_message('admin_activation_required', $message, $hashed, $user->user_login);
+		$message=pcl_get_custom_email_message('admin_activation_required', $message, 1, $user->user_login);
 
 		add_user_meta($user_id, 'has_to_be_approved', $hashed, true); // THIS PROBABLY NEEDS TO CHANGE
 		//add_user_meta($user_id, 'has_to_be_activated', $hashed, true); -- do we want this?
