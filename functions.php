@@ -290,6 +290,16 @@ function pcl_require_activation_key() {
 }
 
 /**
+ * pcl_require_admin_activation function.
+ * 
+ * @access public
+ * @return void
+ */
+function pcl_require_admin_activation() {
+    return get_option('pcl-require-admin-activation', 0);
+}
+
+/**
  * pcl_login_redirect_url function.
  * 
  * @access public

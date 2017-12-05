@@ -195,6 +195,13 @@ final class PickleCustomLoginAdmin {
 			delete_option('pcl-require-activation-key');
 		endif;
 
+		// require admin activation //
+		if (isset($settings_data['require_admin_activation'])) :
+			update_option('pcl-require-admin-activation', 1);
+		else :
+			delete_option('pcl-require-admin-activation');
+		endif;
+
 		$this->admin_notices['updated']='Settings Updated!';
 	}
 
