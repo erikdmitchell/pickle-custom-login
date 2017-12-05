@@ -32,7 +32,7 @@
     	<tbody id="the-list" data-wp-lists="list:user">
     
             <?php foreach (pcl_users_to_be_activated() as $user) : ?>
-     <?php print_r($user); ?>      
+      
                 <tr id="user-<?php echo $user->ID; ?>">
                     <th scope="row" class="check-column">
                         <label class="screen-reader-text" for="user_<?php echo $user->ID; ?>">Select <?php echo $user->data->user_login; ?></label>
@@ -41,7 +41,7 @@
                     
                     <td class="username column-username has-row-actions column-primary" data-colname="Username">
                         <?php echo get_avatar($user->ID, 32); ?>
-                        <strong><a href="<?php //echo get_edit_user_link($user->ID); ?>"><?php echo $user->data->user_login; ?></a></strong>
+                        <strong><a href="<?php echo get_edit_user_link($user->ID); ?>"><?php echo $user->data->user_login; ?></a></strong>
                     </td>
                         
                     <td class="name column-name" data-colname="Name"><?php echo $user->data->display_name; ?></td>
