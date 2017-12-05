@@ -32,7 +32,7 @@ class Pickle_Custom_Login_Email {
     
     	$user=get_userdata($args['user_id']);
     	
-    	$this->notify_admin($user);
+    	$this->notify_admin($user, $args['type']);
     	
         if ('admin' === $args['notify'] || empty($args['notify']))
             return;
@@ -219,23 +219,41 @@ class Pickle_Custom_Login_Email {
     
     	return $message;
     }
-    
+
     /**
      * notify_admin function.
      * 
      * @access private
      * @param string $user (default: '')
+     * @param string $type (default: 'registration')
      * @return void
      */
-    private function notify_admin($user='', $subject='New User Registration') {
+    private function notify_admin($user='', $type='registration') {
         // The blogname option is escaped with esc_html on the way into the database in sanitize_option we want to reverse this for the plain text arena of emails.
         $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
-        $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
-        $message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
-        $message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
+        switch ($type) :
+            case 'account_verification':
+                return;
+            default:
+                if (pcl_require_admin_activation()) :
+                    $title=sprintf(__('[%s] Thank you for registering'), $blogname);
 
-        wp_mail(get_option('admin_email'), sprintf(__('[%s] '.$subject), $blogname), $message);
+                    $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
+                    $message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
+                    $message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
+                    
+                    $message .= __('Please login and verify the user. They will not be able to access the site until verified.') . "\r\n";
+                else:
+                    $title=sprintf(__('[%s] New User Registration'), $blogname);
+                    
+                    $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
+                    $message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
+                    $message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
+                endif;                
+        endswitch;
+
+        wp_mail(get_option('admin_email'), $title, $message);
     }
     
     /**
