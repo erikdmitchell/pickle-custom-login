@@ -72,6 +72,7 @@ final class PickleCustomLoginAdmin {
 		$tabs=array(
 			'settings' => 'Settings',
 			'emails' => 'Emails',
+			'approve_users' => 'Approve Users',
 		);
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
 			
@@ -93,7 +94,10 @@ final class PickleCustomLoginAdmin {
 			switch ($active_tab) :
 				case 'emails':
 					$html.=$this->get_admin_page('emails');
-					break;					
+					break;
+				case 'approve_users':
+				    $html.=$this->get_admin_page('approve-users');
+				    break;					
 				default:
 					$html.=$this->get_admin_page('settings');
 			endswitch;
