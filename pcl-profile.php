@@ -41,12 +41,18 @@ class Pickle_Custom_Login_Profile {
         endif;
     }
 
+    /**
+     * update_user_profile function.
+     * 
+     * @access public
+     * @return void
+     */
     public function update_user_profile() {
         global $wp_roles;
         
-        $current_user = wp_get_current_user();
+        $current_user = pcl_get_edit_profile_user();
         $error = array();    
-        
+     
         if (!isset($_POST['pcl_update_profile']) || !wp_verify_nonce($_POST['pcl_update_profile'], 'update-user_'.$current_user->ID))
             return false;           
 

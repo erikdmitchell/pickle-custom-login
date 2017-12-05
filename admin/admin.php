@@ -1,11 +1,18 @@
 <?php
 
-final class PickleCustomLoginAdmin {
+final class Pickle_Custom_Login_Admin {
 	
 	protected $admin_notices=array();
 
 	protected static $_instance=null;
 
+	/**
+	 * instance function.
+	 * 
+	 * @access public
+	 * @static
+	 * @return void
+	 */
 	public static function instance() {
 		if (is_null(self::$_instance)) {
 			self::$_instance=new self();
@@ -14,18 +21,37 @@ final class PickleCustomLoginAdmin {
 		return self::$_instance;
 	}
 
+	/**
+	 * __construct function.
+	 * 
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		$this->define_constants();
 		$this->includes();
 		$this->init_hooks();
 	}
 
+	/**
+	 * define_constants function.
+	 * 
+	 * @access private
+	 * @return void
+	 */
 	private function define_constants() {
 		$this->define('PCL_ADMIN_PATH', plugin_dir_path(__FILE__));
 		$this->define('PCL_ADMIN_URL', plugin_dir_url(__FILE__));
-		
 	}
 
+	/**
+	 * define function.
+	 * 
+	 * @access private
+	 * @param mixed $name
+	 * @param mixed $value
+	 * @return void
+	 */
 	private function define($name, $value) {
 		if (!defined($name)) {
 			define($name, $value);
@@ -33,7 +59,6 @@ final class PickleCustomLoginAdmin {
 	}
 
 	public function includes() {
-
 	}
 
 	/**
@@ -48,6 +73,7 @@ final class PickleCustomLoginAdmin {
 		add_action('admin_enqueue_scripts', array($this, 'admin_scripts_styles'));
 		add_action('admin_init', array($this, 'update_settings'), 0);
 		add_action('admin_init', array($this, 'update_emails'), 0);
+		add_action('admin_init', array($this, 'approve_users'), 9);
 		add_action('wp_trash_post', array($this, 'check_pages_on_trash'));		
 	}
 
@@ -72,6 +98,7 @@ final class PickleCustomLoginAdmin {
 		$tabs=array(
 			'settings' => 'Settings',
 			'emails' => 'Emails',
+			'approve_users' => 'Approve Users',
 		);
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
 			
@@ -93,7 +120,10 @@ final class PickleCustomLoginAdmin {
 			switch ($active_tab) :
 				case 'emails':
 					$html.=$this->get_admin_page('emails');
-					break;					
+					break;
+				case 'approve_users':
+				    $html.=$this->get_admin_page('approve-users');
+				    break;					
 				default:
 					$html.=$this->get_admin_page('settings');
 			endswitch;
@@ -195,6 +225,13 @@ final class PickleCustomLoginAdmin {
 			delete_option('pcl-require-activation-key');
 		endif;
 
+		// require admin activation //
+		if (isset($settings_data['require_admin_activation'])) :
+			update_option('pcl-require-admin-activation', 1);
+		else :
+			delete_option('pcl-require-admin-activation');
+		endif;
+
 		$this->admin_notices['updated']='Settings Updated!';
 	}
 
@@ -219,6 +256,10 @@ final class PickleCustomLoginAdmin {
 		// update account activation email //
 		if (isset($_POST['account_activation_email']) && $_POST['account_activation_email']!='')
 			update_option('pcl-account-activation-email', wp_kses_post($_POST['account_activation_email']));
+
+		// update admin activation email //
+		if (isset($_POST['admin_activation_email']) && $_POST['admin_activation_email']!='')
+			update_option('pcl-admin-activation-email', wp_kses_post($_POST['admin_activation_email']));
 
 		$this->admin_notices['updated']='Emails Updated!';
 	}
@@ -252,6 +293,13 @@ final class PickleCustomLoginAdmin {
 		$content='';
 
 		switch ($slug) :
+		    case 'admin_activation_email':
+				$content="Username: {username}\r\n\r\n";
+				$content.="Thank you for registering with us.\r\n\r\n";
+				$content.="Once an administrator approves your account, you will receive an email on how to access the site.\r\n\r\n";
+                $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
+				$content.="Cheers!\r\n\r\n";		    
+		        break;
 			case 'retrieve_password_email':
 				$content.="Hello!\r\n\r\n";
 				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n";
@@ -264,7 +312,7 @@ final class PickleCustomLoginAdmin {
 				$content="Username: {username}\r\n\r\n";
 				$content.="To activate your account, visit the following address:\r\n\r\n";
 				$content.="{activate_account_link}\r\n\r\n";
-			  $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
+                $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";
 				break;
 			case 'account_creation_email':
@@ -273,7 +321,7 @@ final class PickleCustomLoginAdmin {
 				$content.="{set_password_link}\r\n\r\n";
 				$content.="Or, login here:\r\n\r\n";
 				$content.="{login_url}\r\n\r\n";
-			  $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
+                $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";
 			default:
 				break;
@@ -315,6 +363,30 @@ final class PickleCustomLoginAdmin {
 
 		wp_editor($content, $id, array('media_buttons' => false));
 	}
+
+    /**
+     * approve_users function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function approve_users() {
+		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'approve_users'))
+			return;  
+			
+        if (!isset($_POST['pcl_users']) || empty($_POST['pcl_users']))
+            return;
+			
+        $users=$_POST['pcl_users'];
+        
+        foreach ($users as $user_id) :
+            update_user_meta($user_id, 'has_to_be_approved', 0);
+            pickle_custom_login()->email->send_email(array(
+                'user_id' => $user_id,
+                'type' => 'account_verification',
+            ));
+        endforeach;       
+    }
 
 	/**
 	 * get_admin_page function.
