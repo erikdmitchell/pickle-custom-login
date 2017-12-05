@@ -227,7 +227,7 @@ class Pickle_Custom_Login_Email {
      * @param string $user (default: '')
      * @return void
      */
-    private function notify_admin($user='') {
+    private function notify_admin($user='', $subject='New User Registration') {
         // The blogname option is escaped with esc_html on the way into the database in sanitize_option we want to reverse this for the plain text arena of emails.
         $blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
 
@@ -235,7 +235,7 @@ class Pickle_Custom_Login_Email {
         $message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
         $message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
 
-        @wp_mail(get_option('admin_email'), sprintf(__('[%s] New User Registration'), $blogname), $message); // THIS NEEDS TO BE CUSTOMIZED
+        wp_mail(get_option('admin_email'), sprintf(__('[%s] '.$subject), $blogname), $message);
     }
     
     /**

@@ -364,6 +364,12 @@ final class Pickle_Custom_Login_Admin {
 		wp_editor($content, $id, array('media_buttons' => false));
 	}
 
+    /**
+     * approve_users function.
+     * 
+     * @access public
+     * @return void
+     */
     public function approve_users() {
 		if (!isset($_POST['pcl_admin_update']) || !wp_verify_nonce($_POST['pcl_admin_update'], 'approve_users'))
 			return;  
