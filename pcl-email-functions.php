@@ -35,6 +35,9 @@ function pcl_get_custom_email_message($type=false, $original_message='', $key=''
 		return false;
 
 	switch ($type) :
+	    case 'admin_activation_required':
+			$message=pcl_admin_activation_email($original_message, $key, $user->user_login);	    
+	        break;
 		case 'password_reset':
 			$message=pcl_password_reset_email($original_message, $key, $user->user_login);
 			break;
@@ -115,6 +118,27 @@ function pcl_account_creation_email($message, $key, $user_login) {
 }
 
 /**
+ * pcl_admin_activation_email function.
+ * 
+ * @access public
+ * @param mixed $message
+ * @param mixed $key
+ * @param mixed $user_login
+ * @return void
+ */
+function pcl_admin_activation_email($message, $key, $user_login) {
+	$custom_message=$message;
+
+	// check if custom message exists //
+	if ($custom_message=get_option('pcl-admin-activation-email')) :
+		$custom_message=stripslashes($custom_message); // clean from db
+		$custom_message=pcl_clean_up_placeholders($custom_message, $user_login,$key);
+	endif;
+
+	return $custom_message;
+}
+
+/**
  * pcl_clean_up_placeholders function.
  * 
  * @access public
@@ -183,12 +207,12 @@ function pcl_user_activation_email($user_id, $notify='') {
 
     if (pcl_require_admin_activation()) :
 		$message = sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
-		$message .= __('To activate your account, visit the following address:') . "\r\n\r\n";
-		$message .= '<' . home_url("/".pcl_page_slug('activate-account')."/?key=$hashed&user_login=$user->user_login") . ">\r\n\r\n";
+		$message .= __('Thank you for registering with us.') . "\r\n\r\n";
+		$message .= __('Once an administrator approves your account, you will receive an email on how to access the site.') . "\r\n\r\n";
         $message .= sprintf( __('If you have any problems, please contact us at %s.'), get_option('admin_email') ) . "\r\n\r\n";
 		$message .= __('Cheers!') . "\r\n\r\n";
 
-		$message=pcl_get_custom_email_message('admin_approval_required', $message, $hashed, $user->user_login);
+		$message=pcl_get_custom_email_message('admin_activation_required', $message, $hashed, $user->user_login);
 
 		add_user_meta($user_id, 'has_to_be_approved', $hashed, true); // THIS PROBABLY NEEDS TO CHANGE
 	elseif (pcl_is_activation_required()) :
