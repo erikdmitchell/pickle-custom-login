@@ -2,7 +2,9 @@
 
 class Pickle_Custom_Login_Registration {
 
-	protected $registration_success_notice=false;
+    protected $admin_activate_account_required=false;
+
+	protected $activate_account_required=false;
 
 	/**
 	 * __construct function.
@@ -28,8 +30,11 @@ class Pickle_Custom_Login_Registration {
 		if (is_user_logged_in())
 			return pcl_get_template_html('logged-in');
 
-		if ($this->registration_success_notice)
+        if ($this->admin_activate_account_required) :
+            echo pcl_format_error_message('', 'You will receive an email when your account is approved by an admin.', 'success');
+		elseif ($this->activate_account_required) :
 			echo pcl_format_error_message('', 'Please check your email to activate your account.', 'success');
+        endif;
 
 		return pcl_get_template_html('register-form');
 	}
@@ -155,6 +160,13 @@ class Pickle_Custom_Login_Registration {
 		    $this->add_user($fields, $_POST);
 	}
 	
+	/**
+	 * check_username function.
+	 * 
+	 * @access protected
+	 * @param string $username (default: '')
+	 * @return void
+	 */
 	protected function check_username($username='') {
 		// Username already registered
 		if (username_exists($username))
@@ -169,6 +181,13 @@ class Pickle_Custom_Login_Registration {
 			pcl_add_error_message('username_empty', 'Please enter a username');    	
 	}
 
+    /**
+     * check_email function.
+     * 
+     * @access protected
+     * @param string $email (default: '')
+     * @return void
+     */
     protected function check_email($email='') {
 		//invalid email
 		if (!is_email($email))
@@ -179,6 +198,14 @@ class Pickle_Custom_Login_Registration {
 			pcl_add_error_message('email_used', 'Email already registered');        
     }
     
+    /**
+     * check_password function.
+     * 
+     * @access protected
+     * @param string $password (default: '')
+     * @param string $password_check (default: '')
+     * @return void
+     */
     protected function check_password($password='', $password_check='') {
 		// passwords empty
 		if ($password=='' || $password_check=='')
@@ -189,6 +216,13 @@ class Pickle_Custom_Login_Registration {
 			pcl_add_error_message('password_mismatch', 'Passwords do not match');        
     }
 	
+	/**
+	 * check_recaptcha function.
+	 * 
+	 * @access protected
+	 * @param string $recaptcha_response (default: '')
+	 * @return void
+	 */
 	protected function check_recaptcha($recaptcha_response='') {
     	$secret=get_option('pcl-recaptcha-secret-key', ''); // secret key
     	$response=null; // empty response
@@ -239,11 +273,15 @@ class Pickle_Custom_Login_Registration {
     	do_action('pcl_after_user_registration', $new_user_id, $fields, $post_data);
     
     	if ($new_user_id) :
-    		// send an email to the admin alerting them of the registration
+    		// send an email to the admin alerting them of the registration //
     		pcl_user_activation_email($new_user_id, 'both');
     
-    		// if activation is required, we skip
-    		if (!pcl_is_activation_required()) :
+            // check our activation flags - admin activation, user (email) activation, other //
+            if (pcl_require_admin_activation()) :
+                $this->admin_activate_account_required=true;
+            elseif (pcl_is_activation_required()) :
+                $this->activate_account_required=true;
+            else :
     			// log the new user in
     			wp_set_auth_cookie($new_user_id);
     			wp_set_current_user($new_user_id, $user_login);
@@ -252,8 +290,6 @@ class Pickle_Custom_Login_Registration {
     			// send the newly created user to the redirect page after logging them in
     			wp_safe_redirect($redirect);
     			exit;
-    		else :
-    			$this->registration_success_notice=true;
     		endif;
     	endif;        
     }	
