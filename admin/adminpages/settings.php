@@ -89,7 +89,7 @@
 				<th scope="row"><label for="hide_admin_bar"><?php _e('Hide Admin Bar', 'pcl'); ?></label></th>
 				<td>
 					<input name="pcl_settings[hide_admin_bar]" type="checkbox" id="hide_admin_bar" value="1" <?php checked(pcl_hide_admin_bar(), 1); ?>>
-					<p class="description" id="hide_admin_bar_description"><?php _e('If checked, the admin bar would be hidden for non administrators.', 'pcl'); ?></p></td>
+					<span class="description" id="hide_admin_bar_description"><?php _e('If checked, the admin bar would be hidden for non administrators.', 'pcl'); ?></span>
 				</td>
 			</tr>
 
@@ -97,7 +97,7 @@
 				<th scope="row"><label for="force_login"><?php _e('Force Login', 'pcl'); ?></label></th>
 				<td>
 					<input name="pcl_settings[force_login]" type="checkbox" id="force_login" value="1" <?php checked(pcl_force_login(), 1); ?>>
-					<p class="description" id="force_login_description"><?php _e('If checked, users would be forced to login before viewing the site.', 'pcl'); ?></p></td>
+					<span class="description" id="force_login_description"><?php _e('If checked, users would be forced to login before viewing the site.', 'pcl'); ?></span>
 				</td>
 			</tr>
 		</tbody>
@@ -111,7 +111,7 @@
 				<th scope="row"><label for="enable_recaptcha"><?php _e('Enable reCaptcha', 'pcl'); ?></label></th>
 				<td>
 					<input name="pcl_settings[enable_recaptcha]" type="checkbox" id="enable_recaptcha" value="1" <?php checked(pcl_enable_recaptcha(), 1); ?>>
-					<p class="description" id="enable_recaptcha_description"><?php _e('Enable reCaptcha form on registration page.', 'pcl'); ?></p></td>
+					<span class="description" id="enable_recaptcha_description"><?php _e('Enable reCaptcha form on registration page.', 'pcl'); ?></span>
 				</td>
 			</tr>
 			<tr class="recaptcha-details-field hidden">
@@ -137,7 +137,15 @@
 				<th scope="row"><label for="require_activation_key"><?php _e('Require Account Activation', 'pcl'); ?></label></th>
 				<td>
 					<input name="pcl_settings[require_activation_key]" type="checkbox" id="require_activation_key" value="1" <?php checked(pcl_require_activation_key(), 1); ?>>
-					<p class="description" id="rquire_activation_key_description"><?php _e('If checked, users would receive an email to activate their account before they can login.', 'pcl'); ?></p></td>
+					<span class="description" id="rquire_activation_key_description"><?php _e('If checked, users would receive an email to activate their account before they can login.', 'pcl'); ?></span>
+				</td>
+			</tr>
+
+			<tr>
+				<th scope="row"><label for="require_admin_activation"><?php _e('Require Admin Account Activation', 'pcl'); ?></label></th>
+				<td>
+					<input name="pcl_settings[require_admin_activation]" type="checkbox" id="require_admin_activation" value="1" <?php checked(pcl_require_admin_activation(), 1); ?>>
+					<span class="description" id="require_admin_activation_description"><?php _e('If checked, users would receive need to be activated by an admin before the can login. This overrides "Require Account Activation". Users will be required to activate their account after aprroval', 'pcl'); ?></span>
 				</td>
 			</tr>
 		</tbody>

@@ -26,6 +26,14 @@
 					<p class="description"><?php _e('When "Require Account Activation" is active.', 'pcl'); ?></p>
 				</td>
 			</tr>
+			
+			<tr>
+				<th scope="row"><label for="admin_activation_email"><?php _e('Admin Activation Email', 'pcl'); ?></label></th>
+				<td>
+					<?php pickle_custom_login()->admin->email_editor('pcl-admin-activation-email', 'admin_activation_email'); ?>
+					<p class="description"><?php _e('When "Require Admin Account Activation" is active.', 'pcl'); ?></p>
+				</td>
+			</tr>			
 		</tbody>
 	</table>
 

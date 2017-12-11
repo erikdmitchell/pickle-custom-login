@@ -1,9 +1,9 @@
 <?php
 /*
   Plugin Name: Pickle Custom Login
-  Plugin URI: https://wordpress.org/plugins/em-custom-login/
+  Plugin URI: 
   Description: Enables a completely customizable WordPress login, registration and password form.
-  Version: 1.0.0
+  Version: 1.0.0-alpha
   Author: Erik Mitchell
   Author URI: http://erikmitchell.net
   License: GPL-2.0+
@@ -23,7 +23,7 @@ if (!defined('PCL_PLUGIN_FILE')) {
 
 final class PickleCustomLogin {
 
-	public $version='1.0.0';
+	public $version='1.0.0-alpha';
 	
 	public $errors='';
 	
@@ -34,6 +34,8 @@ final class PickleCustomLogin {
 	public $registration='';
 	
 	public $profile='';
+	
+	public $email='';
 	
 	public $pages=array();
 
@@ -79,7 +81,7 @@ final class PickleCustomLogin {
 		include_once(PCL_PATH.'pcl-password.php');
 		include_once(PCL_PATH.'admin/admin.php');
 		include_once(PCL_PATH.'pcl-user-activation.php');
-		include_once(PCL_PATH.'pcl-email-functions.php');
+		include_once(PCL_PATH.'pcl-email.php');
 		include_once(PCL_PATH.'libraries/recaptchalib.php'); // google recaptcha library
 		include_once(PCL_PATH.'updater/updater.php'); // git hub update
 		
@@ -87,7 +89,7 @@ final class PickleCustomLogin {
 		new Pickle_Custom_Login_Reset_Password();
 		
 		if (is_admin()) :
-			$this->admin=new PickleCustomLoginAdmin();
+			$this->admin=new Pickle_Custom_Login_Admin();
 		endif;
 	}
 
@@ -102,6 +104,7 @@ final class PickleCustomLogin {
 		$this->registration=new Pickle_Custom_Login_Registration();
 		$this->profile=new Pickle_Custom_Login_Profile();
 		$this->errors=new Pickle_Custom_Login_Errors();
+		$this->email=new Pickle_Custom_Login_Email();
 		$this->pages=get_option('pcl_pages');
 	}
 	

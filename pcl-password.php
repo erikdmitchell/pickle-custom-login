@@ -176,7 +176,12 @@ class Pickle_Custom_Login_Reset_Password {
 	 * @return void
 	 */
 	public function replace_retrieve_password_message($message, $key, $user_login, $user_data) {
-		return pcl_get_custom_email_message('password_reset', $message, $key, $user_login);
+    	return pickle_custom_login()->email->get_email_message(array(
+            'type' => 'password_reset', 
+            'original_message' => $message, 
+            'key' => $key, 
+            'user_login' => $user_login, 
+        ));
 	}
 
 	/**
@@ -281,4 +286,3 @@ class Pickle_Custom_Login_Reset_Password {
 	}
 
 }
-?>
