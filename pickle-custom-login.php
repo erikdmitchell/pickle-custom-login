@@ -95,7 +95,6 @@ final class PickleCustomLogin {
 	private function init_hooks() {
 		register_activation_hook(PCL_PLUGIN_FILE, array('Pickle_Custom_Login_Install', 'install'));
 		add_action('init', array($this, 'init'), 0);
-		add_action('admin_init', array($this, 'plugin_updater'));
 	}
 
 	public function init() {
@@ -105,7 +104,7 @@ final class PickleCustomLogin {
 		$this->errors=new Pickle_Custom_Login_Errors();
 		$this->email=new Pickle_Custom_Login_Email();
 		$this->pages=get_option('pcl_pages');
-	}s	
+	}	
 
 }
 

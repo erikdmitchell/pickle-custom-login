@@ -185,7 +185,7 @@ class Pickle_Custom_Login_Email {
         
         if (empty($args['option']))
             return $message;
-            
+
      	// check if custom message exists //
     	if ($custom_message=get_option($args['option'])) :
     		$custom_message=stripslashes($custom_message); // clean from db
