@@ -257,7 +257,7 @@ function pcl_remove_admin_bar() {
 	$hide_admin_bar=get_option('pcl-hide-admin-bar',false);
 
 	if (!current_user_can('administrator') && !is_admin() && $hide_admin_bar) :
-  	show_admin_bar(false);
+        show_admin_bar(false);
 	endif;
 }
 add_action('after_setup_theme','pcl_remove_admin_bar');
@@ -439,8 +439,7 @@ add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
  */
 function pcl_updated_profile_message() {
     if (isset($_GET['updated']) && $_GET['updated'] == 'true' && !pickle_custom_login()->profile->has_errors()) : 
-        //echo '<div id="message" class="updated published text-center important"><h5>Your profile has been updated.</h5></div>';
-        echo '<script>window.location = "/wp-admin/users.php"</script>';
+        echo '<div id="message" class="updated published text-center important"><h5>Your profile has been updated.</h5></div>';
     endif;
     
     if (pickle_custom_login()->profile->has_errors()) :
@@ -480,6 +479,13 @@ function pcl_users_to_be_activated() {
     return $users;
 }
 
+/**
+ * Get editr user profile.
+ * 
+ * @access public
+ * @param int $user_id (default: 0)
+ * @return void
+ */
 function pcl_get_edit_profile_user($user_id=0) {
     if (isset($_GET['user_id'])) :
         $user_id=$_GET['user_id'];
@@ -498,6 +504,13 @@ function pcl_get_edit_profile_user($user_id=0) {
     return $user;   
 }
 
+/**
+ * Add body classes.
+ * 
+ * @access public
+ * @param mixed $classes
+ * @return void
+ */
 function pcl_add_body_classes($classes) {
     global $wp_query;
     
