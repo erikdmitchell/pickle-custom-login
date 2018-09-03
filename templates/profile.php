@@ -16,9 +16,19 @@
         
     
     <?php else : ?>
-        <?php pcl_updated_profile_message(); ?>
+        <?php pcl_updated_profile_message();
+        $hf_user = wp_get_current_user();
+        $hf_username = $hf_user->user_login;
+        //echo "here: " . wp_get_referer() . "<br>";
+        if (wp_get_referer()=="http://dev-partnerhub.pantheonsite.io/wp-admin/users.php") {
+            $page = '/wp-admin/users.php';
+        } else {
+            $page = '/wp-admin/options-general.php?page=pickle_custom_login&tab=approve_users';
+        }
+        ?>
             
-        <h3>Update Information for <?php echo $current_user->user_login ?></h3>
+        <h3 class="text-center">Update Info for <?php echo $current_user->first_name ?>  <?php echo $current_user->last_name ?></h3>
+        <h6 class="text-center"><a href="<?php echo $page; ?>"><< Back to Previous Page</a></h6>
         
         <form method="post" id="adduser" class="pcl-profile-form" action="" method="post">
                        
@@ -60,9 +70,9 @@
         			$public_display = array_unique( $public_display );
         
         			foreach ( $public_display as $id => $item ) : ?>
-            			<option <?php selected( $current_user->display_name, $item ); ?>><?php echo $item; ?></option>
-                    <?php endforeach; ?>
-                    
+            <?php do_action('edit_user_profile', $current_user); ?>
+
+            <p>&nbsp;</p>
         		</select>
     		
     		</p>

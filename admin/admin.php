@@ -85,6 +85,7 @@ final class Pickle_Custom_Login_Admin {
 	 */
 	public function admin_menu() {
 		add_options_page('Pickle Custom Login', 'Pickle Custom Login', 'manage_options', 'pickle_custom_login', array($this, 'admin_page'));
+		add_users_page('Approve Users', 'Approve Users', 'manage_options', 'approve-users', array($this, 'approve_users_page'));
 	}
 
 	/**
@@ -98,7 +99,6 @@ final class Pickle_Custom_Login_Admin {
 		$tabs=array(
 			'settings' => 'Settings',
 			'emails' => 'Emails',
-			'approve_users' => 'Approve Users',
 		);
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings';
 			
@@ -120,10 +120,7 @@ final class Pickle_Custom_Login_Admin {
 			switch ($active_tab) :
 				case 'emails':
 					$html.=$this->get_admin_page('emails');
-					break;
-				case 'approve_users':
-				    $html.=$this->get_admin_page('approve-users');
-				    break;					
+					break;					
 				default:
 					$html.=$this->get_admin_page('settings');
 			endswitch;
@@ -131,6 +128,17 @@ final class Pickle_Custom_Login_Admin {
 		$html.='</div>';
 
 		echo $html;
+	}
+	
+	function approve_users_page() {
+		$html=null;
+			
+		$html.='<div class="wrap pcl-admin">';
+			$html.='<h1>Approve Users</h1>';
+            $html.=$this->get_admin_page('approve-users');
+		$html.='</div>';
+
+		echo $html;    	
 	}
 
 	/**
@@ -289,14 +297,14 @@ final class Pickle_Custom_Login_Admin {
 	 * @param string $slug (default: '')
 	 * @return void
 	 */
-	protected function default_email_content($slug='') {
+	public function default_email_content($slug='') {
 		$content='';
 
 		switch ($slug) :
 		    case 'admin_activation_email':
 				$content="Username: {username}\r\n\r\n";
-				$content.="Thank you for registering with us.\r\n\r\n";
-				$content.="Once an administrator approves your account, you will receive an email on how to access the site.\r\n\r\n";
+				$content.="Thank you for registering for access to the Dell Boomi Partner Resources Center.\r\n\r\n";
+				$content.="We will process your request within the next 48 business hours.\r\n\r\n";
                 $content.="If you have any problems, please contact us at {admin_email_link}\r\n\r\n";
 				$content.="Cheers!\r\n\r\n";		    
 		        break;
@@ -412,6 +420,43 @@ final class Pickle_Custom_Login_Admin {
 		ob_end_clean();
 
 		return $html;
+	}
+	
+	public function approve_user_cols() {
+    	$columns = array(
+        	'username' => 'Username',
+     	    'name' => 'Name',
+    	    'email' => 'Email',
+    	    'role' => 'Role',
+    	);
+    	
+    	return apply_filters('pcl_approve_user_cols', $columns);
+	}
+	
+	public function approve_user_cols_values($slug, $label, $user) {
+    	$html = '';
+    	
+    	switch ($slug) :
+    	    case 'username':
+    	        $html.='<td class="username column-username has-row-actions column-primary" data-colname="Username">';
+                    $html.=get_avatar($user->ID, 32);
+                    $html.='<strong><a href="'.get_edit_user_link($user->ID).'">'.$user->data->user_login.'</a></strong>';
+                $html.='</td>';
+    	        break;
+            case 'name':
+                $html.='<td class="name column-name" data-colname="Name">'.$user->data->display_name.'</td>';
+                break;
+            case 'email':
+                $html.='<td class="email column-email" data-colname="Email"><a href="mailto:'.$user->data->user_email.'">'.$user->data->user_email.'</a></td>';
+                break;
+            case 'role':
+    	        $html.='<td class="'.$slug.' column-'.$slug.'" data-colname="'.$label.'">[Role]</td>';            
+                break;
+    	    default:
+    	        $html = apply_filters('pcl_approve_user_cols_values', $slug, $label, $user);
+    	endswitch;
+    	
+    	echo $html;
 	}
 	
 }

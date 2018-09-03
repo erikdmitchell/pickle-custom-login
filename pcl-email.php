@@ -81,7 +81,7 @@ class Pickle_Custom_Login_Email {
                 endif;                
         endswitch;
 
-        wp_mail($user->user_email, $title, $message);                    	    
+        $mail = wp_mail($user->user_email, $title, $message);
     }
     
     /**
@@ -191,9 +191,73 @@ class Pickle_Custom_Login_Email {
     		$custom_message=stripslashes($custom_message); // clean from db
     		$message=$this->clean_placeholders($custom_message, $args['user_login'], $args['key']);
     	endif;
+    	
+    	// message is still empty.
+    	if (empty($message)) :
+    	    switch ($args['option']) :
+    	        case 'pcl-retrieve-password-email':
+    	            $id = 'retrieve_password_email';
+    	            break;
+    	        case 'pcl-account-creation-email':
+    	            $id = 'account_creation_email';
+    	            break;
+    	        case 'pcl-account-activation-email':
+    	            $id = 'account_activation_email';
+    	            break;
+    	        case 'pcl-admin-activation-email':
+    	            $id = 'admin_activation_email';
+    	            break;    	            
+    	    endswitch;
+    	    
+        	$message = $this->default_email_content($id);
+    		$message=$this->clean_placeholders($message, $args['user_login'], $args['key']);        	
+    	endif;
     
     	return $message;       
     }
+    
+	public function default_email_content($slug='') {
+		$content='';
+
+		switch ($slug) :
+		    case 'admin_activation_email':
+                $content="Username: {username}\r\n\r\n";
+                $content.="Thank you for registering for access to the Dell Boomi Partner Resources Center.\r\n\r\n";
+                $content.="We will process your request within the next 48 business hours.\r\n\r\n";
+                $content.="You will be notified using the partner company email you provided in your registration submission when your request for access has been approved.\r\n\r\n";
+                $content.="Questions? Please contact us at: BoomiPartners@Dell.com\r\n\r\n";
+                $content.="The Dell Boomi Partner Program Team\r\n\r\n";    	    
+		        break;
+			case 'retrieve_password_email':
+				$content.="Hello!\r\n\r\n";
+				$content.="You asked us to reset your password for your account using the email address {username}\r\n\r\n";
+				$content.="If this was a mistake, or you didn't ask for a password reset, just ignore this email and nothing will happen.\r\n\r\n";
+				$content.="To reset your password, visit the following address:\r\n\r\n";
+				$content.="{password_reset_link}\r\n\r\n";
+				$content.="Thanks!\r\n\r\n";
+				break;
+			case 'account_activation_email':
+                $content="Username: {username}\r\n\r\n";
+                $content.="To activate your account, visit the following address:\r\n\r\n";
+                $content.="{activate_account_link}\r\n\r\n";
+                $content.="Questions? Please contact us at: BoomiPartners@Dell.com\r\n\r\n";
+                $content.="The Dell Boomi Partner Program Team\r\n\r\n"; 
+
+				break;
+			case 'account_creation_email':
+				$content="Username: {username}\r\n\r\n";
+				$content.="To set your password, visit the following address:\r\n\r\n";
+				$content.="{set_password_link}\r\n\r\n";
+				$content.="Or, login here:\r\n\r\n";
+				$content.="{login_url}\r\n\r\n";
+                $content.="If you have any problems, please contact us at BoomiPartners@Dell.com\r\n\r\n";
+				$content.="The Dell Boomi Partner Program Team\r\n\r\n";  
+			default:
+				break;
+		endswitch;
+
+		return $content;
+	}    
         
     /**
      * clean_placeholders function.
@@ -242,6 +306,7 @@ class Pickle_Custom_Login_Email {
                     $message  = sprintf(__('New user registration on your site %s:'), $blogname) . "\r\n\r\n";
                     $message .= sprintf(__('Username: %s'), $user->user_login) . "\r\n\r\n";
                     $message .= sprintf(__('E-mail: %s'), $user->user_email) . "\r\n";
+                    $message .= sprintf(__('Phone: %s'), $user->user_phone) . "\r\n";
                     
                     $message .= __('Please login and verify the user. They will not be able to access the site until verified.') . "\r\n";
                 else:

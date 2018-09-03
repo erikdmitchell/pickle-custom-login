@@ -22,10 +22,10 @@
                     <label class="screen-reader-text" for="cb-select-all-1">Select All</label>
                     <input id="cb-select-all-1" type="checkbox">
                 </td>
-                <th scope="col" id="username" class="manage-column column-username column-primary">Username</th>
-                <th scope="col" id="name" class="manage-column column-name">Name</th>
-                <th scope="col" id="email" class="manage-column column-email">Email</th>
-                <th scope="col" id="role" class="manage-column column-role">Role</th>
+                
+                <?php foreach (pickle_custom_login()->admin->approve_user_cols() as $slug => $label) : ?>
+                    <th scope="col" id="<?php echo $slug; ?>" class="manage-column column-<?php echo $slug; ?>"><?php echo $label; ?></th>
+                <?php endforeach; ?>
             </tr>
     	</thead>
     	
@@ -39,16 +39,9 @@
                         <input type="checkbox" name="pcl_users[]" id="user_<?php echo $user->ID; ?>" class="" value="<?php echo $user->ID; ?>">
                     </th>
                     
-                    <td class="username column-username has-row-actions column-primary" data-colname="Username">
-                        <?php echo get_avatar($user->ID, 32); ?>
-                        <strong><a href="<?php echo get_edit_user_link($user->ID); ?>"><?php echo $user->data->user_login; ?></a></strong>
-                    </td>
-                        
-                    <td class="name column-name" data-colname="Name"><?php echo $user->data->display_name; ?></td>
-                    
-                    <td class="email column-email" data-colname="Email"><a href="mailto:<?php echo $user->data->user_email; ?>"><?php echo $user->data->user_email; ?></a></td>
-                    
-                    <td class="role column-role" data-colname="Role">Administrator</td>
+                    <?php foreach (pickle_custom_login()->admin->approve_user_cols() as $slug => $label) : ?>
+                        <?php pickle_custom_login()->admin->approve_user_cols_values($slug, $label, $user); ?>
+                    <?php endforeach; ?>
                     
                 </tr>
             

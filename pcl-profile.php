@@ -101,7 +101,7 @@ class Pickle_Custom_Login_Profile {
     }
     
     protected function update_password($password='', $password_check='') {
-        $current_user = wp_get_current_user();
+        $current_user = pcl_get_edit_profile_user();
         
         if (empty($password) && empty($password_check))
             return;
@@ -123,7 +123,7 @@ class Pickle_Custom_Login_Profile {
     }
     
     protected function update_email($email='') {
-        $current_user = wp_get_current_user();
+        $current_user = pcl_get_edit_profile_user();
         
         if (empty($email))
             return;

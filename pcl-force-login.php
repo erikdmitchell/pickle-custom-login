@@ -24,6 +24,7 @@ function pcl_force_login_redirect() {
         // Apply filters //
 		$bypass=apply_filters('pcl_force_login_bypass', false);
 		$whitelist=apply_filters('pcl_force_login_whitelist', array());
+		$whitelist = array_map('pcl_force_login_trim_url', $whitelist); // remove trailing slash.
 		$redirect_url=apply_filters('pcl_force_login_redirect', $url);
 
         // setup raw urls for cleaner comparison //
@@ -32,10 +33,21 @@ function pcl_force_login_redirect() {
 		$url_clean=preg_replace('/\?.*/', '', $url);
 
         // check and redirect //
-		if ($redirect_url_clean != $login_url_clean && !in_array($url_clean, $whitelist) && !$bypass) :			
+		if ($redirect_url_clean != $login_url_clean && !in_array(pcl_force_login_trim_url($url_clean), $whitelist) && !$bypass) :		
 			wp_safe_redirect(wp_login_url(), 302); 
 			exit();
     	endif;
 	endif;
 }
 add_action('template_redirect', 'pcl_force_login_redirect');
+
+/**
+ * Removes the trailing slash from a url.
+ * 
+ * @access public
+ * @param string $url (default: '')
+ * @return void
+ */
+function pcl_force_login_trim_url($url='') {
+    return rtrim($url, '/');
+}

@@ -439,7 +439,8 @@ add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
  */
 function pcl_updated_profile_message() {
     if (isset($_GET['updated']) && $_GET['updated'] == 'true' && !pickle_custom_login()->profile->has_errors()) : 
-        echo '<div id="message" class="updated published"><p>Your profile has been updated.</p></div>';
+        //echo '<div id="message" class="updated published text-center important"><h5>Your profile has been updated.</h5></div>';
+        echo '<script>window.location = "/wp-admin/users.php"</script>';
     endif;
     
     if (pickle_custom_login()->profile->has_errors()) :
@@ -496,3 +497,19 @@ function pcl_get_edit_profile_user($user_id=0) {
  
     return $user;   
 }
+
+function pcl_add_body_classes($classes) {
+    global $wp_query;
+    
+    $post_id = $wp_query->get_queried_object_id();
+
+    if (is_singular() && in_array($post_id, pickle_custom_login()->pages)) :
+        $slug = array_search($post_id, pickle_custom_login()->pages);
+
+        $classes[] = "pcl-$slug-page";  
+    endif;
+    
+    return $classes;
+}
+add_filter('body_class', 'pcl_add_body_classes');
+
