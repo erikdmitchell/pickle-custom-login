@@ -1,9 +1,15 @@
 <?php
+/**
+ * Pickle Custom install class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
 /**
- * Pickle_Custom_Login_Install class.
+ * PCL_Install class.
  */
-class Pickle_Custom_Login_Install {
+class PCL_Install {
 
     /**
      * Updates
