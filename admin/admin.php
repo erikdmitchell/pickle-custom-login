@@ -2,16 +2,16 @@
 
 /**
  * Final PCL_Admin class.
- *
+ * 
  * @final
  */
 final class PCL_Admin {
 
     /**
      * admin_notices
-     *
+     * 
      * (default value: array())
-     *
+     * 
      * @var array
      * @access protected
      */
@@ -19,9 +19,9 @@ final class PCL_Admin {
 
     /**
      * _instance
-     *
+     * 
      * (default value: null)
-     *
+     * 
      * @var mixed
      * @access protected
      * @static
