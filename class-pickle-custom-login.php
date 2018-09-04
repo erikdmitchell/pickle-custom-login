@@ -174,7 +174,7 @@ final class Pickle_Custom_Login {
         include_once( PCL_PATH . 'pcl-force-login.php' );
         include_once( PCL_PATH . 'class-pcl-login.php' );
         include_once( PCL_PATH . 'pcl-profile.php' );
-        include_once( PCL_PATH . 'pcl-register.php' );
+        include_once( PCL_PATH . 'class-pcl-registration.php' );
         include_once( PCL_PATH . 'pcl-password.php' );
         include_once( PCL_PATH . 'admin/admin.php' );
         include_once( PCL_PATH . 'pcl-user-activation.php' );
@@ -210,7 +210,7 @@ final class Pickle_Custom_Login {
      */
     public function init() {
         $this->activation = new Pickle_Custom_Login_User_Activation();
-        $this->registration = new Pickle_Custom_Login_Registration();
+        $this->registration = new PCL_Registration();
         $this->profile = new Pickle_Custom_Login_Profile();
         $this->errors = new Pickle_Custom_Login_Errors();
         $this->email = new Pickle_Custom_Login_Email();

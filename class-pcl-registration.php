@@ -1,9 +1,34 @@
 <?php
+/**
+ * Registration class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
-class Pickle_Custom_Login_Registration {
+/**
+ * PCL_Registration class.
+ */
+class PCL_Registration {
 
+    /**
+     * admin_activate_account_required
+     * 
+     * (default value: false)
+     * 
+     * @var bool
+     * @access protected
+     */
     protected $admin_activate_account_required = false;
 
+    /**
+     * activate_account_required
+     * 
+     * (default value: false)
+     * 
+     * @var bool
+     * @access protected
+     */
     protected $activate_account_required = false;
 
     /**
@@ -21,7 +46,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * registration_form function.
+     * Registration form.
      *
      * @access public
      * @return void
@@ -41,7 +66,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * form_username_field function.
+     * Form username field.
      *
      * @access public
      * @return void
@@ -52,7 +77,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * form_email_field function.
+     * Form email field.
      *
      * @access public
      * @return void
@@ -63,7 +88,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * form_name_field function.
+     * Form name field.
      *
      * @access public
      * @return void
@@ -77,7 +102,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * form_password_field function.
+     * Form password field.
      *
      * @access public
      * @return void
@@ -91,7 +116,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * form_recaptcha_field function.
+     * Form recaptcha field.
      *
      * @access public
      * @return void
@@ -105,7 +130,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * form_register_button function.
+     * Form register button.
      *
      * @access public
      * @return void
@@ -117,7 +142,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * register_form_redirect function.
+     * Form redirect.
      *
      * @access public
      * @return void
@@ -132,7 +157,7 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * add_new_user function.
+     * Add new user.
      *
      * @access public
      * @return void
@@ -165,10 +190,10 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * check_username function.
+     * Check username.
      *
      * @access protected
-     * @param string $username (default: '')
+     * @param string $username (default: '').
      * @return void
      */
     protected function check_username( $username = '' ) {
@@ -189,10 +214,10 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * check_email function.
+     * Check email.
      *
      * @access protected
-     * @param string $email (default: '')
+     * @param string $email (default: '').
      * @return void
      */
     protected function check_email( $email = '' ) {
@@ -208,11 +233,11 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * check_password function.
+     * Check password.
      *
      * @access protected
-     * @param string $password (default: '')
-     * @param string $password_check (default: '')
+     * @param string $password (default: '').
+     * @param string $password_check (default: '').
      * @return void
      */
     protected function check_password( $password = '', $password_check = '' ) {
@@ -228,10 +253,10 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * check_recaptcha function.
+     * Cechk recaptcha.
      *
      * @access protected
-     * @param string $recaptcha_response (default: '')
+     * @param string $recaptcha_response (default: '').
      * @return void
      */
     protected function check_recaptcha( $recaptcha_response = '' ) {
@@ -252,11 +277,11 @@ class Pickle_Custom_Login_Registration {
     }
 
     /**
-     * add_user function.
+     * Add user.
      *
      * @access protected
-     * @param array $fields (default: array())
-     * @param array $post_data (default: array())
+     * @param array $fields (default: array()).
+     * @param array $post_data (default: array()).
      * @return void
      */
     protected function add_user( $fields = array(), $post_data = array() ) {
