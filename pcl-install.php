@@ -1,11 +1,17 @@
 <?php
 
-if (!defined('ABSPATH')) {
-	exit;
-}
-
+/**
+ * Pickle_Custom_Login_Install class.
+ */
 class Pickle_Custom_Login_Install {
 
+	/**
+	 * Updates
+	 * 
+	 * @var mixed
+	 * @access private
+	 * @static
+	 */
 	private static $updates = array(
 		'1.0.0' => array(
 			'pcl_update_100_shortcodes',
@@ -14,7 +20,7 @@ class Pickle_Custom_Login_Install {
 	);
 
 	/**
-	 * init function.
+	 * Init
 	 * 
 	 * @access public
 	 * @static
@@ -25,7 +31,7 @@ class Pickle_Custom_Login_Install {
 	}
 
 	/**
-	 * check_version function.
+	 * Check version.
 	 * 
 	 * @access public
 	 * @static
@@ -37,7 +43,7 @@ class Pickle_Custom_Login_Install {
 	}
 
 	/**
-	 * install function.
+	 * Install.
 	 * 
 	 * @access public
 	 * @static
@@ -62,7 +68,7 @@ class Pickle_Custom_Login_Install {
 	}
 
 	/**
-	 * create_pages function.
+	 * Create pages.
 	 * 
 	 * @access public
 	 * @static
@@ -128,7 +134,7 @@ class Pickle_Custom_Login_Install {
 	}
 
 	/**
-	 * update function.
+	 * Update function.
 	 * 
 	 * @access private
 	 * @static
@@ -147,18 +153,18 @@ class Pickle_Custom_Login_Install {
 	}
 
 	/**
-	 * get_update_callbacks function.
+	 * Get update callbacks.
 	 * 
 	 * @access public
 	 * @static
-	 * @return void
+	 * @return updates
 	 */
 	public static function get_update_callbacks() {
 		return self::$updates;
 	}
 
 	/**
-	 * update_version function.
+	 * Update version.
 	 * 
 	 * @access private
 	 * @static
@@ -173,4 +179,3 @@ class Pickle_Custom_Login_Install {
 }
 
 Pickle_Custom_Login_Install::init();
-?>
