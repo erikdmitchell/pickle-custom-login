@@ -26,19 +26,10 @@
             
             <p>
                 <label for="rememberme"><input name="rememberme" type="checkbox" id="pcl-rememberme" value="1" /> Remember Me</label>
-                <p><a href="/wp-login.php?action=lostpassword" title="Lost Password?">Lost Password?</a></p>
-            
-                <div class="required-text">
-                    <a href="https://boomi.com/privacy/" target="_blank">Privacy Policy</a>
-                </div>
+            </p>
         </fieldset>
     </form>
 
-        <div class="wp-register text-center mt-5">
-        <h5 class="text-center">Don't have an account? Register below for access.</h5>
-    <a href="/register/" class="btn btn-primary">Register</a>
-    </div>
-    
     <?php pcl_login_extras(); ?>
     
 </div>
