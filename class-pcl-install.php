@@ -188,4 +188,4 @@ class PCL_Install {
 
 }
 
-Pickle_Custom_Login_Install::init();
+PCL_Install::init();
