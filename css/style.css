@@ -1,51 +1,48 @@
 /**
  * notices
  */
-.custom-login-notice {
-
-}
 .custom-login-notice > span {
-  background: #fff;
-  border-left: 4px solid #fff;
-  -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-  box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
-  margin: 5px 15px 2px;
-  padding: 1px 12px;
-  border-color: #7ad03a;
+    background: #fff;
+    border-left: 4px solid #fff;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    margin: 5px 15px 2px;
+    padding: 1px 12px;
+    border-color: #7ad03a;
 }
 .custom-login-notice > span.error {
-	border-color: red;
+    border-color: red;
 }
 .custom-login-notice .error .title {
-	color: red;
+    color: red;
 }
 
 /**
  * log in link lists
  */
 .custom-login-extras {
-	overflow: hidden;
+    overflow: hidden;
 }
 .custom-login-extras,
 .custom-login-logged-in .loggedin-extras {
-	list-style-type: none;
-	margin: 0;
+    list-style-type: none;
+    margin: 0;
 }
 .custom-login-extras li,
 .custom-login-logged-in .loggedin-extras li {
-	float: left;
-	border-right: 1px solid #000;
-	padding-right: 7px;
-	margin-right: 7px;
+    float: left;
+    border-right: 1px solid #000;
+    padding-right: 7px;
+    margin-right: 7px;
 }
 .custom-login-extras li:last-child,
 .custom-login-logged-in .loggedin-extras li:last-child {
-	border-right: none;
+    border-right: none;
 }
 
 /**
  * register form
  */
-.pcl-registration label.required::after {
-	content: ' *';
+.pcl-registration label.required:after {
+    content: ' *';
 }
