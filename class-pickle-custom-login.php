@@ -1,0 +1,98 @@
+<?php
+    
+final class Pickle_Custom_Login {
+
+    public $version = '1.0.0-beta.2';
+
+    public $errors = '';
+
+    public $activation = '';
+
+    public $admin = '';
+
+    public $registration = '';
+
+    public $profile = '';
+
+    public $email = '';
+
+    public $pages = array();
+
+    protected static $_instance = null;
+
+    public static function instance() {
+        if ( is_null( self::$_instance ) ) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
+    }
+
+    public function __construct() {
+        $this->define_constants();
+        $this->includes();
+        $this->init_hooks();
+    }
+
+    private function define_constants() {
+        $this->define( 'PCL_VERSION', $this->version );
+        $this->define( 'PCL_PATH', plugin_dir_path( __FILE__ ) );
+        $this->define( 'PCL_URL', plugin_dir_url( __FILE__ ) );
+    }
+
+    private function define( $name, $value ) {
+        if ( ! defined( $name ) ) {
+            define( $name, $value );
+        }
+    }
+
+    public function includes() {
+        include_once( PCL_PATH . 'pcl-install.php' );
+        include_once( PCL_PATH . 'class-pcl-uninstall.php' );
+        include_once( PCL_PATH . 'pcl-update-functions.php' );
+        include_once( PCL_PATH . 'pcl-deprecated-functions.php' );
+
+        include_once( PCL_PATH . 'functions.php' );
+        include_once( PCL_PATH . 'pcl-errors.php' );
+        include_once( PCL_PATH . 'pcl-force-login.php' );
+        include_once( PCL_PATH . 'pcl-login.php' );
+        include_once( PCL_PATH . 'pcl-profile.php' );
+        include_once( PCL_PATH . 'pcl-register.php' );
+        include_once( PCL_PATH . 'pcl-password.php' );
+        include_once( PCL_PATH . 'admin/admin.php' );
+        include_once( PCL_PATH . 'pcl-user-activation.php' );
+        include_once( PCL_PATH . 'pcl-email.php' );
+        include_once( PCL_PATH . 'libraries/recaptchalib.php' ); // google recaptcha library
+
+        new Pickle_Custom_Login();
+        new Pickle_Custom_Login_Reset_Password();
+
+        if ( is_admin() ) :
+            $this->admin = new Pickle_Custom_Login_Admin();
+        endif;
+    }
+
+    private function init_hooks() {
+        register_activation_hook( PCL_PLUGIN_FILE, array( 'Pickle_Custom_Login_Install', 'install' ) );
+        register_deactivation_hook( PCL_PLUGIN_FILE, array( 'PCL_Uninstall', 'uninstall' ) );
+
+        add_action( 'init', array( $this, 'init' ), 0 );
+    }
+
+    public function init() {
+        $this->activation = new Pickle_Custom_Login_User_Activation();
+        $this->registration = new Pickle_Custom_Login_Registration();
+        $this->profile = new Pickle_Custom_Login_Profile();
+        $this->errors = new Pickle_Custom_Login_Errors();
+        $this->email = new Pickle_Custom_Login_Email();
+        $this->pages = get_option( 'pcl_pages' );
+    }
+
+}
+
+function pickle_custom_login() {
+    return Pickle_Custom_Login::instance();
+}
+
+// Global for backwards compatibility.
+$GLOBALS['pickle_custom_login'] = pickle_custom_login();
