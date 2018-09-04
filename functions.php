@@ -2,527 +2,550 @@
 
 /**
  * pcl_scripts_styles function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_scripts_styles() {
-	wp_enqueue_style('pcl-frontend-style', PCL_URL.'css/style.css', '', PCL_VERSION);	
+    wp_enqueue_style( 'pcl-frontend-style', PCL_URL . 'css/style.css', '', PCL_VERSION );
 }
-add_action('wp_enqueue_scripts', 'pcl_scripts_styles');
+add_action( 'wp_enqueue_scripts', 'pcl_scripts_styles' );
 
 /**
  * pcl_get_template_html function.
- * 
+ *
  * @access public
- * @param bool $template_name (default: false)
+ * @param bool  $template_name (default: false)
  * @param mixed $attributes (default: null)
  * @return void
  */
-function pcl_get_template_html($template_name=false, $attributes=null) {
-	if (!$attributes )
-		$attributes = array();
+function pcl_get_template_html( $template_name = false, $attributes = null ) {
+    if ( ! $attributes ) {
+        $attributes = array();
+    }
 
-	if (!$template_name)
-		return false;
+    if ( ! $template_name ) {
+        return false;
+    }
 
-	ob_start();
+    ob_start();
 
-	do_action('pcl_before_'.$template_name);
+    do_action( 'pcl_before_' . $template_name );
 
-	if (file_exists(get_stylesheet_directory().'/pickle-custom-login/'.$template_name.'.php')) :
-		include(get_stylesheet_directory().'/pickle-custom-login/'.$template_name.'.php');
-	elseif (file_exists(get_template_directory().'/pickle-custom-login/'.$template_name.'.php')) :
-		include(get_template_directory().'/pickle-custom-login/'.$template_name.'.php');
-	elseif (file_exists(get_stylesheet_directory().'/pickle-custom-login/templates/'.$template_name.'.php')) :
-		include(get_stylesheet_directory().'/pickle-custom-login/templates/'.$template_name.'.php');
-	elseif (file_exists(get_template_directory().'/pickle-custom-login/templates/'.$template_name.'.php')) :
-		include(get_template_directory().'/pickle-custom-login/templates/'.$template_name.'.php');
-	else :
-		include('templates/'.$template_name.'.php');
-	endif;
+    if ( file_exists( get_stylesheet_directory() . '/pickle-custom-login/' . $template_name . '.php' ) ) :
+        include( get_stylesheet_directory() . '/pickle-custom-login/' . $template_name . '.php' );
+    elseif ( file_exists( get_template_directory() . '/pickle-custom-login/' . $template_name . '.php' ) ) :
+        include( get_template_directory() . '/pickle-custom-login/' . $template_name . '.php' );
+    elseif ( file_exists( get_stylesheet_directory() . '/pickle-custom-login/templates/' . $template_name . '.php' ) ) :
+        include( get_stylesheet_directory() . '/pickle-custom-login/templates/' . $template_name . '.php' );
+    elseif ( file_exists( get_template_directory() . '/pickle-custom-login/templates/' . $template_name . '.php' ) ) :
+        include( get_template_directory() . '/pickle-custom-login/templates/' . $template_name . '.php' );
+    else :
+        include( 'templates/' . $template_name . '.php' );
+    endif;
 
-	do_action('pcl_after_'.$template_name);
+    do_action( 'pcl_after_' . $template_name );
 
-	$html=ob_get_contents();
+    $html = ob_get_contents();
 
-	ob_end_clean();
+    ob_end_clean();
 
-	return $html;
+    return $html;
 }
 
 /**
  * pcl_add_error_message function.
- * 
+ *
  * @access public
  * @param string $slug (default: '')
  * @param string $message (default: '')
  * @return void
  */
-function pcl_add_error_message($slug='',$message='') {
-	pickle_custom_login()->errors->register_errors()->add($slug, __($message));
+function pcl_add_error_message( $slug = '', $message = '' ) {
+    pickle_custom_login()->errors->register_errors()->add( $slug, __( $message ) );
 }
 
 /**
  * pcl_has_error_messages function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_has_error_messages() {
-	$errors=pickle_custom_login()->errors->register_errors()->get_error_messages();
+    $errors = pickle_custom_login()->errors->register_errors()->get_error_messages();
 
-	if (empty($errors))
-		return false;
+    if ( empty( $errors ) ) {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 /**
  * pcl_show_error_messages function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_show_error_messages() {
-	pickle_custom_login()->errors->show_error_messages();
+    pickle_custom_login()->errors->show_error_messages();
 }
 
 /**
  * pcl_format_error_message function.
- * 
+ *
  * @access public
  * @param string $code (default: '')
- * @param bool $message (default: false)
+ * @param bool   $message (default: false)
  * @param string $type (default: '')
  * @return void
  */
-function pcl_format_error_message($code='', $message=false, $type='') {
-	return pickle_custom_login()->errors->format_error($code, $message, $type);
+function pcl_format_error_message( $code = '', $message = false, $type = '' ) {
+    return pickle_custom_login()->errors->format_error( $code, $message, $type );
 }
 
 /**
  * pcl_login_extras function.
- * 
+ *
  * @access public
  * @param array $args (default: array())
  * @return void
  */
-function pcl_login_extras($args=array()) {
-	$html=null;
-	$default_args=array(
-		'loginout' => false,
-		'register' => true,
-		'password' => true
-	);
-	$args=array_merge($default_args,$args);
-	$wp_loginout=apply_filters('pcl_login_extras_loginout_redirect','');
-	$wp_register_before=apply_filters('pcl_login_extras_register_before','');
-	$wp_register_after=apply_filters('pcl_login_extras_register_after','');
-	$wp_lostpassword_text=apply_filters('pcl_login_extras_lostpassword_text','Lost Password?');
+function pcl_login_extras( $args = array() ) {
+    $html = null;
+    $default_args = array(
+        'loginout' => false,
+        'register' => true,
+        'password' => true,
+    );
+    $args = array_merge( $default_args, $args );
+    $wp_loginout = apply_filters( 'pcl_login_extras_loginout_redirect', '' );
+    $wp_register_before = apply_filters( 'pcl_login_extras_register_before', '' );
+    $wp_register_after = apply_filters( 'pcl_login_extras_register_after', '' );
+    $wp_lostpassword_text = apply_filters( 'pcl_login_extras_lostpassword_text', 'Lost Password?' );
 
-	extract($args);
+    extract( $args );
 
-	$html.='<ul class="custom-login-extras">';
-		if ($loginout)
-			$html.='<li class="loginout">'.wp_loginout($wp_loginout,false).'</li>';
+    $html .= '<ul class="custom-login-extras">';
+    if ( $loginout ) {
+        $html .= '<li class="loginout">' . wp_loginout( $wp_loginout, false ) . '</li>';
+    }
 
-		if ($register)
-			$html.='<li class="wp-register">'.wp_register($wp_register_before,$wp_register_after,false).'</li>';
+    if ( $register ) {
+        $html .= '<li class="wp-register">' . wp_register( $wp_register_before, $wp_register_after, false ) . '</li>';
+    }
 
-		if ($password)
-			$html.='<li class="lost-password"><a href="'.wp_lostpassword_url().'" title="'.$wp_lostpassword_text.'">'.__($wp_lostpassword_text,'pcl').'</a></li>';
-	$html.='</ul>';
+    if ( $password ) {
+        $html .= '<li class="lost-password"><a href="' . wp_lostpassword_url() . '" title="' . $wp_lostpassword_text . '">' . __( $wp_lostpassword_text, 'pcl' ) . '</a></li>';
+    }
+    $html .= '</ul>';
 
-	echo $html;
+    echo $html;
 }
 
 /**
  * pcl_is_activation_required function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_is_activation_required() {
-	$require_activation_key=get_option('pcl-require-activation-key', 0);
+    $require_activation_key = get_option( 'pcl-require-activation-key', 0 );
 
-	if ($require_activation_key)
-		return true;
+    if ( $require_activation_key ) {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 /**
  * pcl_is_user_authenticated function.
- * 
+ *
  * @access public
  * @param int $user_id (default: 0)
  * @return void
  */
-function pcl_is_user_authenticated($user_id=0) {
-	if (!$user_id)
-		return false;
+function pcl_is_user_authenticated( $user_id = 0 ) {
+    if ( ! $user_id ) {
+        return false;
+    }
 
-	if (get_user_meta($user_id, 'has_to_be_activated', true))
-		return false;
+    if ( get_user_meta( $user_id, 'has_to_be_activated', true ) ) {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 /**
  * pcl_is_user_approved function.
- * 
+ *
  * @access public
  * @param int $user_id (default: 0)
  * @return void
  */
-function pcl_is_user_approved($user_id=0) {
-	if (!$user_id)
-		return false;
+function pcl_is_user_approved( $user_id = 0 ) {
+    if ( ! $user_id ) {
+        return false;
+    }
 
-	if (get_user_meta($user_id, 'has_to_be_approved', true))
-		return false;
+    if ( get_user_meta( $user_id, 'has_to_be_approved', true ) ) {
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 /**
  * pcl_activate_user function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_activate_user() {
-	return pickle_custom_login()->activation->activate_user();
+    return pickle_custom_login()->activation->activate_user();
 }
 
 /**
  * pcl_logged_in_links function.
- * 
+ *
  * @access public
  * @param array $args (default: array())
  * @return void
  */
-function pcl_logged_in_links($args=array()) {
-	$html=null;
-	$default_args=array(
-		'edit_profile' => true,
-		'logout' => true,
-	);
-	$args=array_merge($default_args,$args);
+function pcl_logged_in_links( $args = array() ) {
+    $html = null;
+    $default_args = array(
+        'edit_profile' => true,
+        'logout' => true,
+    );
+    $args = array_merge( $default_args, $args );
 
-	extract($args);
+    extract( $args );
 
-	$html.='<ul class="loggedin-extras">';
-		if ($edit_profile)
-			$html.='<li class="edit-profile"><a href="'.get_edit_user_link().'">'.__('Edit Profile', 'pcl').'</a></li>';
+    $html .= '<ul class="loggedin-extras">';
+    if ( $edit_profile ) {
+        $html .= '<li class="edit-profile"><a href="' . get_edit_user_link() . '">' . __( 'Edit Profile', 'pcl' ) . '</a></li>';
+    }
 
-		if ($logout)
-			$html.='<li class="logout"><a href="'.wp_logout_url().'">'.__('Log Out', 'pcl').'</a></li>';
-	$html.='</ul>';
+    if ( $logout ) {
+        $html .= '<li class="logout"><a href="' . wp_logout_url() . '">' . __( 'Log Out', 'pcl' ) . '</a></li>';
+    }
+    $html .= '</ul>';
 
-	echo $html;
+    echo $html;
 }
 
 /**
  * pcl_page_slug function.
- * 
+ *
  * @access public
  * @param string $page_type (default: '')
  * @return void
  */
-function pcl_page_slug($page_type='') {
-	if (isset(pickle_custom_login()->pages[$page_type])) :
-		$post=get_post(pickle_custom_login()->pages[$page_type]);
+function pcl_page_slug( $page_type = '' ) {
+    if ( isset( pickle_custom_login()->pages[ $page_type ] ) ) :
+        $post = get_post( pickle_custom_login()->pages[ $page_type ] );
 
-		if (isset($post->post_name)) :
-			$slug=$post->post_name;
-		else :
-			$slug=false;
-		endif;
-	else :
-		$slug=false;
-	endif;
+        if ( isset( $post->post_name ) ) :
+            $slug = $post->post_name;
+        else :
+            $slug = false;
+        endif;
+    else :
+        $slug = false;
+    endif;
 
-	return $slug;
+    return $slug;
 }
 
 /**
  * pcl_remove_admin_bar function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_remove_admin_bar() {
-	$hide_admin_bar=get_option('pcl-hide-admin-bar',false);
+    $hide_admin_bar = get_option( 'pcl-hide-admin-bar', false );
 
-	if (!current_user_can('administrator') && !is_admin() && $hide_admin_bar) :
-        show_admin_bar(false);
-	endif;
+    if ( ! current_user_can( 'administrator' ) && ! is_admin() && $hide_admin_bar ) :
+        show_admin_bar( false );
+    endif;
 }
-add_action('after_setup_theme','pcl_remove_admin_bar');
+add_action( 'after_setup_theme', 'pcl_remove_admin_bar' );
 
 /**
  * pcl_recaptcha_scripts_styles function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_recaptcha_scripts_styles() {
-	if (!is_page(pcl_page_slug('register')))
-		return false;
+    if ( ! is_page( pcl_page_slug( 'register' ) ) ) {
+        return false;
+    }
 
-	wp_enqueue_script('google-recaptcha-api-script','https://www.google.com/recaptcha/api.js');
+    wp_enqueue_script( 'google-recaptcha-api-script', 'https://www.google.com/recaptcha/api.js' );
 }
-add_action('wp_enqueue_scripts','pcl_recaptcha_scripts_styles');
+add_action( 'wp_enqueue_scripts', 'pcl_recaptcha_scripts_styles' );
 
 /**
  * pcl_hide_admin_bar function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_hide_admin_bar() {
-	return get_option('pcl-hide-admin-bar', false);
+    return get_option( 'pcl-hide-admin-bar', false );
 }
 
 /**
  * pcl_enable_recaptcha function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_enable_recaptcha() {
-	return get_option('pcl-enable-recaptcha', false);
+    return get_option( 'pcl-enable-recaptcha', false );
 }
 
 /**
  * pcl_require_activation_key function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_require_activation_key() {
-	return get_option('pcl-require-activation-key', 0);
+    return get_option( 'pcl-require-activation-key', 0 );
 }
 
 /**
  * pcl_require_admin_activation function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_require_admin_activation() {
-    return get_option('pcl-require-admin-activation', 0);
+    return get_option( 'pcl-require-admin-activation', 0 );
 }
 
 /**
  * pcl_login_redirect_url function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_login_redirect_url() {
-	return get_option('pcl-login-redirect', home_url());
+    return get_option( 'pcl-login-redirect', home_url() );
 }
 
 /**
  * pcl_register_redirect_url function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_register_redirect_url() {
-	return get_option('pcl-register-redirect', home_url());
+    return get_option( 'pcl-register-redirect', home_url() );
 }
 
 /**
  * pcl_logout_redirect_url function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_logout_redirect_url() {
-	return get_option('pcl-logout-redirect', home_url());
+    return get_option( 'pcl-logout-redirect', home_url() );
 }
 
 /**
  * pcl_force_login function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_force_login() {
-    return get_option('pcl-force-login', 0);
+    return get_option( 'pcl-force-login', 0 );
 }
 
 /**
  * pcl_login_url function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_login_url() {
-	return home_url(pcl_page_slug('login'));
+    return home_url( pcl_page_slug( 'login' ) );
 }
 
 /**
  * pcl_wp_login_url function.
- * 
+ *
  * @access public
  * @param mixed $login_url
  * @param mixed $redirect
  * @param mixed $force_reauth
  * @return void
  */
-function pcl_wp_login_url($login_url, $redirect, $force_reauth) {
-    return home_url(pcl_page_slug('login'));
+function pcl_wp_login_url( $login_url, $redirect, $force_reauth ) {
+    return home_url( pcl_page_slug( 'login' ) );
 }
-add_filter('login_url', 'pcl_wp_login_url', 10, 3);
+add_filter( 'login_url', 'pcl_wp_login_url', 10, 3 );
 
 /**
  * pcl_force_login_whitelist function.
- * 
+ *
  * @access public
  * @param mixed $urls
  * @return void
  */
-function pcl_force_login_whitelist($urls) {
-    foreach (pickle_custom_login()->pages as $slug => $page_id) :
-        $urls[]=get_permalink($page_id);    
+function pcl_force_login_whitelist( $urls ) {
+    foreach ( pickle_custom_login()->pages as $slug => $page_id ) :
+        $urls[] = get_permalink( $page_id );
     endforeach;
-    
-    if (pcl_logout_page_url() != home_url())
-        $urls[]=pcl_logout_page_url();
+
+    if ( pcl_logout_page_url() != home_url() ) {
+        $urls[] = pcl_logout_page_url();
+    }
 
     return $urls;
 }
-add_filter('pcl_force_login_whitelist', 'pcl_force_login_whitelist');
+add_filter( 'pcl_force_login_whitelist', 'pcl_force_login_whitelist' );
 
 /**
  * pcl_logout_page_url function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_logout_page_url() {
-	return get_option('pcl-logout-redirect', home_url());   
+    return get_option( 'pcl-logout-redirect', home_url() );
 }
 
 /**
  * pcl_get_edit_user_link function.
- * 
+ *
  * @access public
  * @param mixed $link
  * @param mixed $user_id
  * @return void
  */
-function pcl_get_edit_user_link($link, $user_id) {
-    $pcl_link=home_url(pcl_page_slug('profile'));
-    $url_parsed=parse_url($link);
-    
-    if (isset($url_parsed['query']))
-        $pcl_link.='?'.$url_parsed['query'];
-    
-    if ($pcl_link != $link)
+function pcl_get_edit_user_link( $link, $user_id ) {
+    $pcl_link = home_url( pcl_page_slug( 'profile' ) );
+    $url_parsed = parse_url( $link );
+
+    if ( isset( $url_parsed['query'] ) ) {
+        $pcl_link .= '?' . $url_parsed['query'];
+    }
+
+    if ( $pcl_link != $link ) {
         return $pcl_link;
-        
+    }
+
     return $link;
 }
-add_filter('get_edit_user_link', 'pcl_get_edit_user_link', 10, 2);
+add_filter( 'get_edit_user_link', 'pcl_get_edit_user_link', 10, 2 );
 
 /**
  * pcl_updated_profile_message function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_updated_profile_message() {
-    if (isset($_GET['updated']) && $_GET['updated'] == 'true' && !pickle_custom_login()->profile->has_errors()) : 
+    if ( isset( $_GET['updated'] ) && $_GET['updated'] == 'true' && ! pickle_custom_login()->profile->has_errors() ) :
         echo '<div id="message" class="updated published text-center important"><h5>Your profile has been updated.</h5></div>';
     endif;
-    
-    if (pickle_custom_login()->profile->has_errors()) :
-       pickle_custom_login()->profile->display_errors();    
+
+    if ( pickle_custom_login()->profile->has_errors() ) :
+        pickle_custom_login()->profile->display_errors();
     endif;
 }
 
 /**
  * pcl_users_to_be_activated_count function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_users_to_be_activated_count() {
-    $users=get_users(array(
-       'meta_key' => 'has_to_be_approved',
-       'meta_value' => 1,
-       'meta_compare' => '=', // default 
-    ));
-    
-    echo count($users);
+    $users = get_users(
+        array(
+            'meta_key' => 'has_to_be_approved',
+            'meta_value' => 1,
+            'meta_compare' => '=', // default
+        )
+    );
+
+    echo count( $users );
 }
 
 /**
  * pcl_users_to_be_activated function.
- * 
+ *
  * @access public
  * @return void
  */
 function pcl_users_to_be_activated() {
-    $users=get_users(array(
-       'meta_key' => 'has_to_be_approved',
-       'meta_value' => 1,
-       'meta_compare' => '=', // default 
-    ));
-    
+    $users = get_users(
+        array(
+            'meta_key' => 'has_to_be_approved',
+            'meta_value' => 1,
+            'meta_compare' => '=', // default
+        )
+    );
+
     return $users;
 }
 
 /**
  * Get editr user profile.
- * 
+ *
  * @access public
  * @param int $user_id (default: 0)
  * @return void
  */
-function pcl_get_edit_profile_user($user_id=0) {
-    if (isset($_GET['user_id'])) :
-        $user_id=$_GET['user_id'];
-    elseif (!$user_id) :
+function pcl_get_edit_profile_user( $user_id = 0 ) {
+    if ( isset( $_GET['user_id'] ) ) :
+        $user_id = $_GET['user_id'];
+    elseif ( ! $user_id ) :
         $user_id = get_current_user_id();
     endif;
- 
-    if (empty($user_id) || !current_user_can('edit_user', $user_id))
+
+    if ( empty( $user_id ) || ! current_user_can( 'edit_user', $user_id ) ) {
         return false;
- 
-    $user=get_userdata($user_id);
- 
-    if (!$user)
+    }
+
+    $user = get_userdata( $user_id );
+
+    if ( ! $user ) {
         return false;
- 
-    return $user;   
+    }
+
+    return $user;
 }
 
 /**
  * Add body classes.
- * 
+ *
  * @access public
  * @param mixed $classes
  * @return void
  */
-function pcl_add_body_classes($classes) {
+function pcl_add_body_classes( $classes ) {
     global $wp_query;
-    
+
     $post_id = $wp_query->get_queried_object_id();
 
-    if (is_singular() && in_array($post_id, pickle_custom_login()->pages)) :
-        $slug = array_search($post_id, pickle_custom_login()->pages);
+    if ( is_singular() && in_array( $post_id, pickle_custom_login()->pages ) ) :
+        $slug = array_search( $post_id, pickle_custom_login()->pages );
 
-        $classes[] = "pcl-$slug-page";  
+        $classes[] = "pcl-$slug-page";
     endif;
-    
+
     return $classes;
 }
-add_filter('body_class', 'pcl_add_body_classes');
+add_filter( 'body_class', 'pcl_add_body_classes' );
 
