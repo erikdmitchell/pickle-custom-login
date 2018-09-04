@@ -4,7 +4,7 @@ Donate link: erikdmitchell@gmail.com
 Tags: custom login, login, register, password, admin, customization, error, login error
 Requires at least: 4.0
 Tested up to: 4.9.1
-Stable tag: 1.0.0-alpha
+Stable tag: 1.0.0-beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
