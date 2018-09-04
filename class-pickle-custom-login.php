@@ -1,5 +1,16 @@
 <?php
-    
+/**
+ * Main Pickle Custom Login class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+     
+/**
+ * Final Pickle_Custom_Login class.
+ * 
+ * @final
+ */
 final class Pickle_Custom_Login {
 
     public $version = '1.0.0-beta.2';
@@ -55,7 +66,7 @@ final class Pickle_Custom_Login {
         include_once( PCL_PATH . 'functions.php' );
         include_once( PCL_PATH . 'pcl-errors.php' );
         include_once( PCL_PATH . 'pcl-force-login.php' );
-        include_once( PCL_PATH . 'pcl-login.php' );
+        include_once( PCL_PATH . 'class-pcl-login.php' );
         include_once( PCL_PATH . 'pcl-profile.php' );
         include_once( PCL_PATH . 'pcl-register.php' );
         include_once( PCL_PATH . 'pcl-password.php' );
@@ -64,7 +75,7 @@ final class Pickle_Custom_Login {
         include_once( PCL_PATH . 'pcl-email.php' );
         include_once( PCL_PATH . 'libraries/recaptchalib.php' ); // google recaptcha library
 
-        new Pickle_Custom_Login();
+        new PCL_Login();
         new Pickle_Custom_Login_Reset_Password();
 
         if ( is_admin() ) :
