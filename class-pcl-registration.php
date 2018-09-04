@@ -13,9 +13,9 @@ class PCL_Registration {
 
     /**
      * admin_activate_account_required
-     * 
+     *
      * (default value: false)
-     * 
+     *
      * @var bool
      * @access protected
      */
@@ -23,9 +23,9 @@ class PCL_Registration {
 
     /**
      * activate_account_required
-     * 
+     *
      * (default value: false)
-     * 
+     *
      * @var bool
      * @access protected
      */
