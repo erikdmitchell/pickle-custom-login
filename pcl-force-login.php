@@ -18,6 +18,9 @@ function pcl_force_login_redirect() {
 
     // Redirect unauthorized visitors
     if ( ! is_user_logged_in() && pcl_force_Login() ) :
+        // set vars.
+        $is_regex = false;
+        
         // get url //
         $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
         $url .= '://' . $_SERVER['HTTP_HOST'];
@@ -28,14 +31,25 @@ function pcl_force_login_redirect() {
         $whitelist = apply_filters( 'pcl_force_login_whitelist', array() );
         $whitelist = array_map( 'pcl_force_login_trim_url', $whitelist ); // remove trailing slash.
         $redirect_url = apply_filters( 'pcl_force_login_redirect', $url );
+        $regex = apply_filters( 'pcl_force_login_regex', array() );
 
         // setup raw urls for cleaner comparison //
         $redirect_url_clean = rtrim( preg_replace( '/\?.*/', '', $redirect_url ), '/' );
         $login_url_clean = preg_replace( '/\?.*/', '', wp_login_url() );
         $url_clean = preg_replace( '/\?.*/', '', $url );
 
+        // setup regex if need be.
+        if (!empty($regex)) :
+            foreach ($regex as $reg) :
+                if (preg_match($reg, pcl_force_login_trim_url( $url_clean ))) :
+                    $is_regex = true;
+                    break;
+                endif;
+            endforeach;
+        endif;
+
         // check and redirect //
-        if ( $redirect_url_clean != $login_url_clean && ! in_array( pcl_force_login_trim_url( $url_clean ), $whitelist ) && ! $bypass ) :
+        if ( $redirect_url_clean != $login_url_clean && ! in_array( pcl_force_login_trim_url( $url_clean ), $whitelist ) && ! $bypass && !$is_regex) :
             wp_safe_redirect( wp_login_url(), 302 );
             exit();
         endif;
