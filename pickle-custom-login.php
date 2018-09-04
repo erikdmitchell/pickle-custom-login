@@ -69,6 +69,7 @@ final class PickleCustomLogin {
 
 	public function includes() {
 		include_once(PCL_PATH.'pcl-install.php');
+		include_once(PCL_PATH.'uninstall.php');
 		include_once(PCL_PATH.'pcl-update-functions.php');
 		include_once(PCL_PATH.'pcl-deprecated-functions.php');
 		
