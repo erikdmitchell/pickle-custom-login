@@ -19,14 +19,16 @@ var buildInclude = [
         '!node_modules/**/*',
         '!style.css.map',
         '!assets/js/custom/*',
-        '!assets/css/patrials/*'
+        '!assets/css/patrials/*',
+        '!svn/**'
 
     ];
     
 var phpSrc = [
         '**/*.php', // Include all files    
         '!node_modules/**/*', // Exclude node_modules/
-        '!vendor/**' // Exclude vendor/    
+        '!vendor/**', // Exclude vendor/
+        '!svn/**'    
     ];
 
 var cssInclude = [
@@ -37,7 +39,8 @@ var cssInclude = [
         '!**/*.min.css',
         '!node_modules/**/*',
         '!style.css.map',
-        '!vendor/**'
+        '!vendor/**',
+        '!svn/**'
     ];
     
 var jsInclude = [
@@ -48,7 +51,8 @@ var jsInclude = [
         '!**/*.min.js',
         '!node_modules/**/*',
         '!vendor/**',
-        '!**/gulpfile.js'       
+        '!**/gulpfile.js',
+        '!svn/**'      
     ];    
 
 // Load plugins
