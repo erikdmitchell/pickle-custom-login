@@ -20,16 +20,9 @@
         pcl_updated_profile_message();
         $hf_user = wp_get_current_user();
         $hf_username = $hf_user->user_login;
-        // echo "here: " . wp_get_referer() . "<br>";
-        if ( wp_get_referer() == 'http://dev-partnerhub.pantheonsite.io/wp-admin/users.php' ) {
-            $page = '/wp-admin/users.php';
-        } else {
-            $page = '/wp-admin/options-general.php?page=pickle_custom_login&tab=approve_users';
-        }
         ?>
             
         <h3 class="text-center">Update Info for <?php echo $current_user->first_name; ?>  <?php echo $current_user->last_name; ?></h3>
-        <h6 class="text-center"><a href="<?php echo $page; ?>"><< Back to Previous Page</a></h6>
         
         <form method="post" id="adduser" class="pcl-profile-form" action="" method="post">
                        
@@ -44,43 +37,41 @@
             </p>
             
             <p class="form-display_name">
+                <?php
+                $public_display = array();
+                $public_display['display_nickname']  = $current_user->nickname;
+                $public_display['display_username']  = $current_user->user_login;
+
+                if ( ! empty( $current_user->first_name ) ) {
+                    $public_display['display_firstname'] = $current_user->first_name;
+                }
+
+                if ( ! empty( $current_user->last_name ) ) {
+                    $public_display['display_lastname'] = $current_user->last_name;
+                }
+
+                if ( ! empty( $current_user->first_name ) && ! empty( $current_user->last_name ) ) {
+                    $public_display['display_firstlast'] = $current_user->first_name . ' ' . $current_user->last_name;
+                    $public_display['display_lastfirst'] = $current_user->last_name . ' ' . $current_user->first_name;
+                }
+
+                if ( ! in_array( $current_user->display_name, $public_display ) ) { // Only add this if it isn't duplicated elsewhere
+                    $public_display = array( 'display_displayname' => $current_user->display_name ) + $public_display;
+                }
+
+                $public_display = array_map( 'trim', $public_display );
+                $public_display = array_unique( $public_display );
+                ?>       
                 <label for="display_name"><?php _e( 'Display name publicly as' ); ?></label>
         
-                <select name="display_name" id="display_name">
-                    
-                    <?php
-                    $public_display = array();
-                    $public_display['display_nickname']  = $current_user->nickname;
-                    $public_display['display_username']  = $current_user->user_login;
-
-                    if ( ! empty( $current_user->first_name ) ) {
-                        $public_display['display_firstname'] = $current_user->first_name;
-                    }
-
-                    if ( ! empty( $current_user->last_name ) ) {
-                        $public_display['display_lastname'] = $current_user->last_name;
-                    }
-
-                    if ( ! empty( $current_user->first_name ) && ! empty( $current_user->last_name ) ) {
-                        $public_display['display_firstlast'] = $current_user->first_name . ' ' . $current_user->last_name;
-                        $public_display['display_lastfirst'] = $current_user->last_name . ' ' . $current_user->first_name;
-                    }
-
-                    if ( ! in_array( $current_user->display_name, $public_display ) ) { // Only add this if it isn't duplicated elsewhere
-                        $public_display = array( 'display_displayname' => $current_user->display_name ) + $public_display;
-                    }
-
-                    $public_display = array_map( 'trim', $public_display );
-                    $public_display = array_unique( $public_display );
-
-                    foreach ( $public_display as $id => $item ) :
-                        ?>
-            <?php do_action( 'edit_user_profile', $current_user ); ?>
-
-            <p>&nbsp;</p>
+                <select name="display_name" id="display_name">                    
+                    <?php foreach ( $public_display as $id => $item ) : ?>
+                        <option value="<?php echo $id; ?>"><?php echo $item; ?></option>
+                    <?php endforeach; ?>
                 </select>
-            
             </p>
+            
+            <?php do_action( 'edit_user_profile', $current_user ); ?>
                         
             <p class="form-email">
                 <label for="email"><?php _e( 'E-mail *', 'profile' ); ?></label>
