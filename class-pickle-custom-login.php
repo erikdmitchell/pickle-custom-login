@@ -185,7 +185,7 @@ final class Pickle_Custom_Login {
         new Pickle_Custom_Login_Reset_Password();
 
         if ( is_admin() ) :
-            $this->admin = new Pickle_Custom_Login_Admin();
+            $this->admin = new PCL_Admin();
         endif;
     }
 
