@@ -1,5 +1,14 @@
 <?php
+/**
+ * Login reset password class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
+/**
+ * Pickle_Custom_Login_Reset_Password class.
+ */
 class Pickle_Custom_Login_Reset_Password {
 
     /**

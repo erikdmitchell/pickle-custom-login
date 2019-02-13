@@ -1,5 +1,14 @@
 <?php
+/**
+ * User activation class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
+/**
+ * Pickle_Custom_Login_User_Activation class.
+ */
 class Pickle_Custom_Login_User_Activation {
 
     /**
