@@ -57,6 +57,22 @@ Coming soon.
 
 = 1.0.0 =
 
+* Added reCAPTCHA to forgot password form
+* Added support for url regex in force login
+* Added admin email class
+* Added approve users admin page
+* Added uninstall class
+* Added custom activation email
+
+* Fixed block user from logging in if not approved
+* Fixed display name loop
+* Fixed password reset bug
+* Fixed when admin viewing users wrong profile is loaded
+* Fixed user id meta bug
+
+* Removed duplicate password/register links from login
+* Removed GitHub updater
+
 = 0.1.5 =
 
 * The plugin activation function has been cleaned up.
