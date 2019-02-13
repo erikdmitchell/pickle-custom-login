@@ -195,9 +195,9 @@ final class PCL_Admin {
             return false;
         }
 
-        wp_enqueue_script( 'pcl-admin-script', PCL_ADMIN_URL . 'js/admin.js', array( 'jquery' ), PCL_VERSION, true );
+        wp_enqueue_script( 'pcl-admin-script', PCL_ADMIN_URL . 'js/admin.min.js', array( 'jquery' ), PCL_VERSION, true );
 
-        wp_enqueue_style( 'pcl-admin-style', PCL_ADMIN_URL . 'css/admin.css', '', PCL_VERSION );
+        wp_enqueue_style( 'pcl-admin-style', PCL_ADMIN_URL . 'css/admin.min.css', '', PCL_VERSION );
     }
 
     /**
