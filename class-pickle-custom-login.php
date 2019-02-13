@@ -16,12 +16,12 @@ final class Pickle_Custom_Login {
     /**
      * version
      *
-     * (default value: '1.0.0-beta.2')
+     * (default value: '1.0.0')
      *
      * @var string
      * @access public
      */
-    public $version = '1.0.0-beta.2';
+    public $version = '1.0.0';
 
     /**
      * errors
