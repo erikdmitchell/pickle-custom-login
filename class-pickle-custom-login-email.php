@@ -1,5 +1,14 @@
 <?php
+/**
+ * Main login email class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
+/**
+ * PCL_Login class.
+ */
 class Pickle_Custom_Login_Email {
 
     /**

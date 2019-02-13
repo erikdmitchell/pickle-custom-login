@@ -7,7 +7,7 @@
  * @return void
  */
 function pcl_scripts_styles() {
-    wp_enqueue_style( 'pcl-frontend-style', PCL_URL . 'css/style.css', '', PCL_VERSION );
+    wp_enqueue_style( 'pcl-frontend-style', PCL_URL . 'css/style.min.css', '', PCL_VERSION );
 }
 add_action( 'wp_enqueue_scripts', 'pcl_scripts_styles' );
 
@@ -282,11 +282,11 @@ add_action( 'after_setup_theme', 'pcl_remove_admin_bar' );
  * @return void
  */
 function pcl_recaptcha_scripts_styles() {
-    if ( ! is_page( pcl_page_slug( 'register' ) ) ) {
+    if ( ! is_page( pcl_page_slug( 'register' ) ) && ! is_page( pcl_page_slug( 'forgot-password' ) ) ) {
         return false;
     }
 
-    wp_enqueue_script( 'google-recaptcha-api-script', 'https://www.google.com/recaptcha/api.js' );
+    wp_enqueue_script( 'google-recaptcha-api-script', 'https://www.google.com/recaptcha/api.js', '', '0.1.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'pcl_recaptcha_scripts_styles' );
 

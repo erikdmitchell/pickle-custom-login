@@ -1,5 +1,14 @@
 <?php
+/**
+ * Main login errors class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
+/**
+ * Pickle_Custom_Login_Errors class.
+ */
 class Pickle_Custom_Login_Errors {
 
     /**

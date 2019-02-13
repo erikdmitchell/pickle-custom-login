@@ -1,5 +1,14 @@
 <?php
+/**
+ * Main login profile class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
+/**
+ * Pickle_Custom_Login_Profile class.
+ */
 class Pickle_Custom_Login_Profile {
 
     public $errors = array();

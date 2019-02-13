@@ -3,8 +3,8 @@ Contributors: erikdmitchell
 Donate link: erikdmitchell@gmail.com
 Tags: custom login, login, register, password, admin, customization, error, login error
 Requires at least: 4.0
-Tested up to: 4.9.1
-Stable tag: 1.0.0-beta
+Tested up to: 5.0.3
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,22 @@ Coming soon.
 == Changelog ==
 
 = 1.0.0 =
+
+* Added reCAPTCHA to forgot password form
+* Added support for url regex in force login
+* Added admin email class
+* Added approve users admin page
+* Added uninstall class
+* Added custom activation email
+
+* Fixed block user from logging in if not approved
+* Fixed display name loop
+* Fixed password reset bug
+* Fixed when admin viewing users wrong profile is loaded
+* Fixed user id meta bug
+
+* Removed duplicate password/register links from login
+* Removed GitHub updater
 
 = 0.1.5 =
 
