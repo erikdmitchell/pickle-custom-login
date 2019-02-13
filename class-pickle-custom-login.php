@@ -176,7 +176,7 @@ final class Pickle_Custom_Login {
         include_once( PCL_PATH . 'class-pickle-custom-login-profile.php' );
         include_once( PCL_PATH . 'class-pcl-registration.php' );
         include_once( PCL_PATH . 'class-pickle-custom-login-reset-password.php' );
-        include_once( PCL_PATH . 'admin/admin.php' );
+        include_once( PCL_PATH . 'admin/class-pcl-admin.php' );
         include_once( PCL_PATH . 'class-pickle-custom-login-user-activation.php' );
         include_once( PCL_PATH . 'class-pickle-custom-login-email.php' );
         include_once( PCL_PATH . 'libraries/recaptchalib.php' ); // google recaptcha library.
