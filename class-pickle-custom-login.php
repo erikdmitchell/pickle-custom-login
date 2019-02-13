@@ -170,16 +170,16 @@ final class Pickle_Custom_Login {
         include_once( PCL_PATH . 'pcl-deprecated-functions.php' );
 
         include_once( PCL_PATH . 'functions.php' );
-        include_once( PCL_PATH . 'pcl-errors.php' );
+        include_once( PCL_PATH . 'class-pickle-custom-login-errors.php' );
         include_once( PCL_PATH . 'pcl-force-login.php' );
         include_once( PCL_PATH . 'class-pcl-login.php' );
-        include_once( PCL_PATH . 'pcl-profile.php' );
+        include_once( PCL_PATH . 'class-pickle-custom-login-profile.php' );
         include_once( PCL_PATH . 'class-pcl-registration.php' );
-        include_once( PCL_PATH . 'pcl-password.php' );
+        include_once( PCL_PATH . 'class-pickle-custom-login-reset-password.php' );
         include_once( PCL_PATH . 'admin/admin.php' );
-        include_once( PCL_PATH . 'pcl-user-activation.php' );
-        include_once( PCL_PATH . 'pcl-email.php' );
-        include_once( PCL_PATH . 'libraries/recaptchalib.php' ); // google recaptcha library
+        include_once( PCL_PATH . 'class-pickle-custom-login-user-activation.php' );
+        include_once( PCL_PATH . 'class-pickle-custom-login-email.php' );
+        include_once( PCL_PATH . 'libraries/recaptchalib.php' ); // google recaptcha library.
 
         new PCL_Login();
         new Pickle_Custom_Login_Reset_Password();
