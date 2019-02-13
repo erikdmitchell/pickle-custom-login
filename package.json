@@ -1,10 +1,10 @@
 {
-  "name": "gulp-standards",
+  "name": "pickle-custom-login",
   "version": "1.0.0",
-  "description": "Gulp Standards.",
+  "description": "Pickle Custom Login",
   "main": "gulpfile.js",
   "scripts": {
-    "test": "echo \"Gulp Standards\" && exit 1"
+    "test": "echo \"PCL\" && exit 1"
   },
   "repository": {
     "type": "git",
