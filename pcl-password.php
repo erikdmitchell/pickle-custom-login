@@ -106,9 +106,21 @@ class Pickle_Custom_Login_Reset_Password {
         if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) :
             $_errors = array();
             $errors = retrieve_password();
+                       
+            // check recaptcha and return if failed.
+            if ( ! $this->check_recaptcha( $_POST['g-recaptcha-response'] ) ) : 
+echo "sans recaptcha";                
 
-            if ( is_wp_error( $errors ) ) :
-                // Errors found
+                // Errors found.
+                if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
+                    $redirect_url = home_url( 'forgot-password' );
+                else :
+                    $redirect_url = wp_lostpassword_url();
+                endif;
+
+                $redirect_url = add_query_arg( 'errors', 'recaptcha error', $redirect_url ); 
+            elseif ( is_wp_error( $errors ) ) :
+                // Errors found.
                 if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
                     $redirect_url = home_url( 'forgot-password' );
                 else :
@@ -117,7 +129,7 @@ class Pickle_Custom_Login_Reset_Password {
 
                 $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
             else :
-                // Email sent
+                // Email sent.
                 if ( $slug = pcl_page_slug( 'login' ) ) :
                     $redirect_url = home_url( $slug );
                 else :
@@ -131,6 +143,25 @@ class Pickle_Custom_Login_Reset_Password {
             exit;
         endif;
     }
+    
+    protected function check_recaptcha( $recaptcha_response = '' ) {
+        $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key
+        $response = null; // empty response
+        $reCaptcha = new ReCaptcha( $secret ); // check secret key
+
+        if ( isset( $recaptcha_response ) ) {
+            $response = $reCaptcha->verifyResponse(
+                $_SERVER['REMOTE_ADDR'],
+                $recaptcha_response
+            );
+        }
+
+        if ( $response == null || ! $response->success ) {
+            return false;
+        }
+        
+        return true;
+    }    
 
     /**
      * process_error_codes function.
@@ -160,10 +191,13 @@ class Pickle_Custom_Login_Reset_Password {
                 case 'password_reset_mismatch':
                     echo pcl_format_error_message( 'Error', 'The passwords do not match.', 'error' );
                     break;
+                case 'recaptchaerror':
+                    echo pcl_format_error_message( 'Error', 'Invalid reCAPTCHA.', 'error' );
+                    break;
                 default:
                     echo pcl_format_error_message( 'Error', 'There was an error, please try again.', 'error' );
                     break;
-          endswitch;
+            endswitch;
          endforeach;
 
         return;
