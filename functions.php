@@ -7,7 +7,7 @@
  * @return void
  */
 function pcl_scripts_styles() {
-    wp_enqueue_style( 'pcl-frontend-style', PCL_URL . 'css/style.css', '', PCL_VERSION );
+    wp_enqueue_style( 'pcl-frontend-style', PCL_URL . 'css/style.min.css', '', PCL_VERSION );
 }
 add_action( 'wp_enqueue_scripts', 'pcl_scripts_styles' );
 
