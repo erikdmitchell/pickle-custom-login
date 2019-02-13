@@ -1,25 +1,29 @@
 // Project configuration
 var buildInclude = [
         // include common file types
-        '**/*.php',
-        '**/*.html',
-        '**/*.css',
-        '**/*.js',
-        '**/*.svg',
-        '**/*.ttf',
-        '**/*.otf',
-        '**/*.eot',
-        '**/*.woff',
-        '**/*.woff2',
+        //'**/*.php',
+        //'**/*.html',
+        //'**/*.css',
+        //'**/*.js',
+        //'**/*.svg',
+        //'**/*.ttf',
+        //'**/*.otf',
+        //'**/*.eot',
+        //'**/*.woff',
+        //'**/*.woff2',
 
         // include specific files and folders
-        'screenshot.png',
 
         // exclude files and folders
-        '!node_modules/**/*',
-        '!style.css.map',
-        '!assets/js/custom/*',
-        '!assets/css/patrials/*',
+        '!./composer.json', 
+        '!./composer.lock',
+        '!./gulpfile.js',
+        '!./{node_modules,node_modules/**/*}',
+        '!./package.json',
+        '!./phpcs.ruleset.xml',
+        '!./{sass,sass/**/*}',
+        '!./.stylelintrc',
+        '!./{vendor,vendor/**/*}',
         '!svn/**'
 
     ];
@@ -78,10 +82,11 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'), // JSHint plugin
     stylish = require('jshint-stylish'), // JSHint Stylish plugin
     stylelint = require('gulp-stylelint'), // stylelint plugin
-    phpcs = require('gulp-phpcs'); // Gulp plugin for running PHP Code Sniffer.
-    phpcbf = require('gulp-phpcbf'); // PHP Code Beautifier
-    gutil = require('gulp-util'); // gulp util
-
+    phpcs = require('gulp-phpcs'), // Gulp plugin for running PHP Code Sniffer.
+    phpcbf = require('gulp-phpcbf'), // PHP Code Beautifier
+    gutil = require('gulp-util'), // gulp util
+    zip = require('gulp-zip'); // gulp zip
+    
 /**
  * Styles
  */
@@ -161,24 +166,6 @@ gulp.task('lintjs', function() {
     .pipe(jshint.reporter(stylish));
 });
 
-/*
-gulp.task('scripts', function () {
-    return gulp.src('./js/*.js')
-        .pipe(concat('custom.js'))
-        .pipe(gulp.dest('./assets/js'))
-        .pipe(rename({
-            basename: "custom",
-            suffix: '.min'
-        }))
-        .pipe(uglify())
-        .pipe(gulp.dest('./assets/js/'))
-        .pipe(notify({
-            message: 'Custom scripts task complete',
-            onLast: true
-        }));
-});
-*/
-
 /**
  * PHP
  */
@@ -215,9 +202,16 @@ gulp.task('phpcbf', function () {
  *
  */
 
-// Package Distributable - sort of
+// gulp zip
+gulp.task('zip', function () {
+  return gulp.src(buildInclude)
+    .pipe(zip('pickle-custom-login.zip'))
+    .pipe(gulp.dest('./../'));
+});  
+
+// Package Distributable
 gulp.task('build', function (cb) {
-    runSequence('styles', 'scripts', cb);
+    runSequence('styles', 'scripts', 'zip', cb);
 });
 
 // Styles task
