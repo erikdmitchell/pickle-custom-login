@@ -8,6 +8,10 @@
             <label for="user_login"><?php _e( 'Email', 'pcl' ); ?>
             <input type="text" name="user_login" id="user_login">
         </p>
+        
+        <p class="form-row">
+            <div class="g-recaptcha" data-sitekey="<?php echo get_option( 'pcl-recaptcha-site-key', '' ); ?>"></div>
+        </p>
 
         <p class="lostpassword-submit">
             <input type="submit" name="submit" class="lostpassword-button" value="<?php _e( 'Reset Password', 'pcl' ); ?>" />
