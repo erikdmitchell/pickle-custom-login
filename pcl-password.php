@@ -106,10 +106,10 @@ class Pickle_Custom_Login_Reset_Password {
         if ( 'POST' == $_SERVER['REQUEST_METHOD'] ) :
             $_errors = array();
             $errors = retrieve_password();
-                       
+
             // check recaptcha and return if failed.
-            if ( ! $this->check_recaptcha( $_POST['g-recaptcha-response'] ) ) : 
-echo "sans recaptcha";                
+            if ( ! $this->check_recaptcha( $_POST['g-recaptcha-response'] ) ) :
+                echo 'sans recaptcha';
 
                 // Errors found.
                 if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
@@ -118,7 +118,7 @@ echo "sans recaptcha";
                     $redirect_url = wp_lostpassword_url();
                 endif;
 
-                $redirect_url = add_query_arg( 'errors', 'recaptcha error', $redirect_url ); 
+                $redirect_url = add_query_arg( 'errors', 'recaptcha error', $redirect_url );
             elseif ( is_wp_error( $errors ) ) :
                 // Errors found.
                 if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
@@ -143,7 +143,7 @@ echo "sans recaptcha";
             exit;
         endif;
     }
-    
+
     protected function check_recaptcha( $recaptcha_response = '' ) {
         $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key
         $response = null; // empty response
@@ -159,9 +159,9 @@ echo "sans recaptcha";
         if ( $response == null || ! $response->success ) {
             return false;
         }
-        
+
         return true;
-    }    
+    }
 
     /**
      * process_error_codes function.

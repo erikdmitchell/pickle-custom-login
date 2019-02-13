@@ -286,7 +286,7 @@ function pcl_recaptcha_scripts_styles() {
         return false;
     }
 
-    wp_enqueue_script( 'google-recaptcha-api-script', 'https://www.google.com/recaptcha/api.js', '', '0.1.0', true);
+    wp_enqueue_script( 'google-recaptcha-api-script', 'https://www.google.com/recaptcha/api.js', '', '0.1.0', true );
 }
 add_action( 'wp_enqueue_scripts', 'pcl_recaptcha_scripts_styles' );
 
