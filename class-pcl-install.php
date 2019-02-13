@@ -1,9 +1,15 @@
 <?php
+/**
+ * Pickle Custom install class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
 /**
- * Pickle_Custom_Login_Install class.
+ * PCL_Install class.
  */
-class Pickle_Custom_Login_Install {
+class PCL_Install {
 
     /**
      * Updates
@@ -79,7 +85,7 @@ class Pickle_Custom_Login_Install {
      */
     public static function create_pages() {
         $pages_arr = array();
-        // Information needed for creating the plugin's pages
+        // Information needed for creating the plugin's pages.
         $page_definitions = array(
             'activate-account' => array(
                 'title' => __( 'Activate Account', 'pcl' ),
@@ -108,11 +114,11 @@ class Pickle_Custom_Login_Install {
         );
 
         foreach ( $page_definitions as $slug => $page ) :
-            // Check that the page doesn't exist already
+            // Check that the page doesn't exist already.
             $query = new WP_Query( 'pagename=' . $slug );
 
             if ( ! $query->have_posts() ) :
-                // Add the page using the data from the array above
+                // Add the page using the data from the array above.
                 $post_id = wp_insert_post(
                     array(
                         'post_content'   => $page['content'],
@@ -131,7 +137,7 @@ class Pickle_Custom_Login_Install {
             $pages_arr[ $slug ] = $post_id;
         endforeach;
 
-        // if this plugin existed before, keep their settings //
+        // if this plugin existed before, keep their settings.
         if ( ! get_option( 'pcl_pages' ) ) {
             update_option( 'pcl_pages', $pages_arr );
         }
@@ -182,4 +188,4 @@ class Pickle_Custom_Login_Install {
 
 }
 
-Pickle_Custom_Login_Install::init();
+PCL_Install::init();

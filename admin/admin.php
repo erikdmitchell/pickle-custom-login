@@ -1,17 +1,39 @@
 <?php
 
-final class Pickle_Custom_Login_Admin {
+/**
+ * Final PCL_Admin class.
+ * 
+ * @final
+ */
+final class PCL_Admin {
 
+    /**
+     * admin_notices
+     * 
+     * (default value: array())
+     * 
+     * @var array
+     * @access protected
+     */
     protected $admin_notices = array();
 
+    /**
+     * _instance
+     * 
+     * (default value: null)
+     * 
+     * @var mixed
+     * @access protected
+     * @static
+     */
     protected static $_instance = null;
 
     /**
-     * instance function.
+     * Instance function.
      *
      * @access public
      * @static
-     * @return void
+     * @return instance
      */
     public static function instance() {
         if ( is_null( self::$_instance ) ) {

@@ -1,6 +1,15 @@
 <?php
+/**
+ * Main Login class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
-class Pickle_Custom_Login {
+/**
+ * PCL_Login class.
+ */
+class PCL_Login {
 
     /**
      * __construct function.
@@ -21,10 +30,10 @@ class Pickle_Custom_Login {
     }
 
     /**
-     * login_form function.
+     * Login form shortcode.
      *
      * @access public
-     * @return void
+     * @return html
      */
     public function login_form() {
         if ( is_user_logged_in() ) {
@@ -43,7 +52,7 @@ class Pickle_Custom_Login {
     }
 
     /**
-     * login_member function.
+     * Login function.
      *
      * @access public
      * @return void
@@ -104,7 +113,7 @@ class Pickle_Custom_Login {
     }
 
     /**
-     * redirect_login_page function.
+     * Redirect login page.
      *
      * @access public
      * @return void
@@ -124,7 +133,7 @@ class Pickle_Custom_Login {
     }
 
     /**
-     * login_failed function.
+     * Failed login redirect.
      *
      * @access public
      * @return void
@@ -141,7 +150,7 @@ class Pickle_Custom_Login {
     }
 
     /**
-     * logout_page function.
+     * Logout page redirect.
      *
      * @access public
      * @return void
@@ -154,7 +163,7 @@ class Pickle_Custom_Login {
     }
 
     /**
-     * verify_username_password function.
+     * Verify username and password.
      *
      * @access public
      * @param mixed $user

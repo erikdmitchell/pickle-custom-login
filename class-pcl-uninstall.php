@@ -1,33 +1,15 @@
 <?php
+/**
+ * Uninstall class
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
 
 /**
  * PCL_Uninstall class.
  */
 class PCL_Uninstall {
-
-    /**
-     * Init
-     *
-     * @access public
-     * @static
-     * @return void
-     */
-    public static function init() {
-        // add_action('init', array(__CLASS__, 'check_version'), 5);
-    }
-
-    /**
-     * Check version.
-     *
-     * @access public
-     * @static
-     * @return void
-     */
-    public static function check_version() {
-        // if (get_option('pcl_version')!==pickle_custom_login()->version)
-            // self::install();
-    }
-
     /**
      * Uninstall.
      *
@@ -72,7 +54,8 @@ class PCL_Uninstall {
         foreach ( $pages_arr as $slug => $id ) :
             wp_delete_post( $id, true );
         endforeach;
-        // delete_option('pcl_pages');
+
+        delete_option( 'pcl_pages' );
     }
 
     /**
@@ -87,5 +70,3 @@ class PCL_Uninstall {
     }
 
 }
-
-// Pickle_Custom_Login_Install::init();

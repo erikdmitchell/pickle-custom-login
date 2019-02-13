@@ -61,7 +61,8 @@
 
                 $public_display = array_map( 'trim', $public_display );
                 $public_display = array_unique( $public_display );
-                ?>       
+                ?>
+                       
                 <label for="display_name"><?php _e( 'Display name publicly as' ); ?></label>
         
                 <select name="display_name" id="display_name">                    
