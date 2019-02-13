@@ -118,8 +118,6 @@ class Pickle_Custom_Login_Reset_Password {
 
             // check recaptcha and return if failed.
             if ( ! $this->check_recaptcha( $_POST['g-recaptcha-response'] ) ) :
-                echo 'sans recaptcha';
-
                 // Errors found.
                 if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
                     $redirect_url = home_url( 'forgot-password' );
@@ -153,7 +151,18 @@ class Pickle_Custom_Login_Reset_Password {
         endif;
     }
 
+    /**
+     * Check reCAPTCHA.
+     * 
+     * @access protected
+     * @param string $recaptcha_response (default: '')
+     * @return boolean
+     */
     protected function check_recaptcha( $recaptcha_response = '' ) {
+        if ( ! get_option( 'pcl-enable-recaptcha', false ) ) :
+            return true; // return this because there is no recaptcha.
+        endif;
+        
         $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key
         $response = null; // empty response
         $reCaptcha = new ReCaptcha( $secret ); // check secret key
