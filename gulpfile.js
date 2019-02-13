@@ -11,7 +11,9 @@ var buildInclude = [
         //'**/*.eot',
         //'**/*.woff',
         //'**/*.woff2',
-
+        
+        './**/*',
+        
         // include specific files and folders
 
         // exclude files and folders
@@ -25,7 +27,6 @@ var buildInclude = [
         '!./.stylelintrc',
         '!./{vendor,vendor/**/*}',
         '!svn/**'
-
     ];
     
 var phpSrc = [
@@ -195,12 +196,6 @@ gulp.task('phpcbf', function () {
 });
 
 // ==== TASKS ==== //
-/**
- * Gulp Default Task
- *
- * Compiles styles, watches js and php files.
- *
- */
 
 // gulp zip
 gulp.task('zip', function () {
