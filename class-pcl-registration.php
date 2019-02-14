@@ -494,42 +494,38 @@ class PCL_Registration {
         }
 
         $fields = $_POST['pcl_registration'];
+        $check_fields = array(
+            'firstname',
+            'lastname',
+            'country',
+            'city',
+            'zip',
+            'company',
+            'phone',
+        );
 
-        // check username.
-        $this->check_username( $fields['username'] );
-        
-		// check first.
-        $this->check_first($fields['firstname']);
+        // check username - required.
+        $this->check_username( $fields['username'] );       
 
-       // check last.
-        $this->check_last($fields['lastname']);        
-
-        // check email.
+        // check email - required.
         $this->check_email( $fields['email'] );
 
-        // check country.
-        $this->check_country($fields['country']);
-
-        // check state_code.
-        //$this->check_state_code($fields['state_code']);
-
-        // check city.
-        $this->check_city($fields['city']);
-
-        // check zip.
-        $this->check_zip($fields['zip']);
-
-        // check company.
-        $this->check_company($fields['company']);
-
-        // check title.
-        //$this->check_title($fields['title']);
-
-        // check phone.
-        $this->check_phone($fields['phone']);
-
-        // check password.
+        // check password - required.
         $this->check_password( $fields['password'], $fields['password_check'] );
+
+        // loop through our fields to check, only check if they exist.
+        foreach ($check_fields as $check_field) :
+            if (isset($fields[$check_field])) :
+                $func = "check_{$check_field}";
+                $this->$func($fields[$check_field]);
+            endif;
+        endforeach;
+        
+        // check title - function does not exist.
+        //$this->check_title($fields['title']);        
+        
+        // check state_code - function does not exist.
+        //$this->check_state_code($fields['state_code']);        
 
         // check recaptcha, if active.
         if ( get_option( 'pcl-enable-recaptcha', false ) ) {
@@ -630,20 +626,20 @@ class PCL_Registration {
     }
     
  	/**
-     * check_first function.
+     * Check first name function.
      * 
      */
-    protected function check_first($firstname='') {
+    protected function check_firstname($firstname='') {
 		// first empty
 		if ($firstname=='')
 			pcl_add_error_message('firstname_empty', 'Please enter a first name.'); 
     }
 
  	/**
-     * check_last function.
+     * Check last name function.
      * 
      */
-    protected function check_last($lastname='') {
+    protected function check_lastname($lastname='') {
 		// lastname empty
 		if ($lastname=='')
 			pcl_add_error_message('lastname_empty', 'Please enter a last name.'); 
