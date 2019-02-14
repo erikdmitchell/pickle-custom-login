@@ -115,48 +115,48 @@ class PCL_Registration {
         echo '<input name="pcl_registration[password_check]" id="pcl_password_check" class="password" type="password"/>';
     }
 
-	/**
-	 * form_company_field function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_company_field() {
-		echo '<label for="pcl_company">'.__('Company*').'</label>';
-		echo '<input name="pcl_registration[company]" id="pcl_company" type="text" required/>';   	
-	}
+    /**
+     * form_company_field function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_company_field() {
+        echo '<label for="pcl_company">' . __( 'Company*' ) . '</label>';
+        echo '<input name="pcl_registration[company]" id="pcl_company" type="text" required/>';
+    }
 
     /**
-	 * form_title_field function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_title_field() {
-		echo '<label for="pcl_title">'.__('Job Title*').'</label>';
-		echo '<input name="pcl_registration[title]" id="pcl_title" type="text" required/>';   	
-	}	
+     * form_title_field function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_title_field() {
+        echo '<label for="pcl_title">' . __( 'Job Title*' ) . '</label>';
+        echo '<input name="pcl_registration[title]" id="pcl_title" type="text" required/>';
+    }
 
-	/**
-	 * form_phone function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_phone_field() {
-		echo '<label for="pcl_phone">'.__('Phone*').'</label>';
-		echo '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>';   	
-	}	
+    /**
+     * form_phone function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_phone_field() {
+        echo '<label for="pcl_phone">' . __( 'Phone*' ) . '</label>';
+        echo '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>';
+    }
 
-	/**
-	 * form_country_field function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_country_field() {
-		echo '<label for="country" class="required">'.__('Country*').'</label>';
-		echo '<select name="pcl_registration[country]" id="country" onchange="printStateMenu(this.value);" required>
+    /**
+     * form_country_field function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_country_field() {
+        echo '<label for="country" class="required">' . __( 'Country*' ) . '</label>';
+        echo '<select name="pcl_registration[country]" id="country" onchange="printStateMenu(this.value);" required>
                             <option value="">Select country…</option>
                             <option value="US">United States of America</option>
                             <option value="CA">Canada</option>
@@ -405,41 +405,41 @@ class PCL_Registration {
                             <option value="YE">Yemen</option>
                             <option value="ZM">Zambia</option>
                             <option value="ZW">Zimbabwe</option>
-                        </select>';  	
-	}
-               
-	/**
-	 * form_city_field function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_city_field() {
- 		echo '<label for="pcl_city" class="required">'.__('City*').'</label>';
-		echo '<input name="pcl_registration[city]" id="pcl_city" class="" type="text" required/>'; 	
-	}
+                        </select>';
+    }
 
     /**
-	 * form_state_code_field function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_state_code_field() {
- 		echo '<label for="pcl_state_code" class="required">'.__('State/Province').'</label>';
-		echo '<select id="state_code" name="pcl_registration[state_code]" required><option value="AB">AB-Alberta</option><option value="BC">BC-British Columbia</option><option value="MB">MB-Manitoba</option><option value="NB">NB-New Brunswick</option><option value="NL">NL-Newfoundland and Labrador</option><option value="NT">NT-Northwest Territories</option><option value="NS">NS-Nova Scotia</option><option value="NU">NU-Nunavut</option><option value="ON">ON-Ontario</option><option value="PE">PE-Prince Edward Island</option><option value="QC">QC-Quebec</option><option value="SK">SK-Saskatchewan</option><option value="YT">YT-Yukon</option></select>'; 	
-	}
+     * form_city_field function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_city_field() {
+        echo '<label for="pcl_city" class="required">' . __( 'City*' ) . '</label>';
+        echo '<input name="pcl_registration[city]" id="pcl_city" class="" type="text" required/>';
+    }
 
     /**
-	 * form_zip_field function.
-	 * 
-	 * @access public
-	 * @return void
-	 */
-	public function form_zip_field() {
- 		echo '<label for="pcl_zip" class="required">'.__('Postal Code*').'</label>';
-		echo '<input name="pcl_registration[zip]" id="pcl_zip" class="" type="text" required/>'; 	
-	}    
+     * form_state_code_field function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_state_code_field() {
+        echo '<label for="pcl_state_code" class="required">' . __( 'State/Province' ) . '</label>';
+        echo '<select id="state_code" name="pcl_registration[state_code]" required><option value="AB">AB-Alberta</option><option value="BC">BC-British Columbia</option><option value="MB">MB-Manitoba</option><option value="NB">NB-New Brunswick</option><option value="NL">NL-Newfoundland and Labrador</option><option value="NT">NT-Northwest Territories</option><option value="NS">NS-Nova Scotia</option><option value="NU">NU-Nunavut</option><option value="ON">ON-Ontario</option><option value="PE">PE-Prince Edward Island</option><option value="QC">QC-Quebec</option><option value="SK">SK-Saskatchewan</option><option value="YT">YT-Yukon</option></select>';
+    }
+
+    /**
+     * form_zip_field function.
+     *
+     * @access public
+     * @return void
+     */
+    public function form_zip_field() {
+        echo '<label for="pcl_zip" class="required">' . __( 'Postal Code*' ) . '</label>';
+        echo '<input name="pcl_registration[zip]" id="pcl_zip" class="" type="text" required/>';
+    }
 
     /**
      * Form recaptcha field.
@@ -505,7 +505,7 @@ class PCL_Registration {
         );
 
         // check username - required.
-        $this->check_username( $fields['username'] );       
+        $this->check_username( $fields['username'] );
 
         // check email - required.
         $this->check_email( $fields['email'] );
@@ -514,19 +514,17 @@ class PCL_Registration {
         $this->check_password( $fields['password'], $fields['password_check'] );
 
         // loop through our fields to check, only check if they exist.
-        foreach ($check_fields as $check_field) :
-            if (isset($fields[$check_field])) :
+        foreach ( $check_fields as $check_field ) :
+            if ( isset( $fields[ $check_field ] ) ) :
                 $func = "check_{$check_field}";
-                $this->$func($fields[$check_field]);
+                $this->$func( $fields[ $check_field ] );
             endif;
         endforeach;
-        
-        // check title - function does not exist.
-        //$this->check_title($fields['title']);        
-        
-        // check state_code - function does not exist.
-        //$this->check_state_code($fields['state_code']);        
 
+        // check title - function does not exist.
+        // $this->check_title($fields['title']);
+        // check state_code - function does not exist.
+        // $this->check_state_code($fields['state_code']);
         // check recaptcha, if active.
         if ( get_option( 'pcl-enable-recaptcha', false ) ) {
             $this->check_recaptcha( $_POST['g-recaptcha-response'] );
@@ -624,56 +622,61 @@ class PCL_Registration {
             pcl_add_error_message( 'recaptcha', 'Issue with the recaptcha' );
         }
     }
-    
- 	/**
+
+    /**
      * Check first name function.
-     * 
      */
-    protected function check_firstname($firstname='') {
-		// first empty
-		if ($firstname=='')
-			pcl_add_error_message('firstname_empty', 'Please enter a first name.'); 
+    protected function check_firstname( $firstname = '' ) {
+        // first empty
+        if ( $firstname == '' ) {
+            pcl_add_error_message( 'firstname_empty', 'Please enter a first name.' );
+        }
     }
 
- 	/**
+    /**
      * Check last name function.
-     * 
      */
-    protected function check_lastname($lastname='') {
-		// lastname empty
-		if ($lastname=='')
-			pcl_add_error_message('lastname_empty', 'Please enter a last name.'); 
+    protected function check_lastname( $lastname = '' ) {
+        // lastname empty
+        if ( $lastname == '' ) {
+            pcl_add_error_message( 'lastname_empty', 'Please enter a last name.' );
+        }
     }
 
-    protected function check_company($company='') {
-		// company empty
-		if ($company=='')
-			pcl_add_error_message('company_empty', 'Please enter a company name.'); 
+    protected function check_company( $company = '' ) {
+        // company empty
+        if ( $company == '' ) {
+            pcl_add_error_message( 'company_empty', 'Please enter a company name.' );
+        }
     }
 
-    protected function check_phone($phone='') {
-		// phone empty
-		if ($phone=='')
-			pcl_add_error_message('phone_empty', 'Please enter sa phone number.'); 
+    protected function check_phone( $phone = '' ) {
+        // phone empty
+        if ( $phone == '' ) {
+            pcl_add_error_message( 'phone_empty', 'Please enter sa phone number.' );
+        }
     }
 
-    protected function check_city($city='') {
-		// city empty
-		if ($city=='')
-			pcl_add_error_message('city_empty', 'Please enter a city.'); 
+    protected function check_city( $city = '' ) {
+        // city empty
+        if ( $city == '' ) {
+            pcl_add_error_message( 'city_empty', 'Please enter a city.' );
+        }
     }
 
-    protected function check_zip($zip='') {
-		// zip empty
-		if ($zip=='')
-			pcl_add_error_message('zip_empty', 'Please enter a postal code.'); 
+    protected function check_zip( $zip = '' ) {
+        // zip empty
+        if ( $zip == '' ) {
+            pcl_add_error_message( 'zip_empty', 'Please enter a postal code.' );
+        }
     }
 
-    protected function check_country($country='') {
-		// country empty
-		if ($country=='')
-			pcl_add_error_message('country_empty', 'Please select a country.'); 
-    }    
+    protected function check_country( $country = '' ) {
+        // country empty
+        if ( $country == '' ) {
+            pcl_add_error_message( 'country_empty', 'Please select a country.' );
+        }
+    }
 
     /**
      * Add user.

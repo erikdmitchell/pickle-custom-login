@@ -153,7 +153,7 @@ class Pickle_Custom_Login_Reset_Password {
 
     /**
      * Check reCAPTCHA.
-     * 
+     *
      * @access protected
      * @param string $recaptcha_response (default: '')
      * @return boolean
@@ -162,7 +162,7 @@ class Pickle_Custom_Login_Reset_Password {
         if ( ! get_option( 'pcl-enable-recaptcha', false ) ) :
             return true; // return this because there is no recaptcha.
         endif;
-        
+
         $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key
         $response = null; // empty response
         $reCaptcha = new ReCaptcha( $secret ); // check secret key
