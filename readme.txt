@@ -4,7 +4,7 @@ Donate link: erikdmitchell@gmail.com
 Tags: custom login, login, register, password, admin, customization, error, login error
 Requires at least: 4.0
 Tested up to: 5.0.3
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,10 @@ More soon.
 Coming soon.
 
 == Changelog ==
+
+= 1.1.0 =
+
+* Added Add new registration fields: Title, Company, Phone, Country, State (code), City, Zip
 
 = 1.0.0 =
 
