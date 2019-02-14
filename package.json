@@ -1,6 +1,6 @@
 {
   "name": "pickle-custom-login",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pickle Custom Login",
   "main": "gulpfile.js",
   "scripts": {
