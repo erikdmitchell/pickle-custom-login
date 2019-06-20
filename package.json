@@ -46,6 +46,7 @@
     "jshint-stylish": ""
   },
   "dependencies": {
+    "gulp-load-plugins": "^1.6.0",
     "gulp-sourcemaps": "^2.6.5"
   }
 }
