@@ -451,7 +451,7 @@ class PCL_Registration {
         do_action( 'pcl_registraion_before_recaptcha' );
 
         if ( get_option( 'pcl-enable-recaptcha', false ) ) :
-            echo '<div class="g-recaptcha" data-sitekey="' . get_option( 'pcl-recaptcha-site-key', '' ) . '"></div>';
+            echo sprintf( '<div class="g-recaptcha" data-sitekey="%s"></div>', esc_attr( get_option( 'pcl-recaptcha-site-key', '' ) ) );
          endif;
     }
 
@@ -462,9 +462,9 @@ class PCL_Registration {
      * @return void
      */
     public function form_register_button() {
-        echo '<input type="hidden" name="custom_register_nonce" value="' . wp_create_nonce( 'custom-register-nonce' ) . '" />';
-        echo wp_nonce_field( 'pcl-register', 'pcl_registration_form', true, false );
-        echo '<input type="submit" value="' . __( 'Register' ) . '" />';
+        echo sprintf( '<input type="hidden" name="custom_register_nonce" value="%s" />', esc_html( wp_create_nonce( 'custom-register-nonce' ) ) );
+        wp_nonce_field( 'pcl-register', 'pcl_registration_form' );
+        echo sprintf( '<input type="submit" value="%s" />', esc_html__( 'Register', 'pcl' ) );
     }
 
     /**
@@ -489,11 +489,15 @@ class PCL_Registration {
      * @return void
      */
     public function add_new_user() {
-        if ( ! isset( $_POST['pcl_registration_form'] ) || ! wp_verify_nonce( $_POST['pcl_registration_form'], 'pcl-register' ) ) {
+        if ( ! isset( $_POST['pcl_registration_form'] ) || ! wp_verify_nonce( sanitize_key( $_POST['pcl_registration_form'], 'pcl-register' ) ) ) {
             return;
         }
 
-        $fields = $_POST['pcl_registration'];
+        if ( isset( $_POST['pcl_registration'] ) ) {
+            $fields = wp_unslash( $_POST['pcl_registration'] );
+        }
+
+        print_r( $fields );
         $check_fields = array(
             'firstname',
             'lastname',
