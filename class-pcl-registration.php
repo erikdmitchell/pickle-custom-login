@@ -133,7 +133,7 @@ class PCL_Registration {
      * @return void
      */
     public function form_title_field() {
-        echo sprintf( '<label for="pcl_title">&s</label>', esc_html__( 'Job Title', 'pcl' ) );
+        echo sprintf( '<label for="pcl_title" class="required">%s</label>', esc_html__( 'Job Title', 'pcl' ) );
         echo sprintf( '<input name="esc_html__[title]" id="pcl_title" type="text" required/>' );
     }
 
@@ -144,7 +144,7 @@ class PCL_Registration {
      * @return void
      */
     public function form_phone_field() {
-        echo sprintf( '<label for="pcl_phone">%s</label>', esc_html__( 'Phone', 'pcl' ) );
+        echo sprintf( '<label for="pcl_phone" class="required">%s</label>', esc_html__( 'Phone', 'pcl' ) );
         echo sprintf( '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>' );
     }
 
