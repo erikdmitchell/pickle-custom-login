@@ -20,7 +20,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-cache": "^1.0.2",
+    "gulp-cache": "^1.1.2",
     "gulp-concat": "^2.6.1",
     "gulp-filter": "^5.1.0",
     "gulp-ignore": "^2.0.2",
@@ -46,6 +46,7 @@
     "jshint-stylish": ""
   },
   "dependencies": {
+    "gulp-imagemin": "^6.0.0",
     "gulp-load-plugins": "^1.6.0",
     "gulp-sourcemaps": "^2.6.5"
   }
