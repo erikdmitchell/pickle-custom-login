@@ -43,6 +43,6 @@
 /**
  * register form
  */
-.pcl-registration label.required:after {
+#pcl-registration-form .required:after {
     content: ' *';
 }

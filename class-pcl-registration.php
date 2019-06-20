@@ -12,7 +12,7 @@
 class PCL_Registration {
 
     /**
-     * admin_activate_account_required
+     * Admin activate account required
      *
      * (default value: false)
      *
@@ -22,7 +22,7 @@ class PCL_Registration {
     protected $admin_activate_account_required = false;
 
     /**
-     * activate_account_required
+     * Activate account required
      *
      * (default value: false)
      *
@@ -49,7 +49,7 @@ class PCL_Registration {
      * Registration form.
      *
      * @access public
-     * @return void
+     * @return html
      */
     public function registration_form() {
         if ( is_user_logged_in() ) {
@@ -57,9 +57,9 @@ class PCL_Registration {
         }
 
         if ( $this->admin_activate_account_required ) :
-            echo pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' );
+            echo sprintf( pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' ) );
         elseif ( $this->activate_account_required ) :
-            echo pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' );
+            echo sprintf( pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' ) );
         endif;
 
         return pcl_get_template_html( 'register-form' );
@@ -72,8 +72,8 @@ class PCL_Registration {
      * @return void
      */
     public function form_username_field() {
-        echo '<label for="pcl_username" class="required">' . __( 'Username' ) . '</label>';
-        echo '<input name="pcl_registration[username]" id="pcl_username" class="" type="text"/>';
+        echo sprintf( '<label for="pcl_username" class="required">%s</label>', esc_html__( 'Username', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[username]" id="pcl_username" class="" type="text"/>' );
     }
 
     /**
@@ -83,8 +83,8 @@ class PCL_Registration {
      * @return void
      */
     public function form_email_field() {
-        echo '<label for="pcl_email" class="required">' . __( 'Email' ) . '</label>';
-        echo '<input name="pcl_registration[email]" id="pcl_email" class="email" type="email"/>';
+        echo sprintf( '<label for="pcl_email" class="required">%s</label>', esc_html__( 'Email', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[email]" id="pcl_email" class="email" type="email"/>' );
     }
 
     /**
@@ -94,11 +94,11 @@ class PCL_Registration {
      * @return void
      */
     public function form_name_field() {
-        echo '<label for="pcl_firstname">' . __( 'First Name' ) . '</label>';
-        echo '<input name="pcl_registration[firstname]" id="pcl_firstname" type="text"/>';
+        echo sprintf( '<label for="pcl_firstname">%s</label>', esc_html__( 'First Name', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[firstname]" id="pcl_firstname" type="text"/>' );
 
-        echo '<label for="pcl_lastname">' . __( 'Last Name' ) . '</label>';
-        echo '<input name="pcl_registration[lastname]" id="pcl_lastname" type="text"/>';
+        echo sprintf( '<label for="pcl_lastname">%s</label>', esc_html__( 'Last Name', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[lastname]" id="pcl_lastname" type="text"/>' );
     }
 
     /**
@@ -108,54 +108,54 @@ class PCL_Registration {
      * @return void
      */
     public function form_password_field() {
-        echo '<label for="pcl_password" class="required">' . __( 'Password' ) . '</label>';
-        echo '<input name="pcl_registration[password]" id="pcl_password" class="password" type="password"/>';
+        echo sprintf( '<label for="pcl_password" class="required">%s</label>', esc_html__( 'Password', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[password]" id="pcl_password" class="password" type="password"/>' );
 
-        echo '<label for="pcl_password_check" class="required">' . __( 'Password Again' ) . '</label>';
-        echo '<input name="pcl_registration[password_check]" id="pcl_password_check" class="password" type="password"/>';
+        echo sprintf( '<label for="pcl_password_check" class="required">%s</label>', esc_html__( 'Password Again', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[password_check]" id="pcl_password_check" class="password" type="password"/>' );
     }
 
     /**
-     * form_company_field function.
+     * Form company field.
      *
      * @access public
      * @return void
      */
     public function form_company_field() {
-        echo '<label for="pcl_company">' . __( 'Company*' ) . '</label>';
-        echo '<input name="pcl_registration[company]" id="pcl_company" type="text" required/>';
+        echo sprintf( '<label for="pcl_company" class="required">%s</label>', esc_html__( 'Company', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[company]" id="pcl_company" type="text" required/>' );
     }
 
     /**
-     * form_title_field function.
+     * Form title field.
      *
      * @access public
      * @return void
      */
     public function form_title_field() {
-        echo '<label for="pcl_title">' . __( 'Job Title*' ) . '</label>';
-        echo '<input name="pcl_registration[title]" id="pcl_title" type="text" required/>';
+        echo sprintf( '<label for="pcl_title" class="required">%s</label>', esc_html__( 'Job Title', 'pcl' ) );
+        echo sprintf( '<input name="esc_html__[title]" id="pcl_title" type="text" required/>' );
     }
 
     /**
-     * form_phone function.
+     * Form phone field.
      *
      * @access public
      * @return void
      */
     public function form_phone_field() {
-        echo '<label for="pcl_phone">' . __( 'Phone*' ) . '</label>';
-        echo '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>';
+        echo sprintf( '<label for="pcl_phone" class="required">%s</label>', esc_html__( 'Phone', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>' );
     }
 
     /**
-     * form_country_field function.
+     * Form country field.
      *
      * @access public
      * @return void
      */
     public function form_country_field() {
-        echo '<label for="country" class="required">' . __( 'Country*' ) . '</label>';
+        echo sprintf( '<label for="country" class="required">%s</label>', esc_html__( 'Country', 'pcl' ) );
         echo '<select name="pcl_registration[country]" id="country" onchange="printStateMenu(this.value);" required>
                             <option value="">Select country…</option>
                             <option value="US">United States of America</option>
@@ -409,36 +409,36 @@ class PCL_Registration {
     }
 
     /**
-     * form_city_field function.
+     * Form city field.
      *
      * @access public
      * @return void
      */
     public function form_city_field() {
-        echo '<label for="pcl_city" class="required">' . __( 'City*' ) . '</label>';
-        echo '<input name="pcl_registration[city]" id="pcl_city" class="" type="text" required/>';
+        echo sprintf( '<label for="pcl_city" class="required">%s</label>', esc_html__( 'City', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[city]" id="pcl_city" class="" type="text" required/>' );
     }
 
     /**
-     * form_state_code_field function.
+     * Form sate field.
      *
      * @access public
      * @return void
      */
     public function form_state_code_field() {
-        echo '<label for="pcl_state_code" class="required">' . __( 'State/Province' ) . '</label>';
-        echo '<select id="state_code" name="pcl_registration[state_code]" required><option value="AB">AB-Alberta</option><option value="BC">BC-British Columbia</option><option value="MB">MB-Manitoba</option><option value="NB">NB-New Brunswick</option><option value="NL">NL-Newfoundland and Labrador</option><option value="NT">NT-Northwest Territories</option><option value="NS">NS-Nova Scotia</option><option value="NU">NU-Nunavut</option><option value="ON">ON-Ontario</option><option value="PE">PE-Prince Edward Island</option><option value="QC">QC-Quebec</option><option value="SK">SK-Saskatchewan</option><option value="YT">YT-Yukon</option></select>';
+        echo sprintf( '<label for="pcl_state_code" class="required">%s</label>', esc_html__( 'State/Province', 'pcl' ) );
+        echo sprintf( '<select id="state_code" name="pcl_registration[state_code]" required><option value="AB">AB-Alberta</option><option value="BC">BC-British Columbia</option><option value="MB">MB-Manitoba</option><option value="NB">NB-New Brunswick</option><option value="NL">NL-Newfoundland and Labrador</option><option value="NT">NT-Northwest Territories</option><option value="NS">NS-Nova Scotia</option><option value="NU">NU-Nunavut</option><option value="ON">ON-Ontario</option><option value="PE">PE-Prince Edward Island</option><option value="QC">QC-Quebec</option><option value="SK">SK-Saskatchewan</option><option value="YT">YT-Yukon</option></select>' );
     }
 
     /**
-     * form_zip_field function.
+     * Form zip field.
      *
      * @access public
      * @return void
      */
     public function form_zip_field() {
-        echo '<label for="pcl_zip" class="required">' . __( 'Postal Code*' ) . '</label>';
-        echo '<input name="pcl_registration[zip]" id="pcl_zip" class="" type="text" required/>';
+        echo sprintf( '<label for="pcl_zip" class="required">%s</label>', esc_html__( 'Postal Code', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[zip]" id="pcl_zip" class="" type="text" required/>' );
     }
 
     /**
@@ -451,7 +451,7 @@ class PCL_Registration {
         do_action( 'pcl_registraion_before_recaptcha' );
 
         if ( get_option( 'pcl-enable-recaptcha', false ) ) :
-            echo '<div class="g-recaptcha" data-sitekey="' . get_option( 'pcl-recaptcha-site-key', '' ) . '"></div>';
+            echo sprintf( '<div class="g-recaptcha" data-sitekey="%s"></div>', esc_attr( get_option( 'pcl-recaptcha-site-key', '' ) ) );
          endif;
     }
 
@@ -462,9 +462,9 @@ class PCL_Registration {
      * @return void
      */
     public function form_register_button() {
-        echo '<input type="hidden" name="custom_register_nonce" value="' . wp_create_nonce( 'custom-register-nonce' ) . '" />';
-        echo wp_nonce_field( 'pcl-register', 'pcl_registration_form', true, false );
-        echo '<input type="submit" value="' . __( 'Register' ) . '" />';
+        echo sprintf( '<input type="hidden" name="custom_register_nonce" value="%s" />', esc_html( wp_create_nonce( 'custom-register-nonce' ) ) );
+        wp_nonce_field( 'pcl-register', 'pcl_registration_form' );
+        echo sprintf( '<input type="submit" value="%s" />', esc_html__( 'Register', 'pcl' ) );
     }
 
     /**
@@ -489,11 +489,14 @@ class PCL_Registration {
      * @return void
      */
     public function add_new_user() {
-        if ( ! isset( $_POST['pcl_registration_form'] ) || ! wp_verify_nonce( $_POST['pcl_registration_form'], 'pcl-register' ) ) {
+        if ( ! isset( $_POST['pcl_registration_form'] ) || ! wp_verify_nonce( sanitize_key( $_POST['pcl_registration_form'] ), 'pcl-register' ) ) {
             return;
         }
 
-        $fields = $_POST['pcl_registration'];
+        if ( isset( $_POST['pcl_registration'] ) ) {
+            $fields = array_map( 'sanitize_text_field', wp_unslash( $_POST['pcl_registration'] ) );
+        }
+
         $check_fields = array(
             'firstname',
             'lastname',
@@ -527,7 +530,8 @@ class PCL_Registration {
         // $this->check_state_code($fields['state_code']);
         // check recaptcha, if active.
         if ( get_option( 'pcl-enable-recaptcha', false ) ) {
-            $this->check_recaptcha( $_POST['g-recaptcha-response'] );
+            $recapcha = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+            $this->check_recaptcha( $recapcha );
         }
 
         // only create the user in if there are no errors.
@@ -544,18 +548,18 @@ class PCL_Registration {
      * @return void
      */
     protected function check_username( $username = '' ) {
-        // Username already registered
+        // Username already registered.
         if ( username_exists( $username ) ) {
             pcl_add_error_message( 'username_unavailable', 'Username already taken' );
         }
 
-        // invalid username
+        // invalid username.
         if ( ! validate_username( $username ) ) {
             pcl_add_error_message( 'username_invalid', 'Invalid username' );
         }
 
-        // empty username
-        if ( $username == '' ) {
+        // empty username.
+        if ( '' == $username ) {
             pcl_add_error_message( 'username_empty', 'Please enter a username' );
         }
     }
@@ -568,12 +572,12 @@ class PCL_Registration {
      * @return void
      */
     protected function check_email( $email = '' ) {
-        // invalid email
+        // invalid email.
         if ( ! is_email( $email ) ) {
             pcl_add_error_message( 'email_invalid', 'Invalid email' );
         }
 
-        // Email address already registered
+        // Email address already registered.
         if ( email_exists( $email ) ) {
             pcl_add_error_message( 'email_used', 'Email already registered' );
         }
@@ -588,12 +592,12 @@ class PCL_Registration {
      * @return void
      */
     protected function check_password( $password = '', $password_check = '' ) {
-        // passwords empty
-        if ( $password == '' || $password_check == '' ) {
+        // passwords empty.
+        if ( '' == $password || '' == $password_check ) {
             pcl_add_error_message( 'password_empty', 'Please enter a password' );
         }
 
-        // passwords do not match
+        // passwords do not match.
         if ( $password != $password_check ) {
             pcl_add_error_message( 'password_mismatch', 'Passwords do not match' );
         }
@@ -607,73 +611,118 @@ class PCL_Registration {
      * @return void
      */
     protected function check_recaptcha( $recaptcha_response = '' ) {
-        $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key
-        $response = null; // empty response
-        $reCaptcha = new ReCaptcha( $secret ); // check secret key
+        $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key.
+        $response = null; // empty response.
+        $recaptcha = new ReCaptcha( $secret ); // check secret key.
 
         if ( isset( $recaptcha_response ) ) {
-            $response = $reCaptcha->verifyResponse(
-                $_SERVER['REMOTE_ADDR'],
+            $response = $recaptcha->verifyResponse(
+                isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
                 $recaptcha_response
             );
         }
 
-        if ( $response == null || ! $response->success ) {
+        if ( null == $response || ! $response->success ) {
             pcl_add_error_message( 'recaptcha', 'Issue with the recaptcha' );
         }
     }
 
+
     /**
-     * Check first name function.
+     * Check first name.
+     *
+     * @access protected
+     * @param string $firstname (default: '').
+     * @return void
      */
     protected function check_firstname( $firstname = '' ) {
-        // first empty
-        if ( $firstname == '' ) {
+        // first empty.
+        if ( '' == $firstname ) {
+            echo 'abc';
             pcl_add_error_message( 'firstname_empty', 'Please enter a first name.' );
         }
     }
 
     /**
-     * Check last name function.
+     * Check last name.
+     *
+     * @access protected
+     * @param string $lastname (default: '').
+     * @return void
      */
     protected function check_lastname( $lastname = '' ) {
-        // lastname empty
-        if ( $lastname == '' ) {
+        // lastname empty.
+        if ( '' == $lastname ) {
             pcl_add_error_message( 'lastname_empty', 'Please enter a last name.' );
         }
     }
 
+    /**
+     * Check company.
+     *
+     * @access protected
+     * @param string $company (default: '').
+     * @return void
+     */
     protected function check_company( $company = '' ) {
-        // company empty
-        if ( $company == '' ) {
+        // company empty.
+        if ( '' == $company ) {
             pcl_add_error_message( 'company_empty', 'Please enter a company name.' );
         }
     }
 
+    /**
+     * Check phone.
+     *
+     * @access protected
+     * @param string $phone (default: '').
+     * @return void
+     */
     protected function check_phone( $phone = '' ) {
-        // phone empty
-        if ( $phone == '' ) {
+        // phone empty.
+        if ( '' == $phone ) {
             pcl_add_error_message( 'phone_empty', 'Please enter sa phone number.' );
         }
     }
 
+    /**
+     * Check city.
+     *
+     * @access protected
+     * @param string $city (default: '').
+     * @return void
+     */
     protected function check_city( $city = '' ) {
-        // city empty
-        if ( $city == '' ) {
+        // city empty.
+        if ( '' == $city ) {
             pcl_add_error_message( 'city_empty', 'Please enter a city.' );
         }
     }
 
+    /**
+     * Check zip..
+     *
+     * @access protected
+     * @param string $zip (default: '').
+     * @return void
+     */
     protected function check_zip( $zip = '' ) {
-        // zip empty
-        if ( $zip == '' ) {
+        // zip empty.
+        if ( '' == $zip ) {
             pcl_add_error_message( 'zip_empty', 'Please enter a postal code.' );
         }
     }
 
+    /**
+     * Check country.
+     *
+     * @access protected
+     * @param string $country (default: '').
+     * @return void
+     */
     protected function check_country( $country = '' ) {
-        // country empty
-        if ( $country == '' ) {
+        // country empty.
+        if ( '' == $country ) {
             pcl_add_error_message( 'country_empty', 'Please select a country.' );
         }
     }
@@ -721,21 +770,21 @@ class PCL_Registration {
         do_action( 'pcl_after_user_registration', $new_user_id, $fields, $post_data );
 
         if ( $new_user_id ) :
-            // send an email to the admin alerting them of the registration //
+            // send an email to the admin alerting them of the registration.
             pickle_custom_login()->email->send_email( array( 'user_id' => $new_user_id ) );
 
-            // check our activation flags - admin activation, user (email) activation, other //
+            // check our activation flags - admin activation, user (email) activation, other.
             if ( pcl_require_admin_activation() ) :
                 $this->admin_activate_account_required = true;
             elseif ( pcl_is_activation_required() ) :
                 $this->activate_account_required = true;
             else :
-                // log the new user in
+                // log the new user in.
                 wp_set_auth_cookie( $new_user_id );
                 wp_set_current_user( $new_user_id, $user_login );
                 do_action( 'wp_login', $user_login );
 
-                // send the newly created user to the redirect page after logging them in
+                // send the newly created user to the redirect page after logging them in.
                 wp_safe_redirect( $redirect );
                 exit;
             endif;

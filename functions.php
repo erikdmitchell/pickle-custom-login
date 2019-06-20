@@ -253,11 +253,11 @@ function pcl_page_slug( $page_type = '' ) {
         else :
             $slug = false;
         endif;
-    else :
-        $slug = false;
+        else :
+            $slug = false;
     endif;
 
-    return $slug;
+        return $slug;
 }
 
 /**
@@ -532,7 +532,7 @@ function pcl_get_edit_profile_user( $user_id = 0 ) {
  *
  * @access public
  * @param mixed $classes
- * @return void
+ * @return array
  */
 function pcl_add_body_classes( $classes ) {
     global $wp_query;
@@ -548,4 +548,3 @@ function pcl_add_body_classes( $classes ) {
     return $classes;
 }
 add_filter( 'body_class', 'pcl_add_body_classes' );
-
