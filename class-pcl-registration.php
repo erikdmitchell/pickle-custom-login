@@ -617,7 +617,7 @@ class PCL_Registration {
 
         if ( isset( $recaptcha_response ) ) {
             $response = $recaptcha->verifyResponse(
-                isset( $_SERVER['REMOTE_ADDR'] ) ? wp_unslash( $_SERVER['REMOTE_ADDR'] ) : '',
+                isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
                 $recaptcha_response
             );
         }
@@ -778,7 +778,7 @@ class PCL_Registration {
             elseif ( pcl_is_activation_required() ) :
                 $this->activate_account_required = true;
             else :
-                // log the new user in
+                // log the new user in.
                 wp_set_auth_cookie( $new_user_id );
                 wp_set_current_user( $new_user_id, $user_login );
                 do_action( 'wp_login', $user_login );
