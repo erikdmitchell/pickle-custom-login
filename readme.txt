@@ -58,6 +58,7 @@ Coming soon.
 = 1.1.1 =
 
 * Fixed sanitization issues on registration form.
+* Updated code to meet wpcs standards.
 
 = 1.1.0 =
 
