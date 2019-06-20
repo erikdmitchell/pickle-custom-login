@@ -37,7 +37,7 @@ class PCL_Registration {
      * @access public
      * @return void
      */
-    public function __construct() {        
+    public function __construct() {
         add_action( 'init', array( $this, 'add_new_user' ) );
         add_action( 'login_form_register', array( $this, 'register_form_redirect' ) );
         add_action( 'pcl_before_register-form', 'pcl_show_error_messages' );
@@ -57,9 +57,9 @@ class PCL_Registration {
         }
 
         if ( $this->admin_activate_account_required ) :
-            echo esc_html( pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' ) );
+            echo sprintf( pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' ) );
         elseif ( $this->activate_account_required ) :
-            echo esc_html( pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' ) );
+            echo sprintf( pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' ) );
         endif;
 
         return pcl_get_template_html( 'register-form' );
@@ -489,15 +489,14 @@ class PCL_Registration {
      * @return void
      */
     public function add_new_user() {
-echo 'add_new_user()';   
         if ( ! isset( $_POST['pcl_registration_form'] ) || ! wp_verify_nonce( sanitize_key( $_POST['pcl_registration_form'] ), 'pcl-register' ) ) {
             return;
         }
-echo 'a';
+
         if ( isset( $_POST['pcl_registration'] ) ) {
             $fields = array_map( 'sanitize_text_field', wp_unslash( $_POST['pcl_registration'] ) );
         }
-echo 'b';
+
         $check_fields = array(
             'firstname',
             'lastname',
@@ -510,13 +509,13 @@ echo 'b';
 
         // check username - required.
         $this->check_username( $fields['username'] );
-echo 'c';
+
         // check email - required.
         $this->check_email( $fields['email'] );
-echo 'd';
+
         // check password - required.
         $this->check_password( $fields['password'], $fields['password_check'] );
-echo 'e';
+
         // loop through our fields to check, only check if they exist.
         foreach ( $check_fields as $check_field ) :
             if ( isset( $fields[ $check_field ] ) ) :
@@ -524,7 +523,7 @@ echo 'e';
                 $this->$func( $fields[ $check_field ] );
             endif;
         endforeach;
-echo 'f';
+
         // check title - function does not exist.
         // $this->check_title($fields['title']);
         // check state_code - function does not exist.
@@ -534,11 +533,7 @@ echo 'f';
             $recapcha = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
             $this->check_recaptcha( $recapcha );
         }
-/*
-print_r($fields);
-exit;
-*/
-echo "g";
+
         // only create the user in if there are no errors.
         if ( ! pcl_has_error_messages() ) {
             $this->add_user( $fields, $_POST );
@@ -643,7 +638,7 @@ echo "g";
     protected function check_firstname( $firstname = '' ) {
         // first empty.
         if ( '' == $firstname ) {
-echo "abc";            
+            echo 'abc';
             pcl_add_error_message( 'firstname_empty', 'Please enter a first name.' );
         }
     }
