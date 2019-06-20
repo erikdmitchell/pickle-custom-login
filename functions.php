@@ -253,11 +253,11 @@ function pcl_page_slug( $page_type = '' ) {
         else :
             $slug = false;
         endif;
-    else :
-        $slug = false;
+        else :
+            $slug = false;
     endif;
 
-    return $slug;
+        return $slug;
 }
 
 /**
