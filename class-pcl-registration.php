@@ -57,9 +57,9 @@ class PCL_Registration {
         }
 
         if ( $this->admin_activate_account_required ) :
-            echo esc_html(pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' ));
+            echo esc_html( pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' ) );
         elseif ( $this->activate_account_required ) :
-            echo esc_html(pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' ));
+            echo esc_html( pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' ) );
         endif;
 
         return pcl_get_template_html( 'register-form' );
@@ -72,8 +72,8 @@ class PCL_Registration {
      * @return void
      */
     public function form_username_field() {
-        echo '<label for="pcl_username" class="required">' . __( 'Username' ) . '</label>';
-        echo '<input name="pcl_registration[username]" id="pcl_username" class="" type="text"/>';
+        echo sprintf( '<label for="pcl_username" class="required">%s</label>', esc_html__( 'Username', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[username]" id="pcl_username" class="" type="text"/>' );
     }
 
     /**
@@ -83,8 +83,8 @@ class PCL_Registration {
      * @return void
      */
     public function form_email_field() {
-        echo '<label for="pcl_email" class="required">' . __( 'Email' ) . '</label>';
-        echo '<input name="pcl_registration[email]" id="pcl_email" class="email" type="email"/>';
+        echo sprintf( '<label for="pcl_email" class="required">%s</label>', esc_html__( 'Email', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[email]" id="pcl_email" class="email" type="email"/>' );
     }
 
     /**
@@ -94,11 +94,11 @@ class PCL_Registration {
      * @return void
      */
     public function form_name_field() {
-        echo '<label for="pcl_firstname">' . __( 'First Name' ) . '</label>';
-        echo '<input name="pcl_registration[firstname]" id="pcl_firstname" type="text"/>';
+        echo sprintf( '<label for="pcl_firstname">%s</label>', esc_html__( 'First Name', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[firstname]" id="pcl_firstname" type="text"/>' );
 
-        echo '<label for="pcl_lastname">' . __( 'Last Name' ) . '</label>';
-        echo '<input name="pcl_registration[lastname]" id="pcl_lastname" type="text"/>';
+        echo sprintf( '<label for="pcl_lastname">%s</label>', esc_html__( 'Last Name', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[lastname]" id="pcl_lastname" type="text"/>' );
     }
 
     /**
@@ -108,54 +108,54 @@ class PCL_Registration {
      * @return void
      */
     public function form_password_field() {
-        echo '<label for="pcl_password" class="required">' . __( 'Password' ) . '</label>';
-        echo '<input name="pcl_registration[password]" id="pcl_password" class="password" type="password"/>';
+        echo sprintf( '<label for="pcl_password" class="required">%s</label>', esc_html__( 'Password', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[password]" id="pcl_password" class="password" type="password"/>' );
 
-        echo '<label for="pcl_password_check" class="required">' . __( 'Password Again' ) . '</label>';
-        echo '<input name="pcl_registration[password_check]" id="pcl_password_check" class="password" type="password"/>';
+        echo sprintf( '<label for="pcl_password_check" class="required">%s</label>', esc_html__( 'Password Again', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[password_check]" id="pcl_password_check" class="password" type="password"/>' );
     }
 
     /**
-     * form_company_field function.
+     * Form company field.
      *
      * @access public
      * @return void
      */
     public function form_company_field() {
-        echo '<label for="pcl_company">' . __( 'Company*' ) . '</label>';
-        echo '<input name="pcl_registration[company]" id="pcl_company" type="text" required/>';
+        echo sprintf( '<label for="pcl_company">%s</label>', esc_html__( 'Company', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[company]" id="pcl_company" type="text" required/>' );
     }
 
     /**
-     * form_title_field function.
+     * Form title field.
      *
      * @access public
      * @return void
      */
     public function form_title_field() {
-        echo '<label for="pcl_title">' . __( 'Job Title*' ) . '</label>';
-        echo '<input name="pcl_registration[title]" id="pcl_title" type="text" required/>';
+        echo sprintf( '<label for="pcl_title">&s</label>', esc_html__( 'Job Title', 'pcl' ) );
+        echo sprintf( '<input name="esc_html__[title]" id="pcl_title" type="text" required/>' );
     }
 
     /**
-     * form_phone function.
+     * Form phone field.
      *
      * @access public
      * @return void
      */
     public function form_phone_field() {
-        echo '<label for="pcl_phone">' . __( 'Phone*' ) . '</label>';
-        echo '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>';
+        echo sprintf( '<label for="pcl_phone">%s</label>', esc_html__( 'Phone', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[phone]" id="pcl_phone" type="text" required/>' );
     }
 
     /**
-     * form_country_field function.
+     * Form country field.
      *
      * @access public
      * @return void
      */
     public function form_country_field() {
-        echo '<label for="country" class="required">' . __( 'Country*' ) . '</label>';
+        echo sprintf( '<label for="country" class="required">%s</label>', esc_html__( 'Country', 'pcl' ) );
         echo '<select name="pcl_registration[country]" id="country" onchange="printStateMenu(this.value);" required>
                             <option value="">Select country…</option>
                             <option value="US">United States of America</option>
@@ -409,36 +409,36 @@ class PCL_Registration {
     }
 
     /**
-     * form_city_field function.
+     * Form city field.
      *
      * @access public
      * @return void
      */
     public function form_city_field() {
-        echo '<label for="pcl_city" class="required">' . __( 'City*' ) . '</label>';
-        echo '<input name="pcl_registration[city]" id="pcl_city" class="" type="text" required/>';
+        echo sprintf( '<label for="pcl_city" class="required">%s</label>', esc_html__( 'City', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[city]" id="pcl_city" class="" type="text" required/>' );
     }
 
     /**
-     * form_state_code_field function.
+     * Form sate field.
      *
      * @access public
      * @return void
      */
     public function form_state_code_field() {
-        echo '<label for="pcl_state_code" class="required">' . __( 'State/Province' ) . '</label>';
-        echo '<select id="state_code" name="pcl_registration[state_code]" required><option value="AB">AB-Alberta</option><option value="BC">BC-British Columbia</option><option value="MB">MB-Manitoba</option><option value="NB">NB-New Brunswick</option><option value="NL">NL-Newfoundland and Labrador</option><option value="NT">NT-Northwest Territories</option><option value="NS">NS-Nova Scotia</option><option value="NU">NU-Nunavut</option><option value="ON">ON-Ontario</option><option value="PE">PE-Prince Edward Island</option><option value="QC">QC-Quebec</option><option value="SK">SK-Saskatchewan</option><option value="YT">YT-Yukon</option></select>';
+        echo sprintf( '<label for="pcl_state_code" class="required">%s</label>', esc_html__( 'State/Province', 'pcl' ) );
+        echo sprintf( '<select id="state_code" name="pcl_registration[state_code]" required><option value="AB">AB-Alberta</option><option value="BC">BC-British Columbia</option><option value="MB">MB-Manitoba</option><option value="NB">NB-New Brunswick</option><option value="NL">NL-Newfoundland and Labrador</option><option value="NT">NT-Northwest Territories</option><option value="NS">NS-Nova Scotia</option><option value="NU">NU-Nunavut</option><option value="ON">ON-Ontario</option><option value="PE">PE-Prince Edward Island</option><option value="QC">QC-Quebec</option><option value="SK">SK-Saskatchewan</option><option value="YT">YT-Yukon</option></select>' );
     }
 
     /**
-     * form_zip_field function.
+     * Form zip field.
      *
      * @access public
      * @return void
      */
     public function form_zip_field() {
-        echo '<label for="pcl_zip" class="required">' . __( 'Postal Code*' ) . '</label>';
-        echo '<input name="pcl_registration[zip]" id="pcl_zip" class="" type="text" required/>';
+        echo sprintf( '<label for="pcl_zip" class="required">%s</label>', esc_html__( 'Postal Code', 'pcl' ) );
+        echo sprintf( '<input name="pcl_registration[zip]" id="pcl_zip" class="" type="text" required/>' );
     }
 
     /**
