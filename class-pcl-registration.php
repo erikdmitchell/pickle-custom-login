@@ -496,8 +496,7 @@ class PCL_Registration {
         if ( isset( $_POST['pcl_registration'] ) ) {
             $fields = array_map( 'sanitize_text_field', wp_unslash( $_POST['pcl_registration'] ) );
         }
-        
-        print_r( $fields );
+
         $check_fields = array(
             'firstname',
             'lastname',
@@ -560,7 +559,7 @@ class PCL_Registration {
         }
 
         // empty username.
-        if ( $username == '' ) {
+        if ( '' == $username ) {
             pcl_add_error_message( 'username_empty', 'Please enter a username' );
         }
     }
@@ -612,73 +611,117 @@ class PCL_Registration {
      * @return void
      */
     protected function check_recaptcha( $recaptcha_response = '' ) {
-        $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key
-        $response = null; // empty response
-        $reCaptcha = new ReCaptcha( $secret ); // check secret key
+        $secret = get_option( 'pcl-recaptcha-secret-key', '' ); // secret key.
+        $response = null; // empty response.
+        $recaptcha = new ReCaptcha( $secret ); // check secret key.
 
         if ( isset( $recaptcha_response ) ) {
-            $response = $reCaptcha->verifyResponse(
-                $_SERVER['REMOTE_ADDR'],
+            $response = $recaptcha->verifyResponse(
+                isset( $_SERVER['REMOTE_ADDR'] ) ? wp_unslash( $_SERVER['REMOTE_ADDR'] ) : '',
                 $recaptcha_response
             );
         }
 
-        if ( $response == null || ! $response->success ) {
+        if ( null == $response || ! $response->success ) {
             pcl_add_error_message( 'recaptcha', 'Issue with the recaptcha' );
         }
     }
 
+
     /**
-     * Check first name function.
+     * Check first name.
+     *
+     * @access protected
+     * @param string $firstname (default: '').
+     * @return void
      */
     protected function check_firstname( $firstname = '' ) {
         // first empty.
-        if ( $firstname == '' ) {
+        if ( '' == $firstname ) {
             pcl_add_error_message( 'firstname_empty', 'Please enter a first name.' );
         }
     }
 
     /**
-     * Check last name function.
+     * Check last name.
+     *
+     * @access protected
+     * @param string $lastname (default: '').
+     * @return void
      */
     protected function check_lastname( $lastname = '' ) {
         // lastname empty.
-        if ( $lastname == '' ) {
+        if ( '' == $lastname ) {
             pcl_add_error_message( 'lastname_empty', 'Please enter a last name.' );
         }
     }
 
+    /**
+     * Check company.
+     *
+     * @access protected
+     * @param string $company (default: '').
+     * @return void
+     */
     protected function check_company( $company = '' ) {
         // company empty.
-        if ( $company == '' ) {
+        if ( '' == $company ) {
             pcl_add_error_message( 'company_empty', 'Please enter a company name.' );
         }
     }
 
+    /**
+     * Check phone.
+     *
+     * @access protected
+     * @param string $phone (default: '').
+     * @return void
+     */
     protected function check_phone( $phone = '' ) {
         // phone empty.
-        if ( $phone == '' ) {
+        if ( '' == $phone ) {
             pcl_add_error_message( 'phone_empty', 'Please enter sa phone number.' );
         }
     }
 
+    /**
+     * Check city.
+     *
+     * @access protected
+     * @param string $city (default: '').
+     * @return void
+     */
     protected function check_city( $city = '' ) {
         // city empty.
-        if ( $city == '' ) {
+        if ( '' == $city ) {
             pcl_add_error_message( 'city_empty', 'Please enter a city.' );
         }
     }
 
+    /**
+     * Check zip..
+     *
+     * @access protected
+     * @param string $zip (default: '').
+     * @return void
+     */
     protected function check_zip( $zip = '' ) {
         // zip empty.
-        if ( $zip == '' ) {
+        if ( '' == $zip ) {
             pcl_add_error_message( 'zip_empty', 'Please enter a postal code.' );
         }
     }
 
+    /**
+     * Check country.
+     *
+     * @access protected
+     * @param string $country (default: '').
+     * @return void
+     */
     protected function check_country( $country = '' ) {
         // country empty.
-        if ( $country == '' ) {
+        if ( '' == $country ) {
             pcl_add_error_message( 'country_empty', 'Please select a country.' );
         }
     }
@@ -726,10 +769,10 @@ class PCL_Registration {
         do_action( 'pcl_after_user_registration', $new_user_id, $fields, $post_data );
 
         if ( $new_user_id ) :
-            // send an email to the admin alerting them of the registration //
+            // send an email to the admin alerting them of the registration.
             pickle_custom_login()->email->send_email( array( 'user_id' => $new_user_id ) );
 
-            // check our activation flags - admin activation, user (email) activation, other //
+            // check our activation flags - admin activation, user (email) activation, other.
             if ( pcl_require_admin_activation() ) :
                 $this->admin_activate_account_required = true;
             elseif ( pcl_is_activation_required() ) :
@@ -740,7 +783,7 @@ class PCL_Registration {
                 wp_set_current_user( $new_user_id, $user_login );
                 do_action( 'wp_login', $user_login );
 
-                // send the newly created user to the redirect page after logging them in
+                // send the newly created user to the redirect page after logging them in.
                 wp_safe_redirect( $redirect );
                 exit;
             endif;
