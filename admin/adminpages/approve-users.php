@@ -34,7 +34,7 @@
                 </td>
                 
                 <?php foreach ( pickle_custom_login()->admin->approve_user_cols() as $slug => $label ) : ?>
-                    <th scope="col" id="<?php echo $slug; ?>" class="manage-column column-<?php echo $slug; ?>"><?php echo $label; ?></th>
+                    <th scope="col" id="<?php echo esc_attr( $slug ); ?>" class="manage-column column-<?php echo esc_attr( $slug ); ?>"><?php echo esc_attr( $label ); ?></th>
                 <?php endforeach; ?>
             </tr>
         </thead>
@@ -43,10 +43,10 @@
     
             <?php foreach ( pcl_users_to_be_activated() as $user ) : ?>
       
-                <tr id="user-<?php echo $user->ID; ?>">
+                <tr id="user-<?php echo esc_attr( $user->ID ); ?>">
                     <th scope="row" class="check-column">
-                        <label class="screen-reader-text" for="user_<?php echo $user->ID; ?>">Select <?php echo $user->data->user_login; ?></label>
-                        <input type="checkbox" name="pcl_users[]" id="user_<?php echo $user->ID; ?>" class="" value="<?php echo $user->ID; ?>">
+                        <label class="screen-reader-text" for="user_<?php echo esc_attr( $user->ID ); ?>">Select <?php echo esc_attr( $user->data->user_login ); ?></label>
+                        <input type="checkbox" name="pcl_users[]" id="user_<?php echo esc_attr( $user->ID ); ?>" class="" value="<?php echo esc_attr( $user->ID ); ?>">
                     </th>
                     
                     <?php foreach ( pickle_custom_login()->admin->approve_user_cols() as $slug => $label ) : ?>
