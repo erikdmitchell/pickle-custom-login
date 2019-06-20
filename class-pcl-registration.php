@@ -494,9 +494,9 @@ class PCL_Registration {
         }
 
         if ( isset( $_POST['pcl_registration'] ) ) {
-            $fields = wp_unslash( $_POST['pcl_registration'] );
+            $fields = array_map( 'sanitize_text_field', wp_unslash( $_POST['pcl_registration'] ) );
         }
-
+        
         print_r( $fields );
         $check_fields = array(
             'firstname',
@@ -531,7 +531,8 @@ class PCL_Registration {
         // $this->check_state_code($fields['state_code']);
         // check recaptcha, if active.
         if ( get_option( 'pcl-enable-recaptcha', false ) ) {
-            $this->check_recaptcha( $_POST['g-recaptcha-response'] );
+            $recapcha = isset( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+            $this->check_recaptcha( $recapcha );
         }
 
         // only create the user in if there are no errors.
@@ -548,17 +549,17 @@ class PCL_Registration {
      * @return void
      */
     protected function check_username( $username = '' ) {
-        // Username already registered
+        // Username already registered.
         if ( username_exists( $username ) ) {
             pcl_add_error_message( 'username_unavailable', 'Username already taken' );
         }
 
-        // invalid username
+        // invalid username.
         if ( ! validate_username( $username ) ) {
             pcl_add_error_message( 'username_invalid', 'Invalid username' );
         }
 
-        // empty username
+        // empty username.
         if ( $username == '' ) {
             pcl_add_error_message( 'username_empty', 'Please enter a username' );
         }
@@ -572,12 +573,12 @@ class PCL_Registration {
      * @return void
      */
     protected function check_email( $email = '' ) {
-        // invalid email
+        // invalid email.
         if ( ! is_email( $email ) ) {
             pcl_add_error_message( 'email_invalid', 'Invalid email' );
         }
 
-        // Email address already registered
+        // Email address already registered.
         if ( email_exists( $email ) ) {
             pcl_add_error_message( 'email_used', 'Email already registered' );
         }
@@ -592,12 +593,12 @@ class PCL_Registration {
      * @return void
      */
     protected function check_password( $password = '', $password_check = '' ) {
-        // passwords empty
-        if ( $password == '' || $password_check == '' ) {
+        // passwords empty.
+        if ( '' == $password || '' == $password_check ) {
             pcl_add_error_message( 'password_empty', 'Please enter a password' );
         }
 
-        // passwords do not match
+        // passwords do not match.
         if ( $password != $password_check ) {
             pcl_add_error_message( 'password_mismatch', 'Passwords do not match' );
         }
@@ -631,7 +632,7 @@ class PCL_Registration {
      * Check first name function.
      */
     protected function check_firstname( $firstname = '' ) {
-        // first empty
+        // first empty.
         if ( $firstname == '' ) {
             pcl_add_error_message( 'firstname_empty', 'Please enter a first name.' );
         }
@@ -641,42 +642,42 @@ class PCL_Registration {
      * Check last name function.
      */
     protected function check_lastname( $lastname = '' ) {
-        // lastname empty
+        // lastname empty.
         if ( $lastname == '' ) {
             pcl_add_error_message( 'lastname_empty', 'Please enter a last name.' );
         }
     }
 
     protected function check_company( $company = '' ) {
-        // company empty
+        // company empty.
         if ( $company == '' ) {
             pcl_add_error_message( 'company_empty', 'Please enter a company name.' );
         }
     }
 
     protected function check_phone( $phone = '' ) {
-        // phone empty
+        // phone empty.
         if ( $phone == '' ) {
             pcl_add_error_message( 'phone_empty', 'Please enter sa phone number.' );
         }
     }
 
     protected function check_city( $city = '' ) {
-        // city empty
+        // city empty.
         if ( $city == '' ) {
             pcl_add_error_message( 'city_empty', 'Please enter a city.' );
         }
     }
 
     protected function check_zip( $zip = '' ) {
-        // zip empty
+        // zip empty.
         if ( $zip == '' ) {
             pcl_add_error_message( 'zip_empty', 'Please enter a postal code.' );
         }
     }
 
     protected function check_country( $country = '' ) {
-        // country empty
+        // country empty.
         if ( $country == '' ) {
             pcl_add_error_message( 'country_empty', 'Please select a country.' );
         }
