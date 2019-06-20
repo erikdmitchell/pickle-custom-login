@@ -12,7 +12,7 @@
 class PCL_Registration {
 
     /**
-     * admin_activate_account_required
+     * Admin activate account required
      *
      * (default value: false)
      *
@@ -22,7 +22,7 @@ class PCL_Registration {
     protected $admin_activate_account_required = false;
 
     /**
-     * activate_account_required
+     * Activate account required
      *
      * (default value: false)
      *
@@ -49,7 +49,7 @@ class PCL_Registration {
      * Registration form.
      *
      * @access public
-     * @return void
+     * @return html
      */
     public function registration_form() {
         if ( is_user_logged_in() ) {
@@ -57,9 +57,9 @@ class PCL_Registration {
         }
 
         if ( $this->admin_activate_account_required ) :
-            echo pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' );
+            echo esc_html(pcl_format_error_message( '', 'You will receive an email when your account is approved by an admin.', 'success' ));
         elseif ( $this->activate_account_required ) :
-            echo pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' );
+            echo esc_html(pcl_format_error_message( '', 'Please check your email to activate your account.', 'success' ));
         endif;
 
         return pcl_get_template_html( 'register-form' );
