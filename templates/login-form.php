@@ -25,7 +25,7 @@
                 <input name="custom_user_pass" id="custom_user_pass" class="required" type="password" />
             </p>
             <p>
-                <input type="hidden" name="custom_login_nonce" value="<?php echo wp_create_nonce( 'custom-login-nonce' ); ?>" />
+                <input type="hidden" name="custom_login_nonce" value="<?php echo esc_html( wp_create_nonce( 'custom-login-nonce' ) ); ?>" />
                 <input id="custom_login_submit" type="submit" value="Login" />
             </p>
             
