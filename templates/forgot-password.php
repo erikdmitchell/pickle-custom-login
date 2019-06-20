@@ -1,3 +1,15 @@
+<?php
+/**
+ * Forgot password template
+ *
+ * Can be overriden
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <div id="custom-lost-password-form" class="custom-lost-password-form">
     <h3><?php _e( 'Forgot Your Password?', 'pcl' ); ?></h3>
 

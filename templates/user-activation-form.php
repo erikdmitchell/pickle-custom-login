@@ -1,3 +1,15 @@
+<?php
+/**
+ * User activation form template
+ *
+ * Can be overriden
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <div class="pcl-user-activation">
     <?php if ( pcl_activate_user() ) : ?>
         <div class="success text-center"><p>Account activated. Please click below to login.

@@ -1,3 +1,15 @@
+<?php
+/**
+ * Front end profile template
+ *
+ * Can be overriden
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <?php $current_user = pcl_get_edit_profile_user(); ?>
 
 <div class="pcl-profile">

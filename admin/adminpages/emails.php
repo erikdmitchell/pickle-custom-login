@@ -1,3 +1,13 @@
+<?php
+/**
+ * Admin emails page
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <h2>Emails</h2>
 
 <form method="post" action="" method="post">

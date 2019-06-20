@@ -1,3 +1,13 @@
+<?php
+/**
+ * Admin settings page
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <form method="post" action="" method="post">
     <?php wp_nonce_field( 'update_settings', 'pcl_admin_update' ); ?>
 

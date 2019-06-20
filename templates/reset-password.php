@@ -1,3 +1,15 @@
+<?php
+/**
+ * Reset password template
+ *
+ * Can be overriden
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <div id="password-reset-form" class="password-reset-form">
     <h3><?php _e( 'Pick a New Password', 'dummy' ); ?></h3>
 

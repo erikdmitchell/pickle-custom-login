@@ -1,3 +1,13 @@
+<?php
+/**
+ * Admin approve users page
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
+ */
+
+?>
+
 <h2>Approve Users</h2>
 
 <ul class="subsubsub">

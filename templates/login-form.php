@@ -1,10 +1,15 @@
 <?php
 /**
- * The template for displaying the login form
+ * Login form template
  *
- * This template can be overridden by copying it to yourtheme/pickle-custom-login/login-form.php.
+ * Can be overriden
+ *
+ * @package PickleCustomLogin
+ * @since   1.0.0
  */
+
 ?>
+
 
 <div class="pcl-login-form">
 
