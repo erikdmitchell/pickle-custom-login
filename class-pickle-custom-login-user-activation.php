@@ -22,10 +22,10 @@ class Pickle_Custom_Login_User_Activation {
     }
 
     /**
-     * user_activation_form function.
+     * User activation form template gen.
      *
      * @access public
-     * @return void
+     * @return html
      */
     public function user_activation_form() {
         if ( is_user_logged_in() ) {
@@ -36,10 +36,10 @@ class Pickle_Custom_Login_User_Activation {
     }
 
     /**
-     * activate_user function.
+     * Activate user.
      *
      * @access public
-     * @return void
+     * @return bool
      */
     public function activate_user() {
         global $wpdb;
@@ -62,11 +62,11 @@ class Pickle_Custom_Login_User_Activation {
     }
 
     /**
-     * is_user_authenticated function.
+     * IChecks if user is authenticated.
      *
      * @access public
-     * @param mixed $user
-     * @return void
+     * @param mixed $user.
+     * @return bool
      */
     public function is_user_authenticated( $user ) {
         if ( ! $user || is_wp_error( $user ) ) {

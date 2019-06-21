@@ -1,20 +1,21 @@
 // Project configuration
 var buildInclude = [
         // include common file types
-        //'**/*.php',
-        //'**/*.html',
-        //'**/*.css',
-        //'**/*.js',
-        //'**/*.svg',
-        //'**/*.ttf',
-        //'**/*.otf',
-        //'**/*.eot',
-        //'**/*.woff',
-        //'**/*.woff2',
-        
-        './**/*',
+        '**/*.php',
+        '**/*.html',
+        '**/*.css',
+        '**/*.js',
+        '**/*.svg',
+        '**/*.ttf',
+        '**/*.otf',
+        '**/*.eot',
+        '**/*.woff',
+        '**/*.woff2',
+        '**/*.png',
         
         // include specific files and folders
+        'screenshot.png',
+        'readme.txt',
 
         // exclude files and folders
         '!./composer.json', 
@@ -86,7 +87,8 @@ var gulp = require('gulp'),
     phpcs = require('gulp-phpcs'), // Gulp plugin for running PHP Code Sniffer.
     phpcbf = require('gulp-phpcbf'), // PHP Code Beautifier
     gutil = require('gulp-util'), // gulp util
-    zip = require('gulp-zip'); // gulp zip
+    zip = require('gulp-zip'), // gulp zip
+    beautify = require('gulp-jsbeautifier');
     
 /**
  * Styles
@@ -146,6 +148,13 @@ gulp.task('lintcss', function lintCssTask() {
     }));
 });	
 
+// make pretty
+gulp.task('beautifycss', () =>
+    gulp.src(cssInclude)
+        .pipe(beautify())
+        .pipe(gulp.dest('./'))
+);
+
 /**
  * Scripts
  */
@@ -166,6 +175,13 @@ gulp.task('lintjs', function() {
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
 });
+
+// make pretty
+gulp.task('beautifyjs', () =>
+    gulp.src(jsInclude)
+        .pipe(beautify())
+        .pipe(gulp.dest('./'))
+);
 
 /**
  * PHP

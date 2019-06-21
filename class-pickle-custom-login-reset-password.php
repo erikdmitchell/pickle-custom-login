@@ -126,28 +126,28 @@ class Pickle_Custom_Login_Reset_Password {
                 endif;
 
                 $redirect_url = add_query_arg( 'errors', 'recaptcha error', $redirect_url );
-            elseif ( is_wp_error( $errors ) ) :
-                // Errors found.
-                if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
-                    $redirect_url = home_url( 'forgot-password' );
-                else :
-                    $redirect_url = wp_lostpassword_url();
-                endif;
+                elseif ( is_wp_error( $errors ) ) :
+                    // Errors found.
+                    if ( $slug = pcl_page_slug( 'forgot-password' ) ) :
+                        $redirect_url = home_url( 'forgot-password' );
+                    else :
+                        $redirect_url = wp_lostpassword_url();
+                    endif;
 
-                $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
-            else :
-                // Email sent.
-                if ( $slug = pcl_page_slug( 'login' ) ) :
-                    $redirect_url = home_url( $slug );
-                else :
-                    $redirect_url = wp_login_url();
-                endif;
+                    $redirect_url = add_query_arg( 'errors', join( ',', $errors->get_error_codes() ), $redirect_url );
+                    else :
+                        // Email sent.
+                        if ( $slug = pcl_page_slug( 'login' ) ) :
+                            $redirect_url = home_url( $slug );
+                        else :
+                            $redirect_url = wp_login_url();
+                        endif;
 
-                $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
+                        $redirect_url = add_query_arg( 'checkemail', 'confirm', $redirect_url );
             endif;
 
-            wp_redirect( $redirect_url );
-            exit;
+                    wp_redirect( $redirect_url );
+                    exit;
         endif;
     }
 
@@ -335,11 +335,11 @@ class Pickle_Custom_Login_Reset_Password {
                 else :
                     wp_redirect( wp_login_url() . '?password=changed' );
                 endif;
-            else :
-                echo 'Invalid request.';
+                else :
+                    echo 'Invalid request.';
             endif;
 
-            exit;
+                exit;
         endif;
     }
 
