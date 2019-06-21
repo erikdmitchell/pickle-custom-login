@@ -1,7 +1,7 @@
 /**
  * notices
  */
-.custom-login-notice > span {
+.custom-login-notice>span {
     background: #fff;
     border-left: 4px solid #fff;
     -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
@@ -10,9 +10,11 @@
     padding: 1px 12px;
     border-color: #7ad03a;
 }
-.custom-login-notice > span.error {
+
+.custom-login-notice>span.error {
     border-color: red;
 }
+
 .custom-login-notice .error .title {
     color: red;
 }
@@ -23,11 +25,13 @@
 .custom-login-extras {
     overflow: hidden;
 }
+
 .custom-login-extras,
 .custom-login-logged-in .loggedin-extras {
     list-style-type: none;
     margin: 0;
 }
+
 .custom-login-extras li,
 .custom-login-logged-in .loggedin-extras li {
     float: left;
@@ -35,6 +39,7 @@
     padding-right: 7px;
     margin-right: 7px;
 }
+
 .custom-login-extras li:last-child,
 .custom-login-logged-in .loggedin-extras li:last-child {
     border-right: none;
